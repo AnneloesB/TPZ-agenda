@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Anneloes Bork" />
+  <title>Agenda Transformatieaanjagers - TPZ Midden-Nederland</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --groen-donker: #46571B;
+      --groen-midden: #93AB67;
+      --geel: #EBDC86;
+      --creme: #F5F2E8;
+      --wit: #ffffff;
+      --tekst: #2a2a2a;
+      --grijs-licht: #e8e4d8;
+      --grijs-mid: #b0a98e;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--creme);
+      color: var(--tekst);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--groen-donker);
+      color: var(--wit);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    header .logo-ring {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--groen-midden);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    header .logo-ring svg { width: 28px; height: 28px; }
+    header .header-tekst h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    header .header-tekst p {
+      font-size: 0.8rem;
+      color: var(--groen-midden);
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* NAV BAR */
+    .nav-bar {
+      background: var(--wit);
+      border-bottom: 2px solid var(--groen-donker);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .maand-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .maand-nav button {
+      background: none;
+      border: 1.5px solid var(--groen-donker);
+      color: var(--groen-donker);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .maand-nav button:hover { background: var(--groen-donker); color: var(--wit); }
+    .maand-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--groen-donker);
+      min-width: 180px;
+      text-align: center;
+    }
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--groen-midden);
+      background: var(--wit);
+      color: var(--groen-donker);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn.actief, .filter-btn:hover {
+      background: var(--groen-donker);
+      color: var(--wit);
+      border-color: var(--groen-donker);
+    }
+    .btn-toevoegen {
+      padding: 8px 18px;
+      background: var(--geel);
+      color: var(--groen-donker);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-toevoegen:hover { background: #d4c56a; }
+
+    /* AGENDA GRID */
+    .agenda-wrapper {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    /* Kalenderraster */
+    .kalender {
+      background: var(--wit);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--grijs-licht);
+      overflow: hidden;
+    }
+    .kalender-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: var(--groen-donker);
+    }
+    .dag-naam {
+      padding: 10px 0;
+      text-align: center;
+      color: var(--groen-midden);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .kalender-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-left: 1px solid var(--grijs-licht);
+    }
+    .dag-cel {
+      min-height: 110px;
+      border-right: 1px solid var(--grijs-licht);
+      border-bottom: 1px solid var(--grijs-licht);
+      padding: 6px;
+      position: relative;
+    }
+    .dag-cel.andere-maand { background: #f9f8f3; }
+    .dag-cel.vandaag { background: #f0f5e8; }
+    .dag-nr {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--grijs-mid);
+      margin-bottom: 4px;
+    }
+    .dag-cel.vandaag .dag-nr {
+      background: var(--groen-donker);
+      color: var(--wit);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+    }
+
+    /* Activiteit chip */
+    .activiteit-chip {
+      display: block;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      margin-bottom: 3px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: opacity 0.15s;
+      line-height: 1.3;
+    }
+    .activiteit-chip:hover { opacity: 0.8; }
+    .chip-bijeenkomst { background: #d4e4b0; color: #2d4010; }
+    .chip-werkgroep   { background: #b8d4f0; color: #0d3060; }
+    .chip-overleg     { background: #e8d8f0; color: #4a1a6e; }
+    .chip-campagne    { background: var(--geel); color: var(--groen-donker); }
+    .chip-publieksbijeenkomst { background: #f0d8b0; color: #6e3a0d; }
+
+    /* LEGENDA */
+    .legenda {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .legenda-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--tekst);
+    }
+    .legenda-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.zichtbaar { display: flex; }
+    .modal {
+      background: var(--wit);
+      border-radius: var(--radius);
+      max-width: 560px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(70,87,27,0.18);
+    }
+    .modal-top {
+      background: var(--groen-donker);
+      color: var(--wit);
+      padding: 20px 24px;
+      position: relative;
+    }
+    .modal-type-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--groen-midden);
+      margin-bottom: 6px;
+    }
+    .modal-titel {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+    .modal-sluiten {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: var(--wit);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-body { padding: 20px 24px; }
+    .modal-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .meta-item label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--grijs-mid);
+      margin-bottom: 2px;
+    }
+    .meta-item span {
+      font-size: 0.88rem;
+      color: var(--tekst);
+    }
+    .modal-beschrijving {
+      background: var(--creme);
+      border-left: 3px solid var(--groen-midden);
+      padding: 12px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--tekst);
+    }
+    .modal-actielijn {
+      margin-top: 12px;
+      display: inline-block;
+      background: var(--geel);
+      color: var(--groen-donker);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    /* TOEVOEGEN MODAL */
+    .form-sectie { margin-bottom: 14px; }
+    .form-sectie label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--groen-donker);
+      margin-bottom: 4px;
+    }
+    .form-sectie input,
+    .form-sectie textarea,
+    .form-sectie select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid var(--grijs-licht);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      color: var(--tekst);
+      background: var(--creme);
+      transition: border-color 0.15s;
+    }
+    .form-sectie input:focus,
+    .form-sectie textarea:focus,
+    .form-sectie select:focus {
+      outline: none;
+      border-color: var(--groen-donker);
+    }
+    .form-sectie textarea { resize: vertical; min-height: 80px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-opslaan {
+      width: 100%;
+      padding: 10px;
+      background: var(--groen-donker);
+      color: var(--wit);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-opslaan:hover { background: #344010; }
+    .download-info {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #f0f5e8;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: var(--groen-donker);
+      line-height: 1.5;
+    }
+    .download-info strong { font-weight: 600; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--creme); }
+    ::-webkit-scrollbar-thumb { background: var(--groen-midden); border-radius: 3px; }
+
+    @media (max-width: 640px) {
+      header { padding: 16px; }
+      .nav-bar { padding: 12px 16px; }
+      .agenda-wrapper { padding: 0 12px; margin-top: 20px; }
+      .dag-cel { min-height: 70px; }
+      .modal-meta { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-ring">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 4C8.5 4 4 8.5 4 14s4.5 10 10 10" stroke="#93AB67" stroke-width="2" stroke-linecap="round"/>
+      <path d="M14 4C19.5 4 24 8.5 24 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="14" cy="11" r="3" fill="#93AB67"/>
+      <path d="M11 17c0-1.7 1.3-3 3-3s3 1.3 3 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="header-tekst">
+    <h1>Agenda Transformatieaanjagers</h1>
+    <p>TPZ Midden-Nederland</p>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <div class="maand-nav">
+    <button onclick="verschuifMaand(-1)" aria-label="Vorige maand">&#8592;</button>
+    <span class="maand-label" id="maand-label"></span>
+    <button onclick="verschuifMaand(1)" aria-label="Volgende maand">&#8594;</button>
+  </div>
+  <div class="filter-row" id="filter-row">
+    <button class="filter-btn actief" data-type="alle" onclick="setFilter('alle', this)">Alle</button>
+    <button class="filter-btn" data-type="bijeenkomst" onclick="setFilter('bijeenkomst', this)">Bijeenkomst</button>
+    <button class="filter-btn" data-type="werkgroep" onclick="setFilter('werkgroep', this)">Werkgroep</button>
+    <button class="filter-btn" data-type="overleg" onclick="setFilter('overleg', this)">Overleg</button>
+    <button class="filter-btn" data-type="campagne" onclick="setFilter('campagne', this)">Campagne</button>
+    <button class="filter-btn" data-type="publieksbijeenkomst" onclick="setFilter('publieksbijeenkomst', this)">Publieksbijeenkomst</button>
+  </div>
+  <button class="btn-toevoegen" onclick="openToevoegenModal()">
+    <span style="font-size:1.1rem;">+</span> Activiteit toevoegen
+  </button>
+</div>
+
+<!-- AGENDA -->
+<div class="agenda-wrapper">
+  <div class="legenda">
+    <div class="legenda-item"><div class="legenda-dot" style="background:#d4e4b0;"></div> Bijeenkomst</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#b8d4f0;"></div> Werkgroep</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#e8d8f0;"></div> Overleg</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#EBDC86;"></div> Campagne</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#f0d8b0;"></div> Publieksbijeenkomst</div>
+  </div>
+
+  <div class="kalender">
+    <div class="kalender-header">
+      <div class="dag-naam">Ma</div>
+      <div class="dag-naam">Di</div>
+      <div class="dag-naam">Wo</div>
+      <div class="dag-naam">Do</div>
+      <div class="dag-naam">Vr</div>
+      <div class="dag-naam">Za</div>
+      <div class="dag-naam">Zo</div>
+    </div>
+    <div class="kalender-grid" id="kalender-grid"></div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detail-modal" onclick="sluitModal('detail-modal', event)">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-type-badge" id="modal-type"></div>
+      <div class="modal-titel" id="modal-titel"></div>
+      <button class="modal-sluiten" onclick="sluitModal('detail-modal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <div class="meta-item"><label>Datum</label><span id="modal-datum"></span></div>
+        <div class="meta-item"><label>Tijd</label><span id="modal-tijd"></span></div>
+        <div class="meta-item"><label>Locatie</label><span id="modal-locatie"></span></div>
+        <div class="meta-item"><label>Doelgroep</label><span id="modal-doelgroep"></span></div>
+      </div>
+      <div class="modal-beschrijving" id="modal-beschrijving"></div>
+      <div class="modal-actielijn" id="modal-actielijn"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOEVOEGEN MODAL -->
+<div class="modal-overlay" id="toevoegen-modal" onclick="sluitModal('toevoegen-modal', event)">
+  <div class="modal" style="max-width:620px; max-height:90vh; overflow-y:auto;">
+    <div class="modal-top">
+      <div class="modal-type-badge">Nieuwe activiteit</div>
+      <div class="modal-titel">Activiteit toevoegen</div>
+      <button class="modal-sluiten" onclick="sluitModal('toevoegen-modal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-sectie">
+        <label>Titel *</label>
+        <input type="text" id="f-titel" placeholder="Naam van de activiteit" />
+      </div>
+      <div class="form-grid">
+        <div class="form-sectie">
+          <label>Datum *</label>
+          <input type="date" id="f-datum" />
+        </div>
+        <div class="form-sectie">
+          <label>Tijd</label>
+          <input type="text" id="f-tijd" placeholder="bijv. 10:00 - 12:00" />
+        </div>
+      </div>
+      <div class="form-sectie">
+        <label>Locatie</label>
+        <input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" />
+      </div>
+      <div class="form-grid">
+        <div class="form-sectie">
+          <label>Type</label>
+          <select id="f-type">
+            <option value="bijeenkomst">Bijeenkomst</option>
+            <option value="werkgroep">Werkgroep</option>
+            <option value="overleg">Overleg</option>
+            <option value="campagne">Campagne</option>
+            <option value="publieksbijeenkomst">Publieksbijeenkomst</option>
+          </select>
+        </div>
+        <div class="form-sectie">
+          <label>Actielijn</label>
+          <select id="f-actielijn">
+            <option value="Project A">Project A - Bewustwording zorgprofessionals</option>
+            <option value="Project B">Project B - Bewustwording inwoners</option>
+            <option value="Project C">Project C - Monitoring en borging</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-sectie">
+        <label>Doelgroep</label>
+        <input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" />
+      </div>
+      <div class="form-sectie">
+        <label>Beschrijving</label>
+        <textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea>
+      </div>
+      <button class="btn-opslaan" onclick="slaActiviteitOp()">JSON downloaden met nieuwe activiteit</button>
+      <div class="download-info">
+        Na het klikken download je een bijgewerkt <strong>activiteiten.json</strong> bestand. Vervang het huidige bestand in je GitHub repository om de activiteit zichtbaar te maken op de agenda.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let allActiviteiten = [];
+  let huidigJaar = new Date().getFullYear();
+  let huidigMaand = new Date().getMonth(); // 0-indexed
+  let actieveFilter = 'alle';
+
+  const maandNamen = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+
+  async function laadActiviteiten() {
+    try {
+      const res = await fetch('activiteiten.json');
+      if (!res.ok) throw new Error('Kan activiteiten.json niet laden');
+      allActiviteiten = await res.json();
+    } catch(e) {
+      allActiviteiten = [];
+      console.warn('activiteiten.json niet gevonden:', e);
+    }
+    tekenKalender();
+  }
+
+  function verschuifMaand(richting) {
+    huidigMaand += richting;
+    if (huidigMaand > 11) { huidigMaand = 0; huidigJaar++; }
+    if (huidigMaand < 0)  { huidigMaand = 11; huidigJaar--; }
+    tekenKalender();
+  }
+
+  function setFilter(type, btn) {
+    actieveFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('actief'));
+    btn.classList.add('actief');
+    tekenKalender();
+  }
+
+  function tekenKalender() {
+    document.getElementById('maand-label').textContent = maandNamen[huidigMaand] + ' ' + huidigJaar;
+
+    const grid = document.getElementById('kalender-grid');
+    grid.innerHTML = '';
+
+    const eersteVanMaand = new Date(huidigJaar, huidigMaand, 1);
+    // Ma=0, begin van week aanpassen
+    let startDag = eersteVanMaand.getDay(); // 0=zo
+    startDag = (startDag === 0) ? 6 : startDag - 1;
+
+    const aantalDagen = new Date(huidigJaar, huidigMaand + 1, 0).getDate();
+    const vandaag = new Date();
+    const totaalCellen = Math.ceil((startDag + aantalDagen) / 7) * 7;
+
+    for (let i = 0; i < totaalCellen; i++) {
+      const dagNr = i - startDag + 1;
+      const cel = document.createElement('div');
+      cel.className = 'dag-cel';
+
+      if (dagNr < 1 || dagNr > aantalDagen) {
+        cel.classList.add('andere-maand');
+        const nr = document.createElement('div');
+        nr.className = 'dag-nr';
+        if (dagNr < 1) {
+          const vorigeMaandDagen = new Date(huidigJaar, huidigMaand, 0).getDate();
+          nr.textContent = vorigeMaandDagen + dagNr;
+        } else {
+          nr.textContent = dagNr - aantalDagen;
+        }
+        cel.appendChild(nr);
+      } else {
+        const isVandaag = (dagNr === vandaag.getDate() && huidigMaand === vandaag.getMonth() && huidigJaar === vandaag.getFullYear());
+        if (isVandaag) cel.classList.add('vandaag');
+
+        const nr = document.createElement('div');
+        nr.className = 'dag-nr';
+        if (isVandaag) {
+          nr.style.cssText = 'background:#46571B;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;';
+        }
+        nr.textContent = dagNr;
+        cel.appendChild(nr);
+
+        // Activiteiten van deze dag
+        const datumStr = huidigJaar + '-' + String(huidigMaand+1).padStart(2,'0') + '-' + String(dagNr).padStart(2,'0');
+        const dagActiviteiten = allActiviteiten.filter(a => {
+          if (actieveFilter !== 'alle' && a.type !== actieveFilter) return false;
+          return a.datum === datumStr;
+        });
+
+        dagActiviteiten.forEach(act => {
+          const chip = document.createElement('span');
+          chip.className = 'activiteit-chip chip-' + act.type;
+          chip.textContent = act.titel;
+          chip.onclick = () => openDetailModal(act);
+          cel.appendChild(chip);
+        });
+      }
+
+      grid.appendChild(cel);
+    }
+  }
+
+  function openDetailModal(act) {
+    const typeLabels = {
+      bijeenkomst: 'Bijeenkomst',
+      werkgroep: 'Werkgroep',
+      overleg: 'Overleg',
+      campagne: 'Campagne',
+      publieksbijeenkomst: 'Publieksbijeenkomst'
+    };
+    document.getElementById('modal-type').textContent = typeLabels[act.type] || act.type;
+    document.getElementById('modal-titel').textContent = act.titel;
+    document.getElementById('modal-datum').textContent = formateerDatum(act.datum);
+    document.getElementById('modal-tijd').textContent = act.tijd || 'Niet opgegeven';
+    document.getElementById('modal-locatie').textContent = act.locatie || 'Niet opgegeven';
+    document.getElementById('modal-doelgroep').textContent = act.doelgroep || '';
+    document.getElementById('modal-beschrijving').textContent = act.beschrijving || '';
+    document.getElementById('modal-actielijn').textContent = act.actielijn || '';
+    document.getElementById('detail-modal').classList.add('zichtbaar');
+  }
+
+  function formateerDatum(d) {
+    if (!d) return '';
+    const [j,m,dag] = d.split('-');
+    return `${parseInt(dag)} ${maandNamen[parseInt(m)-1]} ${j}`;
+  }
+
+  function openToevoegenModal() {
+    // reset form
+    ['f-titel','f-datum','f-tijd','f-locatie','f-doelgroep','f-beschrijving'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('toevoegen-modal').classList.add('zichtbaar');
+  }
+
+  function sluitModal(id, event) {
+    if (!event || event.target.classList.contains('modal-overlay')) {
+      document.getElementById(id).classList.remove('zichtbaar');
+    }
+  }
+
+  function slaActiviteitOp() {
+    const titel = document.getElementById('f-titel').value.trim();
+    const datum = document.getElementById('f-datum').value;
+    if (!titel || !datum) {
+      alert('Vul minimaal een titel en datum in.');
+      return;
+    }
+    const nieuweActiviteit = {
+      id: Date.now().toString(),
+      titel,
+      datum,
+      tijd: document.getElementById('f-tijd').value.trim(),
+      locatie: document.getElementById('f-locatie').value.trim(),
+      type: document.getElementById('f-type').value,
+      beschrijving: document.getElementById('f-beschrijving').value.trim(),
+      doelgroep: document.getElementById('f-doelgroep').value.trim(),
+      actielijn: document.getElementById('f-actielijn').value
+    };
+
+    const bijgewerkt = [...allActiviteiten, nieuweActiviteit];
+    const blob = new Blob([JSON.stringify(bijgewerkt, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'activiteiten.json';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    sluitModal('toevoegen-modal');
+  }
+
+  // Start
+  laadActiviteiten();
+</script>
+</body>
+</html>
