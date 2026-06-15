@@ -1,25 +1,26 @@
 [
   {
-    "id": "1781507180472",
+    "id": "1781510013930",
     "titel": "Wat als de dood het leven is? - Theater",
     "datum": "2026-07-11",
+    "einddatum": "2026-07-11",
     "tijd": "13:00 - 17:00",
     "locatie": "ZIMIHC theater Stefanus",
     "type": "publieksbijeenkomst",
-    "beschrijving": "Wat als de dood het leven is?\nZaterdag 11 juli 2026, 13.00-17.00 uur\n14.00 uur voorstelling\nZIMIHC theater Stefanus, Utrecht \nEen muzikale en poëtische vertelling \nover de gedachtewisseling tussen een \nvrouw aan het begin van haar leven en \neen vrouw aan het eind van haar leven.\nAan tafel is het leven opgedekt\n\nmeer info: https://www.zimihc.nl/agenda/wat-als-de-dood-het-leven-is/",
-    "doelgroep": "Alle geïnteresseerde",
+    "beschrijving": "Wat als de dood het leven is?\nZaterdag 11 juli 2026, 13.00-17.00 uur\n14.00 uur voorstelling\nZIMIHC theater Stefanus, Utrecht \nEen muzikale en poëtische vertelling \nover de gedachtewisseling tussen een \nvrouw aan het begin van haar leven en \neen vrouw aan het eind van haar leven.\nAan tafel is het leven opgedekt \n\nhttps://www.zimihc.nl/agenda/wat-als-de-dood-het-leven-is/",
+    "doelgroep": "",
     "actielijn": "Maatschappelijke bewustwording"
-  }
-
-    {
-    "id": "1781507180473",
+  },
+  {
+    "id": "1781510119723",
     "titel": "Week van de palliatieve zorg",
     "datum": "2026-10-03",
-    "tijd": "nvt",
+    "einddatum": "2026-10-10",
+    "tijd": "",
     "locatie": "Nederland",
-    "type": "Campagne",
-    "beschrijving": "Week van de palliatieve zorg: van 3 tot en met 9 oktober 2026 is het de Week van de palliatieve zorg. Tijdens deze week wordt er extra aandacht besteed aan palliatieve zorg en de mensen die hierbij betrokken zijn. Het thema van dit jaar is 'Samen zorgen voor een goed levenseinde'.\n\nMeer informatie: https://www.palliatievezorg.nl/week-van-de-palliatieve-zorg",
-    "doelgroep": "Alle geïnteresseerde",
+    "type": "campagne",
+    "beschrijving": "De Week van de Palliatieve Zorg: wat doe jij van 3 tot en met 10 oktober 2026?\nTijdens de Week van de Palliatieve Zorg zetten we samen ook in 2026 palliatieve zorg volop in de spotlights! In de week van 3 tot en met 10 oktober vinden in Nederland tal van activiteiten plaats om palliatieve zorg bekender te maken. Zo helpen we méér mensen te begrijpen wat palliatieve zorg is en wat het voor hen kan betekenen. Het doel: ervoor zorgen dat iedereen op het juiste moment de juiste zorg ontvangt.\n\nhttps://palliaweb.nl/weekvandepalliatievezorg",
+    "doelgroep": "Iedereen",
     "actielijn": "Maatschappelijke bewustwording"
   }
 ]
