@@ -8,215 +8,41 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --groen-donker: #46571B;
-      --groen-midden: #93AB67;
-      --geel: #EBDC86;
-      --creme: #F5F2E8;
-      --wit: #ffffff;
-      --tekst: #2a2a2a;
-      --grijs-licht: #e8e4d8;
-      --grijs-mid: #b0a98e;
-      --radius: 10px;
+      --groen-donker: #46571B; --groen-midden: #93AB67; --geel: #EBDC86;
+      --creme: #F5F2E8; --wit: #ffffff; --tekst: #2a2a2a;
+      --grijs-licht: #e8e4d8; --grijs-mid: #b0a98e; --rood: #c0392b; --radius: 10px;
     }
+    body { font-family: 'DM Sans', sans-serif; background: var(--creme); color: var(--tekst); min-height: 100vh; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--creme);
-      color: var(--tekst);
-      min-height: 100vh;
-    }
+    header { background: var(--groen-donker); color: var(--wit); padding: 24px 32px; display: flex; align-items: center; gap: 20px; }
+    .logo-ring { width: 48px; height: 48px; border: 2px solid var(--groen-midden); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-ring svg { width: 28px; height: 28px; }
+    .header-tekst h1 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; font-weight: 400; line-height: 1.2; }
+    .header-tekst p { font-size: 0.8rem; color: var(--groen-midden); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-    /* HEADER */
-    header {
-      background: var(--groen-donker);
-      color: var(--wit);
-      padding: 24px 32px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    header .logo-ring {
-      width: 48px;
-      height: 48px;
-      border: 2px solid var(--groen-midden);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    header .logo-ring svg { width: 28px; height: 28px; }
-    header .header-tekst h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      line-height: 1.2;
-    }
-    header .header-tekst p {
-      font-size: 0.8rem;
-      color: var(--groen-midden);
-      margin-top: 2px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    /* NAV BAR */
-    .nav-bar {
-      background: var(--wit);
-      border-bottom: 2px solid var(--groen-donker);
-      padding: 14px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .maand-nav {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .maand-nav button {
-      background: none;
-      border: 1.5px solid var(--groen-donker);
-      color: var(--groen-donker);
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s;
-    }
+    .nav-bar { background: var(--wit); border-bottom: 2px solid var(--groen-donker); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; }
+    .maand-nav { display: flex; align-items: center; gap: 12px; }
+    .maand-nav button { background: none; border: 1.5px solid var(--groen-donker); color: var(--groen-donker); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
     .maand-nav button:hover { background: var(--groen-donker); color: var(--wit); }
-    .maand-label {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.25rem;
-      color: var(--groen-donker);
-      min-width: 180px;
-      text-align: center;
-    }
-    .filter-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .filter-btn {
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--groen-midden);
-      background: var(--wit);
-      color: var(--groen-donker);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .filter-btn.actief, .filter-btn:hover {
-      background: var(--groen-donker);
-      color: var(--wit);
-      border-color: var(--groen-donker);
-    }
-    .btn-toevoegen {
-      padding: 8px 18px;
-      background: var(--geel);
-      color: var(--groen-donker);
-      border: none;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.15s;
-    }
+    .maand-label { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--groen-donker); min-width: 180px; text-align: center; }
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-btn { padding: 5px 14px; border-radius: 20px; border: 1.5px solid var(--groen-midden); background: var(--wit); color: var(--groen-donker); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; cursor: pointer; transition: all 0.15s; }
+    .filter-btn.actief, .filter-btn:hover { background: var(--groen-donker); color: var(--wit); border-color: var(--groen-donker); }
+    .btn-toevoegen { padding: 8px 18px; background: var(--geel); color: var(--groen-donker); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s; }
     .btn-toevoegen:hover { background: #d4c56a; }
 
-    /* AGENDA GRID */
-    .agenda-wrapper {
-      max-width: 1100px;
-      margin: 32px auto;
-      padding: 0 24px;
-    }
-
-    /* Kalenderraster */
-    .kalender {
-      background: var(--wit);
-      border-radius: var(--radius);
-      border: 1.5px solid var(--grijs-licht);
-      overflow: hidden;
-    }
-    .kalender-header {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      background: var(--groen-donker);
-    }
-    .dag-naam {
-      padding: 10px 0;
-      text-align: center;
-      color: var(--groen-midden);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .kalender-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      border-left: 1px solid var(--grijs-licht);
-    }
-    .dag-cel {
-      min-height: 110px;
-      border-right: 1px solid var(--grijs-licht);
-      border-bottom: 1px solid var(--grijs-licht);
-      padding: 6px;
-      position: relative;
-    }
+    .agenda-wrapper { max-width: 1100px; margin: 32px auto; padding: 0 24px; }
+    .kalender { background: var(--wit); border-radius: var(--radius); border: 1.5px solid var(--grijs-licht); overflow: hidden; }
+    .kalender-header { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--groen-donker); }
+    .dag-naam { padding: 10px 0; text-align: center; color: var(--groen-midden); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .kalender-grid { display: grid; grid-template-columns: repeat(7, 1fr); border-left: 1px solid var(--grijs-licht); }
+    .dag-cel { min-height: 110px; border-right: 1px solid var(--grijs-licht); border-bottom: 1px solid var(--grijs-licht); padding: 6px; }
     .dag-cel.andere-maand { background: #f9f8f3; }
     .dag-cel.vandaag { background: #f0f5e8; }
-    .dag-nr {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--grijs-mid);
-      margin-bottom: 4px;
-    }
-    .dag-cel.vandaag .dag-nr {
-      background: var(--groen-donker);
-      color: var(--wit);
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.72rem;
-    }
-
-    /* Activiteit chip */
-    .activiteit-chip {
-      display: block;
-      padding: 3px 6px;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 500;
-      margin-bottom: 3px;
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: opacity 0.15s;
-      line-height: 1.3;
-    }
+    .dag-nr { font-size: 0.78rem; font-weight: 600; color: var(--grijs-mid); margin-bottom: 4px; }
+    .dag-nr-vandaag { background: #46571B; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; margin-bottom: 4px; }
+    .activiteit-chip { display: block; padding: 3px 6px; border-radius: 4px; font-size: 0.68rem; font-weight: 500; margin-bottom: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity 0.15s; line-height: 1.3; }
     .activiteit-chip:hover { opacity: 0.8; }
     .chip-bijeenkomst { background: #d4e4b0; color: #2d4010; }
     .chip-werkgroep   { background: #b8d4f0; color: #0d3060; }
@@ -224,179 +50,49 @@
     .chip-campagne    { background: var(--geel); color: var(--groen-donker); }
     .chip-publieksbijeenkomst { background: #f0d8b0; color: #6e3a0d; }
 
-    /* LEGENDA */
-    .legenda {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-      margin-bottom: 24px;
-    }
-    .legenda-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.76rem;
-      color: var(--tekst);
-    }
-    .legenda-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-    }
+    .legenda { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 24px; }
+    .legenda-item { display: flex; align-items: center; gap: 6px; font-size: 0.76rem; }
+    .legenda-dot { width: 12px; height: 12px; border-radius: 3px; }
 
-    /* MODAL */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+    /* MODALS */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.zichtbaar { display: flex; }
-    .modal {
-      background: var(--wit);
-      border-radius: var(--radius);
-      max-width: 560px;
-      width: 100%;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(70,87,27,0.18);
-    }
-    .modal-top {
-      background: var(--groen-donker);
-      color: var(--wit);
-      padding: 20px 24px;
-      position: relative;
-    }
-    .modal-type-badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--groen-midden);
-      margin-bottom: 6px;
-    }
-    .modal-titel {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      line-height: 1.3;
-    }
-    .modal-sluiten {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: 1.5px solid rgba(255,255,255,0.4);
-      color: var(--wit);
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .modal { background: var(--wit); border-radius: var(--radius); max-width: 560px; width: 100%; overflow: hidden; box-shadow: 0 8px 32px rgba(70,87,27,0.18); }
+    .modal-scroll { max-height: 90vh; overflow-y: auto; }
+    .modal-top { background: var(--groen-donker); color: var(--wit); padding: 20px 24px; position: relative; }
+    .modal-type-badge { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--groen-midden); margin-bottom: 6px; }
+    .modal-titel { font-family: 'DM Serif Display', serif; font-size: 1.2rem; font-weight: 400; line-height: 1.3; }
+    .modal-sluiten { position: absolute; top: 16px; right: 16px; background: none; border: 1.5px solid rgba(255,255,255,0.4); color: var(--wit); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
     .modal-body { padding: 20px 24px; }
-    .modal-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .meta-item label {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--grijs-mid);
-      margin-bottom: 2px;
-    }
-    .meta-item span {
-      font-size: 0.88rem;
-      color: var(--tekst);
-    }
-    .modal-beschrijving {
-      background: var(--creme);
-      border-left: 3px solid var(--groen-midden);
-      padding: 12px 14px;
-      border-radius: 0 6px 6px 0;
-      font-size: 0.88rem;
-      line-height: 1.6;
-      color: var(--tekst);
-    }
-    .modal-actielijn {
-      margin-top: 12px;
-      display: inline-block;
-      background: var(--geel);
-      color: var(--groen-donker);
-      border-radius: 20px;
-      padding: 3px 12px;
-      font-size: 0.76rem;
-      font-weight: 600;
-    }
+    .modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .meta-item label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--grijs-mid); margin-bottom: 2px; }
+    .meta-item span { font-size: 0.88rem; }
+    .modal-beschrijving { background: var(--creme); border-left: 3px solid var(--groen-midden); padding: 12px 14px; border-radius: 0 6px 6px 0; font-size: 0.88rem; line-height: 1.6; }
+    .modal-actielijn { margin-top: 12px; display: inline-block; background: var(--geel); color: var(--groen-donker); border-radius: 20px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
+    .modal-acties { display: flex; gap: 10px; margin-top: 16px; }
+    .btn-bewerken { flex: 1; padding: 9px; background: var(--groen-donker); color: var(--wit); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-bewerken:hover { background: #344010; }
+    .btn-verwijderen { flex: 1; padding: 9px; background: var(--wit); color: var(--rood); border: 1.5px solid var(--rood); border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .btn-verwijderen:hover { background: var(--rood); color: var(--wit); }
+    .verwijder-bevestig { display: none; background: #fff5f5; border: 1.5px solid var(--rood); border-radius: 8px; padding: 14px; margin-top: 14px; }
+    .verwijder-bevestig.zichtbaar { display: block; }
+    .verwijder-bevestig p { font-size: 0.85rem; color: var(--rood); margin-bottom: 10px; font-weight: 500; }
+    .verwijder-knoppen { display: flex; gap: 8px; }
+    .btn-verwijder-ja { flex: 1; padding: 8px; background: var(--rood); color: var(--wit); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer; }
+    .btn-verwijder-nee { flex: 1; padding: 8px; background: var(--wit); color: var(--tekst); border: 1.5px solid var(--grijs-licht); border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; cursor: pointer; }
 
-    /* TOEVOEGEN MODAL */
+    /* FORMULIER */
     .form-sectie { margin-bottom: 14px; }
-    .form-sectie label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--groen-donker);
-      margin-bottom: 4px;
-    }
-    .form-sectie input,
-    .form-sectie textarea,
-    .form-sectie select {
-      width: 100%;
-      padding: 8px 10px;
-      border: 1.5px solid var(--grijs-licht);
-      border-radius: 6px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      color: var(--tekst);
-      background: var(--creme);
-      transition: border-color 0.15s;
-    }
-    .form-sectie input:focus,
-    .form-sectie textarea:focus,
-    .form-sectie select:focus {
-      outline: none;
-      border-color: var(--groen-donker);
-    }
+    .form-sectie label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--groen-donker); margin-bottom: 4px; }
+    .form-sectie input, .form-sectie textarea, .form-sectie select { width: 100%; padding: 8px 10px; border: 1.5px solid var(--grijs-licht); border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--tekst); background: var(--creme); transition: border-color 0.15s; }
+    .form-sectie input:focus, .form-sectie textarea:focus, .form-sectie select:focus { outline: none; border-color: var(--groen-donker); }
     .form-sectie textarea { resize: vertical; min-height: 80px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn-opslaan {
-      width: 100%;
-      padding: 10px;
-      background: var(--groen-donker);
-      color: var(--wit);
-      border: none;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
+    .btn-opslaan { width: 100%; padding: 10px; background: var(--groen-donker); color: var(--wit); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
     .btn-opslaan:hover { background: #344010; }
-    .download-info {
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: #f0f5e8;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      color: var(--groen-donker);
-      line-height: 1.5;
-    }
+    .download-info { margin-top: 10px; padding: 10px 12px; background: #f0f5e8; border-radius: 6px; font-size: 0.78rem; color: var(--groen-donker); line-height: 1.5; }
     .download-info strong { font-weight: 600; }
 
-    /* SCROLLBAR */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--creme); }
     ::-webkit-scrollbar-thumb { background: var(--groen-midden); border-radius: 3px; }
@@ -413,7 +109,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo-ring">
     <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -429,27 +124,25 @@
   </div>
 </header>
 
-<!-- NAV -->
 <div class="nav-bar">
   <div class="maand-nav">
     <button onclick="verschuifMaand(-1)" aria-label="Vorige maand">&#8592;</button>
     <span class="maand-label" id="maand-label"></span>
     <button onclick="verschuifMaand(1)" aria-label="Volgende maand">&#8594;</button>
   </div>
-  <div class="filter-row" id="filter-row">
-    <button class="filter-btn actief" data-type="alle" onclick="setFilter('alle', this)">Alle</button>
-    <button class="filter-btn" data-type="bijeenkomst" onclick="setFilter('bijeenkomst', this)">Bijeenkomst</button>
-    <button class="filter-btn" data-type="werkgroep" onclick="setFilter('werkgroep', this)">Werkgroep</button>
-    <button class="filter-btn" data-type="overleg" onclick="setFilter('overleg', this)">Overleg</button>
-    <button class="filter-btn" data-type="campagne" onclick="setFilter('campagne', this)">Campagne</button>
-    <button class="filter-btn" data-type="publieksbijeenkomst" onclick="setFilter('publieksbijeenkomst', this)">Publieksbijeenkomst</button>
+  <div class="filter-row">
+    <button class="filter-btn actief" onclick="setFilter('alle', this)">Alle</button>
+    <button class="filter-btn" onclick="setFilter('bijeenkomst', this)">Bijeenkomst</button>
+    <button class="filter-btn" onclick="setFilter('werkgroep', this)">Werkgroep</button>
+    <button class="filter-btn" onclick="setFilter('overleg', this)">Overleg</button>
+    <button class="filter-btn" onclick="setFilter('campagne', this)">Campagne</button>
+    <button class="filter-btn" onclick="setFilter('publieksbijeenkomst', this)">Publieksbijeenkomst</button>
   </div>
-  <button class="btn-toevoegen" onclick="openToevoegenModal()">
+  <button class="btn-toevoegen" onclick="openFormulierModal(false)">
     <span style="font-size:1.1rem;">+</span> Activiteit toevoegen
   </button>
 </div>
 
-<!-- AGENDA -->
 <div class="agenda-wrapper">
   <div class="legenda">
     <div class="legenda-item"><div class="legenda-dot" style="background:#d4e4b0;"></div> Bijeenkomst</div>
@@ -458,69 +151,66 @@
     <div class="legenda-item"><div class="legenda-dot" style="background:#EBDC86;"></div> Campagne</div>
     <div class="legenda-item"><div class="legenda-dot" style="background:#f0d8b0;"></div> Publieksbijeenkomst</div>
   </div>
-
   <div class="kalender">
     <div class="kalender-header">
-      <div class="dag-naam">Ma</div>
-      <div class="dag-naam">Di</div>
-      <div class="dag-naam">Wo</div>
-      <div class="dag-naam">Do</div>
-      <div class="dag-naam">Vr</div>
-      <div class="dag-naam">Za</div>
-      <div class="dag-naam">Zo</div>
+      <div class="dag-naam">Ma</div><div class="dag-naam">Di</div><div class="dag-naam">Wo</div>
+      <div class="dag-naam">Do</div><div class="dag-naam">Vr</div><div class="dag-naam">Za</div><div class="dag-naam">Zo</div>
     </div>
     <div class="kalender-grid" id="kalender-grid"></div>
   </div>
 </div>
 
 <!-- DETAIL MODAL -->
-<div class="modal-overlay" id="detail-modal" onclick="sluitModal('detail-modal', event)">
+<div class="modal-overlay" id="detail-modal" onclick="sluitOverlay('detail-modal', event)">
   <div class="modal">
     <div class="modal-top">
-      <div class="modal-type-badge" id="modal-type"></div>
-      <div class="modal-titel" id="modal-titel"></div>
+      <div class="modal-type-badge" id="d-type"></div>
+      <div class="modal-titel" id="d-titel"></div>
       <button class="modal-sluiten" onclick="sluitModal('detail-modal')">&times;</button>
     </div>
     <div class="modal-body">
       <div class="modal-meta">
-        <div class="meta-item"><label>Datum</label><span id="modal-datum"></span></div>
-        <div class="meta-item"><label>Tijd</label><span id="modal-tijd"></span></div>
-        <div class="meta-item"><label>Locatie</label><span id="modal-locatie"></span></div>
-        <div class="meta-item"><label>Doelgroep</label><span id="modal-doelgroep"></span></div>
+        <div class="meta-item"><label>Datum</label><span id="d-datum"></span></div>
+        <div class="meta-item"><label>Tijd</label><span id="d-tijd"></span></div>
+        <div class="meta-item"><label>Locatie</label><span id="d-locatie"></span></div>
+        <div class="meta-item"><label>Doelgroep</label><span id="d-doelgroep"></span></div>
       </div>
-      <div class="modal-beschrijving" id="modal-beschrijving"></div>
-      <div class="modal-actielijn" id="modal-actielijn"></div>
+      <div class="modal-beschrijving" id="d-beschrijving"></div>
+      <div class="modal-actielijn" id="d-actielijn"></div>
+      <div class="modal-acties">
+        <button class="btn-bewerken" onclick="openBewerkModal()">Bewerken</button>
+        <button class="btn-verwijderen" onclick="toggleVerwijder()">Verwijderen</button>
+      </div>
+      <div class="verwijder-bevestig" id="verwijder-bevestig">
+        <p>Weet je zeker dat je deze activiteit wilt verwijderen? Je downloadt daarna een bijgewerkt JSON-bestand om in GitHub te plaatsen.</p>
+        <div class="verwijder-knoppen">
+          <button class="btn-verwijder-ja" onclick="verwijderActiviteit()">Ja, verwijderen en downloaden</button>
+          <button class="btn-verwijder-nee" onclick="toggleVerwijder()">Annuleren</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- TOEVOEGEN MODAL -->
-<div class="modal-overlay" id="toevoegen-modal" onclick="sluitModal('toevoegen-modal', event)">
-  <div class="modal" style="max-width:620px; max-height:90vh; overflow-y:auto;">
+<!-- FORMULIER MODAL -->
+<div class="modal-overlay" id="formulier-modal" onclick="sluitOverlay('formulier-modal', event)">
+  <div class="modal modal-scroll" style="max-width:620px;">
     <div class="modal-top">
-      <div class="modal-type-badge">Nieuwe activiteit</div>
-      <div class="modal-titel">Activiteit toevoegen</div>
-      <button class="modal-sluiten" onclick="sluitModal('toevoegen-modal')">&times;</button>
+      <div class="modal-type-badge" id="f-badge">Nieuwe activiteit</div>
+      <div class="modal-titel" id="f-kop">Activiteit toevoegen</div>
+      <button class="modal-sluiten" onclick="sluitModal('formulier-modal')">&times;</button>
     </div>
     <div class="modal-body">
+      <input type="hidden" id="f-id" />
       <div class="form-sectie">
         <label>Titel *</label>
         <input type="text" id="f-titel" placeholder="Naam van de activiteit" />
       </div>
       <div class="form-grid">
-        <div class="form-sectie">
-          <label>Datum *</label>
-          <input type="date" id="f-datum" />
-        </div>
-        <div class="form-sectie">
-          <label>Tijd</label>
-          <input type="text" id="f-tijd" placeholder="bijv. 10:00 - 12:00" />
-        </div>
+        <div class="form-sectie"><label>Datum *</label><input type="date" id="f-datum" /></div>
+        <div class="form-sectie"><label>Tijd</label><input type="text" id="f-tijd" placeholder="bijv. 10:00 - 12:00" /></div>
       </div>
-      <div class="form-sectie">
-        <label>Locatie</label>
-        <input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" />
-      </div>
+      <div class="form-sectie"><label>Locatie</label><input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" /></div>
       <div class="form-grid">
         <div class="form-sectie">
           <label>Type</label>
@@ -535,175 +225,169 @@
         <div class="form-sectie">
           <label>Actielijn</label>
           <select id="f-actielijn">
-            <option value="Project A">Project A - Bewustwording zorgprofessionals</option>
-            <option value="Project B">Project B - Bewustwording inwoners</option>
-            <option value="Project C">Project C - Monitoring en borging</option>
+            <option value="Algemeen">Algemeen</option>
+            <option value="Maatschappelijke bewustwording">(Maatschappelijke) bewustwording</option>
+            <option value="Deskundigheidsbevordering">Deskundigheidsbevordering</option>
+            <option value="Afspraken op alle niveaus">Afspraken op alle niveaus</option>
+            <option value="Digitale ondersteuning">Digitale ondersteuning</option>
+            <option value="Passende financiering">Passende financiering</option>
+            <option value="Spiegel- en stuurinformatie">Spiegel- en stuurinformatie</option>
           </select>
         </div>
       </div>
-      <div class="form-sectie">
-        <label>Doelgroep</label>
-        <input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" />
-      </div>
-      <div class="form-sectie">
-        <label>Beschrijving</label>
-        <textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea>
-      </div>
-      <button class="btn-opslaan" onclick="slaActiviteitOp()">JSON downloaden met nieuwe activiteit</button>
+      <div class="form-sectie"><label>Doelgroep</label><input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" /></div>
+      <div class="form-sectie"><label>Beschrijving</label><textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea></div>
+      <button class="btn-opslaan" id="btn-opslaan" onclick="slaOp()">JSON downloaden</button>
       <div class="download-info">
-        Na het klikken download je een bijgewerkt <strong>activiteiten.json</strong> bestand. Vervang het huidige bestand in je GitHub repository om de activiteit zichtbaar te maken op de agenda.
+        Na het klikken download je een bijgewerkt <strong>activiteiten.json</strong> bestand. Vervang het huidige bestand in je GitHub repository om de wijziging zichtbaar te maken voor alle gebruikers.
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  let allActiviteiten = [];
-  let huidigJaar = new Date().getFullYear();
-  let huidigMaand = new Date().getMonth(); // 0-indexed
-  let actieveFilter = 'alle';
+  const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst' };
 
-  const maandNamen = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  let activiteiten = [];
+  let jaar = new Date().getFullYear();
+  let maand = new Date().getMonth();
+  let filter = 'alle';
+  let huidigId = null;
 
-  async function laadActiviteiten() {
+  async function laad() {
     try {
-      const res = await fetch('activiteiten.json');
-      if (!res.ok) throw new Error('Kan activiteiten.json niet laden');
-      allActiviteiten = await res.json();
-    } catch(e) {
-      allActiviteiten = [];
-      console.warn('activiteiten.json niet gevonden:', e);
-    }
-    tekenKalender();
+      const r = await fetch('activiteiten.json?t=' + Date.now());
+      if (r.ok) activiteiten = await r.json();
+    } catch(e) { activiteiten = []; }
+    teken();
   }
 
-  function verschuifMaand(richting) {
-    huidigMaand += richting;
-    if (huidigMaand > 11) { huidigMaand = 0; huidigJaar++; }
-    if (huidigMaand < 0)  { huidigMaand = 11; huidigJaar--; }
-    tekenKalender();
+  function verschuifMaand(d) {
+    maand += d;
+    if (maand > 11) { maand = 0; jaar++; }
+    if (maand < 0)  { maand = 11; jaar--; }
+    teken();
   }
 
-  function setFilter(type, btn) {
-    actieveFilter = type;
+  function setFilter(t, btn) {
+    filter = t;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('actief'));
     btn.classList.add('actief');
-    tekenKalender();
+    teken();
   }
 
-  function tekenKalender() {
-    document.getElementById('maand-label').textContent = maandNamen[huidigMaand] + ' ' + huidigJaar;
-
+  function teken() {
+    document.getElementById('maand-label').textContent = MAANDEN[maand] + ' ' + jaar;
     const grid = document.getElementById('kalender-grid');
     grid.innerHTML = '';
-
-    const eersteVanMaand = new Date(huidigJaar, huidigMaand, 1);
-    // Ma=0, begin van week aanpassen
-    let startDag = eersteVanMaand.getDay(); // 0=zo
-    startDag = (startDag === 0) ? 6 : startDag - 1;
-
-    const aantalDagen = new Date(huidigJaar, huidigMaand + 1, 0).getDate();
+    let start = new Date(jaar, maand, 1).getDay();
+    start = start === 0 ? 6 : start - 1;
+    const dagen = new Date(jaar, maand + 1, 0).getDate();
     const vandaag = new Date();
-    const totaalCellen = Math.ceil((startDag + aantalDagen) / 7) * 7;
+    const cellen = Math.ceil((start + dagen) / 7) * 7;
 
-    for (let i = 0; i < totaalCellen; i++) {
-      const dagNr = i - startDag + 1;
+    for (let i = 0; i < cellen; i++) {
+      const nr = i - start + 1;
       const cel = document.createElement('div');
-      cel.className = 'dag-cel';
+      cel.className = 'dag-cel' + (nr < 1 || nr > dagen ? ' andere-maand' : '');
 
-      if (dagNr < 1 || dagNr > aantalDagen) {
-        cel.classList.add('andere-maand');
-        const nr = document.createElement('div');
-        nr.className = 'dag-nr';
-        if (dagNr < 1) {
-          const vorigeMaandDagen = new Date(huidigJaar, huidigMaand, 0).getDate();
-          nr.textContent = vorigeMaandDagen + dagNr;
-        } else {
-          nr.textContent = dagNr - aantalDagen;
-        }
-        cel.appendChild(nr);
+      const isVandaag = nr >= 1 && nr <= dagen && nr === vandaag.getDate() && maand === vandaag.getMonth() && jaar === vandaag.getFullYear();
+      if (isVandaag) cel.classList.add('vandaag');
+
+      const dagDiv = document.createElement('div');
+      if (isVandaag) {
+        dagDiv.className = 'dag-nr-vandaag';
+        dagDiv.textContent = nr;
       } else {
-        const isVandaag = (dagNr === vandaag.getDate() && huidigMaand === vandaag.getMonth() && huidigJaar === vandaag.getFullYear());
-        if (isVandaag) cel.classList.add('vandaag');
-
-        const nr = document.createElement('div');
-        nr.className = 'dag-nr';
-        if (isVandaag) {
-          nr.style.cssText = 'background:#46571B;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;';
+        dagDiv.className = 'dag-nr';
+        if (nr < 1) {
+          dagDiv.textContent = new Date(jaar, maand, 0).getDate() + nr;
+        } else if (nr > dagen) {
+          dagDiv.textContent = nr - dagen;
+        } else {
+          dagDiv.textContent = nr;
         }
-        nr.textContent = dagNr;
-        cel.appendChild(nr);
-
-        // Activiteiten van deze dag
-        const datumStr = huidigJaar + '-' + String(huidigMaand+1).padStart(2,'0') + '-' + String(dagNr).padStart(2,'0');
-        const dagActiviteiten = allActiviteiten.filter(a => {
-          if (actieveFilter !== 'alle' && a.type !== actieveFilter) return false;
-          return a.datum === datumStr;
-        });
-
-        dagActiviteiten.forEach(act => {
-          const chip = document.createElement('span');
-          chip.className = 'activiteit-chip chip-' + act.type;
-          chip.textContent = act.titel;
-          chip.onclick = () => openDetailModal(act);
-          cel.appendChild(chip);
-        });
       }
+      cel.appendChild(dagDiv);
 
+      if (nr >= 1 && nr <= dagen) {
+        const ds = jaar + '-' + String(maand+1).padStart(2,'0') + '-' + String(nr).padStart(2,'0');
+        activiteiten
+          .filter(a => a.datum === ds && (filter === 'alle' || a.type === filter))
+          .forEach(a => {
+            const chip = document.createElement('span');
+            chip.className = 'activiteit-chip chip-' + a.type;
+            chip.textContent = a.titel;
+            chip.onclick = () => openDetail(a);
+            cel.appendChild(chip);
+          });
+      }
       grid.appendChild(cel);
     }
   }
 
-  function openDetailModal(act) {
-    const typeLabels = {
-      bijeenkomst: 'Bijeenkomst',
-      werkgroep: 'Werkgroep',
-      overleg: 'Overleg',
-      campagne: 'Campagne',
-      publieksbijeenkomst: 'Publieksbijeenkomst'
-    };
-    document.getElementById('modal-type').textContent = typeLabels[act.type] || act.type;
-    document.getElementById('modal-titel').textContent = act.titel;
-    document.getElementById('modal-datum').textContent = formateerDatum(act.datum);
-    document.getElementById('modal-tijd').textContent = act.tijd || 'Niet opgegeven';
-    document.getElementById('modal-locatie').textContent = act.locatie || 'Niet opgegeven';
-    document.getElementById('modal-doelgroep').textContent = act.doelgroep || '';
-    document.getElementById('modal-beschrijving').textContent = act.beschrijving || '';
-    document.getElementById('modal-actielijn').textContent = act.actielijn || '';
+  function openDetail(a) {
+    huidigId = a.id;
+    document.getElementById('d-type').textContent = TYPE_LABELS[a.type] || a.type;
+    document.getElementById('d-titel').textContent = a.titel;
+    document.getElementById('d-datum').textContent = fmtDatum(a.datum);
+    document.getElementById('d-tijd').textContent = a.tijd || 'Niet opgegeven';
+    document.getElementById('d-locatie').textContent = a.locatie || 'Niet opgegeven';
+    document.getElementById('d-doelgroep').textContent = a.doelgroep || '';
+    document.getElementById('d-beschrijving').textContent = a.beschrijving || '';
+    document.getElementById('d-actielijn').textContent = a.actielijn || '';
+    document.getElementById('verwijder-bevestig').classList.remove('zichtbaar');
     document.getElementById('detail-modal').classList.add('zichtbaar');
   }
 
-  function formateerDatum(d) {
-    if (!d) return '';
-    const [j,m,dag] = d.split('-');
-    return `${parseInt(dag)} ${maandNamen[parseInt(m)-1]} ${j}`;
+  function toggleVerwijder() {
+    document.getElementById('verwijder-bevestig').classList.toggle('zichtbaar');
   }
 
-  function openToevoegenModal() {
-    // reset form
-    ['f-titel','f-datum','f-tijd','f-locatie','f-doelgroep','f-beschrijving'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    document.getElementById('toevoegen-modal').classList.add('zichtbaar');
+  function verwijderActiviteit() {
+    downloadJson(activiteiten.filter(a => a.id !== huidigId));
+    sluitModal('detail-modal');
   }
 
-  function sluitModal(id, event) {
-    if (!event || event.target.classList.contains('modal-overlay')) {
-      document.getElementById(id).classList.remove('zichtbaar');
-    }
+  function openBewerkModal() {
+    const a = activiteiten.find(x => x.id === huidigId);
+    if (!a) return;
+    sluitModal('detail-modal');
+    vulFormulier(a);
+    document.getElementById('f-badge').textContent = 'Activiteit bewerken';
+    document.getElementById('f-kop').textContent = 'Activiteit bewerken';
+    document.getElementById('btn-opslaan').textContent = 'JSON downloaden met wijziging';
+    document.getElementById('formulier-modal').classList.add('zichtbaar');
   }
 
-  function slaActiviteitOp() {
+  function openFormulierModal() {
+    vulFormulier(null);
+    document.getElementById('f-badge').textContent = 'Nieuwe activiteit';
+    document.getElementById('f-kop').textContent = 'Activiteit toevoegen';
+    document.getElementById('btn-opslaan').textContent = 'JSON downloaden met nieuwe activiteit';
+    document.getElementById('formulier-modal').classList.add('zichtbaar');
+  }
+
+  function vulFormulier(a) {
+    document.getElementById('f-id').value = a ? a.id : '';
+    document.getElementById('f-titel').value = a ? (a.titel || '') : '';
+    document.getElementById('f-datum').value = a ? (a.datum || '') : '';
+    document.getElementById('f-tijd').value = a ? (a.tijd || '') : '';
+    document.getElementById('f-locatie').value = a ? (a.locatie || '') : '';
+    document.getElementById('f-type').value = a ? (a.type || 'bijeenkomst') : 'bijeenkomst';
+    document.getElementById('f-actielijn').value = a ? (a.actielijn || 'Algemeen') : 'Algemeen';
+    document.getElementById('f-doelgroep').value = a ? (a.doelgroep || '') : '';
+    document.getElementById('f-beschrijving').value = a ? (a.beschrijving || '') : '';
+  }
+
+  function slaOp() {
     const titel = document.getElementById('f-titel').value.trim();
     const datum = document.getElementById('f-datum').value;
-    if (!titel || !datum) {
-      alert('Vul minimaal een titel en datum in.');
-      return;
-    }
-    const nieuweActiviteit = {
-      id: Date.now().toString(),
-      titel,
-      datum,
+    if (!titel || !datum) { alert('Vul minimaal een titel en datum in.'); return; }
+    const id = document.getElementById('f-id').value;
+    const obj = {
+      id: id || Date.now().toString(), titel, datum,
       tijd: document.getElementById('f-tijd').value.trim(),
       locatie: document.getElementById('f-locatie').value.trim(),
       type: document.getElementById('f-type').value,
@@ -711,21 +395,28 @@
       doelgroep: document.getElementById('f-doelgroep').value.trim(),
       actielijn: document.getElementById('f-actielijn').value
     };
-
-    const bijgewerkt = [...allActiviteiten, nieuweActiviteit];
-    const blob = new Blob([JSON.stringify(bijgewerkt, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'activiteiten.json';
-    a.click();
-    URL.revokeObjectURL(url);
-
-    sluitModal('toevoegen-modal');
+    const bijgewerkt = id ? activiteiten.map(a => a.id === id ? obj : a) : [...activiteiten, obj];
+    downloadJson(bijgewerkt);
+    sluitModal('formulier-modal');
   }
 
-  // Start
-  laadActiviteiten();
+  function downloadJson(data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'activiteiten.json'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function sluitModal(id) { document.getElementById(id).classList.remove('zichtbaar'); }
+  function sluitOverlay(id, e) { if (e.target.id === id) sluitModal(id); }
+
+  function fmtDatum(d) {
+    if (!d) return '';
+    const [j,m,g] = d.split('-');
+    return parseInt(g) + ' ' + MAANDEN[parseInt(m)-1] + ' ' + j;
+  }
+
+  laad();
 </script>
 </body>
 </html>
