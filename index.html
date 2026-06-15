@@ -29,8 +29,9 @@
     .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     .filter-btn { padding: 5px 14px; border-radius: 20px; border: 1.5px solid var(--groen-midden); background: var(--wit); color: var(--groen-donker); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; cursor: pointer; transition: all 0.15s; }
     .filter-btn.actief, .filter-btn:hover { background: var(--groen-donker); color: var(--wit); border-color: var(--groen-donker); }
-    .btn-toevoegen { padding: 8px 18px; background: var(--geel); color: var(--groen-donker); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s; }
+    .btn-toevoegen { padding: 8px 18px; background: var(--geel); color: var(--groen-donker); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s; white-space: nowrap; }
     .btn-toevoegen:hover { background: #d4c56a; }
+    .wachtrij-badge { background: var(--groen-donker); color: var(--wit); border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
 
     .agenda-wrapper { max-width: 1100px; margin: 32px auto; padding: 0 24px; }
     .kalender { background: var(--wit); border-radius: var(--radius); border: 1.5px solid var(--grijs-licht); overflow: hidden; }
@@ -42,8 +43,13 @@
     .dag-cel.vandaag { background: #f0f5e8; }
     .dag-nr { font-size: 0.78rem; font-weight: 600; color: var(--grijs-mid); margin-bottom: 4px; }
     .dag-nr-vandaag { background: #46571B; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; margin-bottom: 4px; }
+
     .activiteit-chip { display: block; padding: 3px 6px; border-radius: 4px; font-size: 0.68rem; font-weight: 500; margin-bottom: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity 0.15s; line-height: 1.3; }
     .activiteit-chip:hover { opacity: 0.8; }
+    /* meerdaags: begin, midden, eind */
+    .chip-begin { border-radius: 4px 0 0 4px; margin-right: -2px; }
+    .chip-midden { border-radius: 0; margin-left: -1px; margin-right: -2px; }
+    .chip-eind { border-radius: 0 4px 4px 0; margin-left: -1px; }
     .chip-bijeenkomst { background: #d4e4b0; color: #2d4010; }
     .chip-werkgroep   { background: #b8d4f0; color: #0d3060; }
     .chip-overleg     { background: #e8d8f0; color: #4a1a6e; }
@@ -88,8 +94,29 @@
     .form-sectie input:focus, .form-sectie textarea:focus, .form-sectie select:focus { outline: none; border-color: var(--groen-donker); }
     .form-sectie textarea { resize: vertical; min-height: 80px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn-opslaan { width: 100%; padding: 10px; background: var(--groen-donker); color: var(--wit); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
-    .btn-opslaan:hover { background: #344010; }
+    .form-hint { font-size: 0.72rem; color: var(--grijs-mid); margin-top: 3px; }
+
+    /* WACHTRIJ */
+    .wachtrij-sectie { margin-top: 20px; border-top: 1.5px solid var(--grijs-licht); padding-top: 16px; }
+    .wachtrij-titel { font-size: 0.78rem; font-weight: 600; color: var(--groen-donker); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .wachtrij-leeg { font-size: 0.82rem; color: var(--grijs-mid); font-style: italic; }
+    .wachtrij-item { display: flex; align-items: center; justify-content: space-between; background: var(--creme); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; gap: 8px; }
+    .wachtrij-item-info { font-size: 0.82rem; line-height: 1.3; flex: 1; min-width: 0; }
+    .wachtrij-item-info strong { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wachtrij-item-info span { color: var(--grijs-mid); font-size: 0.75rem; }
+    .wachtrij-item-acties { display: flex; gap: 4px; flex-shrink: 0; }
+    .btn-wachtrij-bewerk, .btn-wachtrij-verwijder { background: none; border: none; cursor: pointer; font-size: 0.8rem; padding: 4px 6px; border-radius: 4px; }
+    .btn-wachtrij-bewerk { color: var(--groen-donker); }
+    .btn-wachtrij-bewerk:hover { background: #e8f0d4; }
+    .btn-wachtrij-verwijder { color: var(--rood); }
+    .btn-wachtrij-verwijder:hover { background: #fde8e8; }
+
+    .formulier-knoppen { display: flex; gap: 10px; margin-top: 4px; }
+    .btn-toevoegen-wachtrij { flex: 1; padding: 9px; background: var(--groen-midden); color: var(--wit); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+    .btn-toevoegen-wachtrij:hover { background: #7a9250; }
+    .btn-opslaan-alles { width: 100%; padding: 10px; background: var(--groen-donker); color: var(--wit); border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-top: 12px; }
+    .btn-opslaan-alles:hover { background: #344010; }
+    .btn-opslaan-alles:disabled { background: var(--grijs-mid); cursor: not-allowed; }
     .download-info { margin-top: 10px; padding: 10px 12px; background: #f0f5e8; border-radius: 6px; font-size: 0.78rem; color: var(--groen-donker); line-height: 1.5; }
     .download-info strong { font-weight: 600; }
 
@@ -97,7 +124,7 @@
     ::-webkit-scrollbar-track { background: var(--creme); }
     ::-webkit-scrollbar-thumb { background: var(--groen-midden); border-radius: 3px; }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
       header { padding: 16px; }
       .nav-bar { padding: 12px 16px; }
       .agenda-wrapper { padding: 0 12px; margin-top: 20px; }
@@ -140,6 +167,7 @@
   </div>
   <button class="btn-toevoegen" onclick="openFormulierModal(false)">
     <span style="font-size:1.1rem;">+</span> Activiteit toevoegen
+    <span class="wachtrij-badge" id="wachtrij-badge" style="display:none;">0</span>
   </button>
 </div>
 
@@ -194,23 +222,38 @@
 
 <!-- FORMULIER MODAL -->
 <div class="modal-overlay" id="formulier-modal" onclick="sluitOverlay('formulier-modal', event)">
-  <div class="modal modal-scroll" style="max-width:620px;">
+  <div class="modal modal-scroll" style="max-width:640px;">
     <div class="modal-top">
       <div class="modal-type-badge" id="f-badge">Nieuwe activiteit</div>
-      <div class="modal-titel" id="f-kop">Activiteit toevoegen</div>
+      <div class="modal-titel" id="f-kop">Activiteiten toevoegen</div>
       <button class="modal-sluiten" onclick="sluitModal('formulier-modal')">&times;</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="f-id" />
+
       <div class="form-sectie">
         <label>Titel *</label>
         <input type="text" id="f-titel" placeholder="Naam van de activiteit" />
       </div>
       <div class="form-grid">
-        <div class="form-sectie"><label>Datum *</label><input type="date" id="f-datum" /></div>
-        <div class="form-sectie"><label>Tijd</label><input type="text" id="f-tijd" placeholder="bijv. 10:00 - 12:00" /></div>
+        <div class="form-sectie">
+          <label>Startdatum *</label>
+          <input type="date" id="f-datum" />
+        </div>
+        <div class="form-sectie">
+          <label>Einddatum <span style="font-weight:400;color:var(--grijs-mid);">(optioneel)</span></label>
+          <input type="date" id="f-einddatum" />
+          <div class="form-hint">Laat leeg bij een eendaagse activiteit</div>
+        </div>
       </div>
-      <div class="form-sectie"><label>Locatie</label><input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" /></div>
+      <div class="form-sectie">
+        <label>Tijd</label>
+        <input type="text" id="f-tijd" placeholder="bijv. 10:00 - 12:00" />
+      </div>
+      <div class="form-sectie">
+        <label>Locatie</label>
+        <input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" />
+      </div>
       <div class="form-grid">
         <div class="form-sectie">
           <label>Type</label>
@@ -235,11 +278,28 @@
           </select>
         </div>
       </div>
-      <div class="form-sectie"><label>Doelgroep</label><input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" /></div>
-      <div class="form-sectie"><label>Beschrijving</label><textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea></div>
-      <button class="btn-opslaan" id="btn-opslaan" onclick="slaOp()">JSON downloaden</button>
+      <div class="form-sectie">
+        <label>Doelgroep</label>
+        <input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" />
+      </div>
+      <div class="form-sectie">
+        <label>Beschrijving</label>
+        <textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea>
+      </div>
+
+      <div class="formulier-knoppen">
+        <button class="btn-toevoegen-wachtrij" id="btn-naar-wachtrij" onclick="naarWachtrij()">+ Toevoegen aan lijst</button>
+      </div>
+
+      <!-- WACHTRIJ -->
+      <div class="wachtrij-sectie">
+        <div class="wachtrij-titel">Lijst om toe te voegen <span id="wachtrij-teller" style="color:var(--grijs-mid);font-weight:400;">(0)</span></div>
+        <div id="wachtrij-lijst"><div class="wachtrij-leeg">Nog geen activiteiten toegevoegd.</div></div>
+      </div>
+
+      <button class="btn-opslaan-alles" id="btn-opslaan-alles" onclick="slaAllesOp()" disabled>JSON downloaden met alle wijzigingen</button>
       <div class="download-info">
-        Na het klikken download je een bijgewerkt <strong>activiteiten.json</strong> bestand. Vervang het huidige bestand in je GitHub repository om de wijziging zichtbaar te maken voor alle gebruikers.
+        Voeg meerdere activiteiten toe aan de lijst, en download ze daarna in één keer als <strong>activiteiten.json</strong>. Vervang het bestand in je GitHub repository om de agenda bij te werken.
       </div>
     </div>
   </div>
@@ -250,11 +310,14 @@
   const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst' };
 
   let activiteiten = [];
+  let wachtrij = []; // nieuw/bewerkt, nog niet gedownload
   let jaar = new Date().getFullYear();
   let maand = new Date().getMonth();
   let filter = 'alle';
   let huidigId = null;
+  let bewerkWachtrijIndex = null; // index in wachtrij bij bewerken wachtrij-item
 
+  // ---- LADEN ----
   async function laad() {
     try {
       const r = await fetch('activiteiten.json?t=' + Date.now());
@@ -263,10 +326,9 @@
     teken();
   }
 
+  // ---- KALENDER ----
   function verschuifMaand(d) {
-    maand += d;
-    if (maand > 11) { maand = 0; jaar++; }
-    if (maand < 0)  { maand = 11; jaar--; }
+    maand += d; if (maand > 11) { maand = 0; jaar++; } if (maand < 0) { maand = 11; jaar--; }
     teken();
   }
 
@@ -275,6 +337,10 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('actief'));
     btn.classList.add('actief');
     teken();
+  }
+
+  function datumStr(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
 
   function teken() {
@@ -287,51 +353,80 @@
     const vandaag = new Date();
     const cellen = Math.ceil((start + dagen) / 7) * 7;
 
+    // Combineer activiteiten en wachtrij voor weergave
+    const alles = [...activiteiten, ...wachtrij];
+
     for (let i = 0; i < cellen; i++) {
       const nr = i - start + 1;
       const cel = document.createElement('div');
       cel.className = 'dag-cel' + (nr < 1 || nr > dagen ? ' andere-maand' : '');
-
       const isVandaag = nr >= 1 && nr <= dagen && nr === vandaag.getDate() && maand === vandaag.getMonth() && jaar === vandaag.getFullYear();
       if (isVandaag) cel.classList.add('vandaag');
 
       const dagDiv = document.createElement('div');
       if (isVandaag) {
-        dagDiv.className = 'dag-nr-vandaag';
-        dagDiv.textContent = nr;
+        dagDiv.className = 'dag-nr-vandaag'; dagDiv.textContent = nr;
       } else {
         dagDiv.className = 'dag-nr';
-        if (nr < 1) {
-          dagDiv.textContent = new Date(jaar, maand, 0).getDate() + nr;
-        } else if (nr > dagen) {
-          dagDiv.textContent = nr - dagen;
-        } else {
-          dagDiv.textContent = nr;
-        }
+        if (nr < 1) dagDiv.textContent = new Date(jaar, maand, 0).getDate() + nr;
+        else if (nr > dagen) dagDiv.textContent = nr - dagen;
+        else dagDiv.textContent = nr;
       }
       cel.appendChild(dagDiv);
 
       if (nr >= 1 && nr <= dagen) {
         const ds = jaar + '-' + String(maand+1).padStart(2,'0') + '-' + String(nr).padStart(2,'0');
-        activiteiten
-          .filter(a => a.datum === ds && (filter === 'alle' || a.type === filter))
-          .forEach(a => {
-            const chip = document.createElement('span');
-            chip.className = 'activiteit-chip chip-' + a.type;
-            chip.textContent = a.titel;
-            chip.onclick = () => openDetail(a);
-            cel.appendChild(chip);
-          });
+        const celDatum = new Date(jaar, maand, nr);
+
+        alles.filter(a => {
+          if (filter !== 'alle' && a.type !== filter) return false;
+          const start = new Date(a.datum);
+          const eind = a.einddatum ? new Date(a.einddatum) : new Date(a.datum);
+          // normaliseer tijden
+          start.setHours(0,0,0,0); eind.setHours(0,0,0,0); celDatum.setHours(0,0,0,0);
+          return celDatum >= start && celDatum <= eind;
+        }).forEach(a => {
+          const chip = document.createElement('span');
+          const isWachtrij = wachtrij.some(w => w.id === a.id);
+
+          // bepaal positie bij meerdaagse activiteit
+          let positieKlasse = '';
+          if (a.einddatum && a.datum !== a.einddatum) {
+            const startD = new Date(a.datum); startD.setHours(0,0,0,0);
+            const eindD = new Date(a.einddatum); eindD.setHours(0,0,0,0);
+            const celD = new Date(jaar, maand, nr);
+            if (+celD === +startD) positieKlasse = ' chip-begin';
+            else if (+celD === +eindD) positieKlasse = ' chip-eind';
+            else positieKlasse = ' chip-midden';
+          }
+
+          chip.className = 'activiteit-chip chip-' + a.type + positieKlasse;
+          if (isWachtrij) chip.style.opacity = '0.6';
+
+          // bij meerdaagse: alleen titel op startdag tonen
+          const startD2 = new Date(a.datum); startD2.setHours(0,0,0,0);
+          const celD2 = new Date(jaar, maand, nr);
+          chip.textContent = (a.einddatum && a.datum !== a.einddatum && +celD2 !== +startD2) ? '\u00A0' : a.titel;
+
+          chip.onclick = () => {
+            if (isWachtrij) openWachtrijBewerken(wachtrij.findIndex(w => w.id === a.id));
+            else openDetail(a);
+          };
+          cel.appendChild(chip);
+        });
       }
       grid.appendChild(cel);
     }
   }
 
+  // ---- DETAIL MODAL ----
   function openDetail(a) {
     huidigId = a.id;
     document.getElementById('d-type').textContent = TYPE_LABELS[a.type] || a.type;
     document.getElementById('d-titel').textContent = a.titel;
-    document.getElementById('d-datum').textContent = fmtDatum(a.datum);
+    let datumTekst = fmtDatum(a.datum);
+    if (a.einddatum && a.einddatum !== a.datum) datumTekst += ' t/m ' + fmtDatum(a.einddatum);
+    document.getElementById('d-datum').textContent = datumTekst;
     document.getElementById('d-tijd').textContent = a.tijd || 'Niet opgegeven';
     document.getElementById('d-locatie').textContent = a.locatie || 'Niet opgegeven';
     document.getElementById('d-doelgroep').textContent = a.doelgroep || '';
@@ -341,9 +436,7 @@
     document.getElementById('detail-modal').classList.add('zichtbaar');
   }
 
-  function toggleVerwijder() {
-    document.getElementById('verwijder-bevestig').classList.toggle('zichtbaar');
-  }
+  function toggleVerwijder() { document.getElementById('verwijder-bevestig').classList.toggle('zichtbaar'); }
 
   function verwijderActiviteit() {
     downloadJson(activiteiten.filter(a => a.id !== huidigId));
@@ -354,18 +447,22 @@
     const a = activiteiten.find(x => x.id === huidigId);
     if (!a) return;
     sluitModal('detail-modal');
+    bewerkWachtrijIndex = null;
     vulFormulier(a);
     document.getElementById('f-badge').textContent = 'Activiteit bewerken';
     document.getElementById('f-kop').textContent = 'Activiteit bewerken';
-    document.getElementById('btn-opslaan').textContent = 'JSON downloaden met wijziging';
+    document.getElementById('btn-naar-wachtrij').textContent = '+ Bijwerken in lijst';
     document.getElementById('formulier-modal').classList.add('zichtbaar');
   }
 
+  // ---- FORMULIER MODAL ----
   function openFormulierModal() {
+    bewerkWachtrijIndex = null;
     vulFormulier(null);
-    document.getElementById('f-badge').textContent = 'Nieuwe activiteit';
-    document.getElementById('f-kop').textContent = 'Activiteit toevoegen';
-    document.getElementById('btn-opslaan').textContent = 'JSON downloaden met nieuwe activiteit';
+    document.getElementById('f-badge').textContent = 'Nieuwe activiteiten';
+    document.getElementById('f-kop').textContent = 'Activiteiten toevoegen';
+    document.getElementById('btn-naar-wachtrij').textContent = '+ Toevoegen aan lijst';
+    tekenWachtrij();
     document.getElementById('formulier-modal').classList.add('zichtbaar');
   }
 
@@ -373,6 +470,7 @@
     document.getElementById('f-id').value = a ? a.id : '';
     document.getElementById('f-titel').value = a ? (a.titel || '') : '';
     document.getElementById('f-datum').value = a ? (a.datum || '') : '';
+    document.getElementById('f-einddatum').value = a ? (a.einddatum || '') : '';
     document.getElementById('f-tijd').value = a ? (a.tijd || '') : '';
     document.getElementById('f-locatie').value = a ? (a.locatie || '') : '';
     document.getElementById('f-type').value = a ? (a.type || 'bijeenkomst') : 'bijeenkomst';
@@ -381,13 +479,13 @@
     document.getElementById('f-beschrijving').value = a ? (a.beschrijving || '') : '';
   }
 
-  function slaOp() {
-    const titel = document.getElementById('f-titel').value.trim();
-    const datum = document.getElementById('f-datum').value;
-    if (!titel || !datum) { alert('Vul minimaal een titel en datum in.'); return; }
-    const id = document.getElementById('f-id').value;
-    const obj = {
-      id: id || Date.now().toString(), titel, datum,
+  function leesFormulier() {
+    const einddatum = document.getElementById('f-einddatum').value;
+    return {
+      id: document.getElementById('f-id').value || Date.now().toString(),
+      titel: document.getElementById('f-titel').value.trim(),
+      datum: document.getElementById('f-datum').value,
+      einddatum: einddatum || null,
       tijd: document.getElementById('f-tijd').value.trim(),
       locatie: document.getElementById('f-locatie').value.trim(),
       type: document.getElementById('f-type').value,
@@ -395,11 +493,109 @@
       doelgroep: document.getElementById('f-doelgroep').value.trim(),
       actielijn: document.getElementById('f-actielijn').value
     };
-    const bijgewerkt = id ? activiteiten.map(a => a.id === id ? obj : a) : [...activiteiten, obj];
-    downloadJson(bijgewerkt);
-    sluitModal('formulier-modal');
   }
 
+  function naarWachtrij() {
+    const obj = leesFormulier();
+    if (!obj.titel || !obj.datum) { alert('Vul minimaal een titel en startdatum in.'); return; }
+    if (obj.einddatum && obj.einddatum < obj.datum) { alert('De einddatum kan niet voor de startdatum liggen.'); return; }
+
+    const bestaandInActiviteiten = activiteiten.find(a => a.id === obj.id);
+
+    if (bewerkWachtrijIndex !== null) {
+      // update bestaand wachtrij-item
+      wachtrij[bewerkWachtrijIndex] = obj;
+      bewerkWachtrijIndex = null;
+    } else if (bestaandInActiviteiten) {
+      // bewerken van bestaande activiteit: voeg toe als update
+      wachtrij.push(obj);
+    } else {
+      // nieuw
+      wachtrij.push(obj);
+    }
+
+    vulFormulier(null);
+    document.getElementById('f-id').value = '';
+    document.getElementById('btn-naar-wachtrij').textContent = '+ Toevoegen aan lijst';
+    bewerkWachtrijIndex = null;
+    tekenWachtrij();
+    teken();
+  }
+
+  function openWachtrijBewerken(index) {
+    bewerkWachtrijIndex = index;
+    vulFormulier(wachtrij[index]);
+    document.getElementById('btn-naar-wachtrij').textContent = '+ Bijwerken in lijst';
+    if (!document.getElementById('formulier-modal').classList.contains('zichtbaar')) {
+      document.getElementById('formulier-modal').classList.add('zichtbaar');
+    }
+  }
+
+  function verwijderUitWachtrij(index) {
+    wachtrij.splice(index, 1);
+    if (bewerkWachtrijIndex === index) { bewerkWachtrijIndex = null; vulFormulier(null); }
+    tekenWachtrij();
+    teken();
+  }
+
+  function tekenWachtrij() {
+    const lijst = document.getElementById('wachtrij-lijst');
+    const teller = document.getElementById('wachtrij-teller');
+    const badge = document.getElementById('wachtrij-badge');
+    const btnAlles = document.getElementById('btn-opslaan-alles');
+
+    teller.textContent = '(' + wachtrij.length + ')';
+    if (wachtrij.length > 0) {
+      badge.style.display = 'inline-flex';
+      badge.textContent = wachtrij.length;
+      btnAlles.disabled = false;
+    } else {
+      badge.style.display = 'none';
+      btnAlles.disabled = true;
+    }
+
+    if (wachtrij.length === 0) {
+      lijst.innerHTML = '<div class="wachtrij-leeg">Nog geen activiteiten toegevoegd.</div>';
+      return;
+    }
+
+    lijst.innerHTML = '';
+    wachtrij.forEach((a, i) => {
+      const item = document.createElement('div');
+      item.className = 'wachtrij-item';
+      let datumLabel = fmtDatum(a.datum);
+      if (a.einddatum && a.einddatum !== a.datum) datumLabel += ' t/m ' + fmtDatum(a.einddatum);
+      const isBewerking = activiteiten.some(x => x.id === a.id);
+      item.innerHTML = `
+        <div class="wachtrij-item-info">
+          <strong>${a.titel}</strong>
+          <span>${datumLabel} &middot; ${TYPE_LABELS[a.type] || a.type}${isBewerking ? ' &middot; <em>bewerking</em>' : ''}</span>
+        </div>
+        <div class="wachtrij-item-acties">
+          <button class="btn-wachtrij-bewerk" onclick="openWachtrijBewerken(${i})" title="Bewerken">&#9998;</button>
+          <button class="btn-wachtrij-verwijder" onclick="verwijderUitWachtrij(${i})" title="Verwijderen">&times;</button>
+        </div>`;
+      lijst.appendChild(item);
+    });
+  }
+
+  function slaAllesOp() {
+    if (wachtrij.length === 0) return;
+    // Merge: bestaande activiteiten bijwerken of nieuwe toevoegen
+    let resultaat = [...activiteiten];
+    wachtrij.forEach(w => {
+      const idx = resultaat.findIndex(a => a.id === w.id);
+      if (idx >= 0) resultaat[idx] = w;
+      else resultaat.push(w);
+    });
+    downloadJson(resultaat);
+    wachtrij = [];
+    tekenWachtrij();
+    sluitModal('formulier-modal');
+    teken();
+  }
+
+  // ---- HULPFUNCTIES ----
   function downloadJson(data) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
