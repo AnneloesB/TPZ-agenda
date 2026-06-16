@@ -119,6 +119,10 @@
     .btn-opslaan-alles:disabled { background: var(--grijs-mid); cursor: not-allowed; }
     .download-info { margin-top: 10px; padding: 10px 12px; background: #f0f5e8; border-radius: 6px; font-size: 0.78rem; color: var(--groen-donker); line-height: 1.5; }
     .download-info strong { font-weight: 600; }
+    .modal-relatie { margin-top: 10px; }
+    .badge-direct { display: inline-block; background: #d4e8f5; color: #0d4a6e; border-radius: 20px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
+    .badge-niet-direct { display: inline-block; background: #e8e4d8; color: #5a5340; border-radius: 20px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
+    .meta-url a { color: var(--groen-donker); font-size: 0.88rem; word-break: break-all; }
 
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--creme); }
@@ -165,7 +169,7 @@
     <button class="filter-btn" onclick="setFilter('campagne', this)">Campagne</button>
     <button class="filter-btn" onclick="setFilter('publieksbijeenkomst', this)">Publieksbijeenkomst</button>
   </div>
-  <button class="btn-toevoegen" onclick="openFormulierModal(false)">
+  <button class="btn-toevoegen" onclick="vraagWachtwoord()">
     <span style="font-size:1.1rem;">+</span> Activiteit toevoegen
     <span class="wachtrij-badge" id="wachtrij-badge" style="display:none;">0</span>
   </button>
@@ -202,9 +206,11 @@
         <div class="meta-item"><label>Tijd</label><span id="d-tijd"></span></div>
         <div class="meta-item"><label>Locatie</label><span id="d-locatie"></span></div>
         <div class="meta-item"><label>Doelgroep</label><span id="d-doelgroep"></span></div>
+        <div class="meta-item meta-url" id="d-url-wrap" style="display:none;grid-column:1/-1;"><label>Link</label><span id="d-url"></span></div>
       </div>
       <div class="modal-beschrijving" id="d-beschrijving"></div>
       <div class="modal-actielijn" id="d-actielijn"></div>
+      <div class="modal-relatie" id="d-relatie"></div>
       <div class="modal-acties">
         <button class="btn-bewerken" onclick="openBewerkModal()">Bewerken</button>
         <button class="btn-verwijderen" onclick="toggleVerwijder()">Verwijderen</button>
@@ -254,6 +260,10 @@
         <label>Locatie</label>
         <input type="text" id="f-locatie" placeholder="bijv. Utrecht of Teams/online" />
       </div>
+      <div class="form-sectie">
+        <label>URL <span style="font-weight:400;color:var(--grijs-mid);">(optioneel)</span></label>
+        <input type="url" id="f-url" placeholder="https://..." />
+      </div>
       <div class="form-grid">
         <div class="form-sectie">
           <label>Type</label>
@@ -286,6 +296,14 @@
         <label>Beschrijving</label>
         <textarea id="f-beschrijving" placeholder="Korte omschrijving van de activiteit..."></textarea>
       </div>
+      <div class="form-sectie">
+        <label>Relatie zorgsysteem</label>
+        <select id="f-relatie">
+          <option value="">(geen)</option>
+          <option value="direct">Direct gerelateerd aan het beoogde zorgsysteem/transformatiedoelen</option>
+          <option value="niet-direct">Niet direct gerelateerd aan het beoogde zorgsysteem/transformatiedoelen</option>
+        </select>
+      </div>
 
       <div class="formulier-knoppen">
         <button class="btn-toevoegen-wachtrij" id="btn-naar-wachtrij" onclick="naarWachtrij()">+ Toevoegen aan lijst</button>
@@ -308,6 +326,13 @@
 <script>
   const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
   const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst' };
+  const WACHTWOORD = 'TPZ2026';
+
+  function vraagWachtwoord() {
+    const invoer = prompt('Voer het wachtwoord in om een activiteit toe te voegen:');
+    if (invoer === WACHTWOORD) openFormulierModal();
+    else if (invoer !== null) alert('Onjuist wachtwoord.');
+  }
 
   let activiteiten = [];
   let wachtrij = []; // nieuw/bewerkt, nog niet gedownload
@@ -432,6 +457,21 @@
     document.getElementById('d-doelgroep').textContent = a.doelgroep || '';
     document.getElementById('d-beschrijving').textContent = a.beschrijving || '';
     document.getElementById('d-actielijn').textContent = a.actielijn || '';
+    const urlWrap = document.getElementById('d-url-wrap');
+    if (a.url) {
+      document.getElementById('d-url').innerHTML = '<a href="' + a.url + '" target="_blank" rel="noopener">' + a.url + '</a>';
+      urlWrap.style.display = '';
+    } else {
+      urlWrap.style.display = 'none';
+    }
+    const relatieEl = document.getElementById('d-relatie');
+    if (a.relatie === 'direct') {
+      relatieEl.innerHTML = '<span class="badge-direct">Direct gerelateerd aan het beoogde zorgsysteem/transformatiedoelen</span>';
+    } else if (a.relatie === 'niet-direct') {
+      relatieEl.innerHTML = '<span class="badge-niet-direct">Niet direct gerelateerd aan het beoogde zorgsysteem/transformatiedoelen</span>';
+    } else {
+      relatieEl.innerHTML = '';
+    }
     document.getElementById('verwijder-bevestig').classList.remove('zichtbaar');
     document.getElementById('detail-modal').classList.add('zichtbaar');
   }
@@ -444,6 +484,8 @@
   }
 
   function openBewerkModal() {
+    const invoer = prompt('Voer het wachtwoord in om deze activiteit te bewerken:');
+    if (invoer !== WACHTWOORD) { if (invoer !== null) alert('Onjuist wachtwoord.'); return; }
     const a = activiteiten.find(x => x.id === huidigId);
     if (!a) return;
     sluitModal('detail-modal');
@@ -477,6 +519,8 @@
     document.getElementById('f-actielijn').value = a ? (a.actielijn || 'Algemeen') : 'Algemeen';
     document.getElementById('f-doelgroep').value = a ? (a.doelgroep || '') : '';
     document.getElementById('f-beschrijving').value = a ? (a.beschrijving || '') : '';
+    document.getElementById('f-url').value = a ? (a.url || '') : '';
+    document.getElementById('f-relatie').value = a ? (a.relatie || '') : '';
   }
 
   function leesFormulier() {
@@ -491,7 +535,9 @@
       type: document.getElementById('f-type').value,
       beschrijving: document.getElementById('f-beschrijving').value.trim(),
       doelgroep: document.getElementById('f-doelgroep').value.trim(),
-      actielijn: document.getElementById('f-actielijn').value
+      actielijn: document.getElementById('f-actielijn').value,
+      url: document.getElementById('f-url').value.trim() || null,
+      relatie: document.getElementById('f-relatie').value || null
     };
   }
 
