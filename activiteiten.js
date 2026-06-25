@@ -221,7 +221,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "",
     "actielijn": "Maatschappelijke bewustwording",
     "url": "https://www.zimihc.nl/agenda/wat-als-de-dood-het-leven-is/",
-    "relatie": "niet-direct"
+    "relatie": "direct"
   },
   {
     "id": "week-palliatieve-zorg-2026",
@@ -235,7 +235,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "",
     "actielijn": "Maatschappelijke bewustwording",
     "url": null,
-    "relatie": "niet-direct"
+    "relatie": "direct"
   },
   {
     "id": "1782220646127",

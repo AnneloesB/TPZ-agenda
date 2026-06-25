@@ -110,6 +110,15 @@
     .chip-campagne            { background: var(--geel); color: var(--groen-donker); }
     .chip-publieksbijeenkomst { background: #f0d8b0; color: #6e3a0d; }
 
+    /* Relatie transformatiedoelen — linkerrand kleur */
+    .relatie-direct      { border-left-color: #1a7abf !important; }
+    .relatie-niet-direct { border-left-color: #9e8a6e !important; }
+
+    /* Relatie-badge in lijstweergave */
+    .al-relatie-badge      { font-size: 0.68rem; font-weight: 600; border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
+    .al-relatie-direct     { background: #d4e8f5; color: #0d4a6e; }
+    .al-relatie-niet-direct { background: #e8e4d8; color: #5a5340; }
+
     .legenda { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 20px; }
     .legenda-item { display: flex; align-items: center; gap: 6px; font-size: 0.76rem; }
     .legenda-dot { width: 12px; height: 12px; border-radius: 3px; }
@@ -296,6 +305,11 @@
         <option value="Passende financiering">Passende financiering</option>
         <option value="Spiegel- en stuurinformatie">Spiegel- en stuurinformatie</option>
       </select>
+      <select class="filter-select" id="filter-relatie-select" onchange="setFilterRelatie(this.value)">
+        <option value="alle">Alle relaties</option>
+        <option value="direct">Direct gerelateerd</option>
+        <option value="niet-direct">Niet direct gerelateerd</option>
+      </select>
     </div>
   </div>
 
@@ -311,6 +325,8 @@
       <div class="legenda-item"><div class="legenda-dot" style="background:#e8d8f0;"></div> Overleg</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#EBDC86;"></div> Campagne</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#f0d8b0;"></div> Publieksbijeenkomst</div>
+      <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #1a7abf; border-radius:0; width:8px;"></div> Direct gerelateerd aan transformatiedoelen</div>
+      <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #9e8a6e; border-radius:0; width:8px;"></div> Niet direct gerelateerd aan transformatiedoelen</div>
     </div>
     <div class="kalender">
       <div class="kalender-header">
@@ -571,18 +587,31 @@
   let maand = new Date().getMonth();
   let filterType = 'alle';
   let filterActielijn = 'alle';
+  let filterRelatie = 'alle';
   let zoekterm = '';
   let huidigId = null;
   let bewerkWachtrijIndex = null;
   let handleidingOntgrendeld = false;
+  let geauthenticeerd = sessionStorage.getItem('tpz-auth') === '1';
+
+  function controleerWachtwoord(reden) {
+    if (geauthenticeerd) return true;
+    const invoer = prompt('Voer het wachtwoord in' + (reden ? ' ' + reden : '') + ':');
+    if (invoer === WACHTWOORD) {
+      geauthenticeerd = true;
+      handleidingOntgrendeld = true;
+      sessionStorage.setItem('tpz-auth', '1');
+      return true;
+    }
+    if (invoer !== null) alert('Onjuist wachtwoord.');
+    return false;
+  }
   let actieveTab = 'agenda';
 
   // ---- TABS ----
   function toonTab(naam) {
     if (naam === 'handleiding' && !handleidingOntgrendeld) {
-      const invoer = prompt('Voer het wachtwoord in om de handleiding te bekijken:');
-      if (invoer !== WACHTWOORD) { if (invoer !== null) alert('Onjuist wachtwoord.'); return; }
-      handleidingOntgrendeld = true;
+      if (!controleerWachtwoord('om de handleiding te bekijken')) return;
     }
     actieveTab = naam;
     document.querySelectorAll('.tab-inhoud').forEach(el => el.style.display = 'none');
@@ -599,9 +628,7 @@
   }
 
   function vraagWachtwoord() {
-    const invoer = prompt('Voer het wachtwoord in om een activiteit toe te voegen:');
-    if (invoer === WACHTWOORD) openFormulierModal();
-    else if (invoer !== null) alert('Onjuist wachtwoord.');
+    if (controleerWachtwoord('om een activiteit toe te voegen')) openFormulierModal();
   }
 
   // ---- LADEN ----
@@ -628,6 +655,7 @@
   // ---- FILTERS ----
   function setFilterType(val) { filterType = val; herteken(); }
   function setFilterActielijn(val) { filterActielijn = val; herteken(); }
+  function setFilterRelatie(val) { filterRelatie = val; herteken(); }
   function setZoekterm(val) { zoekterm = val.trim(); herteken(); }
 
   function herteken() {
@@ -639,6 +667,7 @@
   function filterActiviteit(a) {
     if (filterType !== 'alle' && a.type !== filterType) return false;
     if (filterActielijn !== 'alle' && a.actielijn !== filterActielijn) return false;
+    if (filterRelatie !== 'alle' && (a.relatie || '') !== filterRelatie) return false;
     if (zoekterm) {
       const q = zoekterm.toLowerCase();
       const tekst = [(a.titel || ''), (a.beschrijving || ''), (a.locatie || ''), (a.doelgroep || '')].join(' ');
@@ -755,7 +784,7 @@
           const isWachtrij = wachtrij.some(w => w.id === a.id);
 
           const bar = document.createElement('div');
-          bar.className = 'multidag-bar chip-' + a.type;
+          bar.className = 'multidag-bar chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '');
           if (isWachtrij) bar.style.opacity = '0.6';
           bar.style.left  = (colStart / 7 * 100).toFixed(4) + '%';
           bar.style.width = ((colEind - colStart + 1) / 7 * 100).toFixed(4) + '%';
@@ -788,7 +817,7 @@
             })
             .forEach(a => {
               const chip = document.createElement('span');
-              chip.className = 'activiteit-chip chip-' + a.type;
+              chip.className = 'activiteit-chip chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '');
               const isWachtrij = wachtrij.some(w => w.id === a.id);
               if (isWachtrij) chip.style.opacity = '0.6';
               chip.textContent = a.titel;
@@ -874,6 +903,16 @@
         badges.appendChild(alBadge);
       }
 
+      if (a.relatie) {
+        const relBadge = document.createElement('span');
+        relBadge.className = 'al-relatie-badge al-relatie-' + a.relatie;
+        relBadge.textContent = a.relatie === 'direct' ? 'Direct' : 'Niet direct';
+        relBadge.title = a.relatie === 'direct'
+          ? 'Direct gerelateerd aan transformatiedoelen'
+          : 'Niet direct gerelateerd aan transformatiedoelen';
+        badges.appendChild(relBadge);
+      }
+
       div.appendChild(datum);
       div.appendChild(titel);
       div.appendChild(badges);
@@ -926,8 +965,7 @@
   }
 
   function openBewerkModal() {
-    const invoer = prompt('Voer het wachtwoord in om deze activiteit te bewerken:');
-    if (invoer !== WACHTWOORD) { if (invoer !== null) alert('Onjuist wachtwoord.'); return; }
+    if (!controleerWachtwoord('om deze activiteit te bewerken')) return;
     const a = activiteiten.find(x => x.id === huidigId);
     if (!a) return;
     sluitModal('detail-modal');
