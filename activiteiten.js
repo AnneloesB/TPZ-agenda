@@ -236,5 +236,33 @@ const ACTIVITEITEN_DATA = [
     "actielijn": "Maatschappelijke bewustwording",
     "url": null,
     "relatie": "niet-direct"
+  },
+  {
+    "id": "1782220646127",
+    "titel": "Het Jaarcongres Palliatieve Zorg",
+    "datum": "2026-09-08",
+    "einddatum": null,
+    "tijd": "9.30-16.45",
+    "locatie": "Ede",
+    "type": "bijeenkomst",
+    "beschrijving": "Op het Jaarcongres Palliatieve Zorg 2026 oefen je met de dilemma's die je dagelijks raken en krijg je praktische handvatten om zelfverzekerder, zorgvuldiger en menselijker te handelen.\n\nAan de hand van herkenbare praktijkcasuïstiek uit verpleeghuis, thuiszorg en hospice werk je aan vragen zoals:\n\nHoe voer je een eerlijk gesprek over euthanasie en palliatieve sedatie?\nHoe leg je palliatieve sedatie helder uit aan patiënt én familie?\nHoe ga je om met botsende wensen van naasten?\nHoe werk je samen met huisarts en wijkteam als visies verschillen?\nHoe blijf je nabij zonder jezelf te verliezen?\nHoe ga je om met rouw, morele stress en cultuurverschillen?",
+    "doelgroep": "Voor alle zorgprofessionals die werkzaam zijn in de palliatieve zorg, zoals verpleegkundigen, gespecialiseerd verpleegkundigen, geestelijk verzorgers, praktijkondersteuners, praktijkverpleegkundigen, verpleegkundigen in de wijk en verzorgenden IG.",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://congressen.nursing.nl/event/jaarcongres-palliatieve-zorg/?utm_medium=email&utm_source=Nursing_Aanmelding%20(AAN)_PalliatieveZorg_nj_2026_AvW_X-EM1_gesprekken_clicks-vorige-selecties&utm_campaign=Events_2026_Nursing&tid=TIDP4864282X711E890F4A5D4735BDF9076E96713EC4YI4",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "1782220997383",
+    "titel": "Palliatief Kennisfestival",
+    "datum": "2026-09-29",
+    "einddatum": null,
+    "tijd": "13.00 – 17.00",
+    "locatie": "Zwolle",
+    "type": "bijeenkomst",
+    "beschrijving": "Het Palliatief Kennisfestival is geen congres als vele andere, maar een inspirerend festival over palliatieve zorg waarin de mens in de palliatieve fase centraal staat. Met korte sessies, interactieve workshops, theater, muziek en ruimte voor echte ontmoeting. Voor iedereen die betrokken is bij palliatieve zorg. In de praktijk, het onderwijs, onderzoek of daarbuiten en die wil verdiepen, verbinden en vernieuwen.\n\n* Accreditatie wordt aangevraagd\n** Toegangsprijs: 10 euro voor studenten, 27,50 euro voor professionals inclusief een horeca tegoed waarmee je wat kunt eten en drinken.",
+    "doelgroep": "Voor iedereen die werkzaam is in de PZ",
+    "actielijn": "Algemeen",
+    "url": "https://palliatiefkennisfestival.nl/",
+    "relatie": "niet-direct"
   }
 ];
