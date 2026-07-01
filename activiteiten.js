@@ -114,13 +114,13 @@ const ACTIVITEITEN_DATA = [
   {
     "id": "FvXJzq-R_kKI__P-ZhZFiJgAKUL_",
     "titel": "inspiratiebijeenkomst over het Utrechts Symptoom Dagboek (voor elke professional die meer wil weten over de USD-4D)",
-    "datum": "2026-06-23",
+    "datum": "2026-07-02",
     "einddatum": "2026-07-02",
     "tijd": "19:00 - 20:30",
-    "locatie": null,
+    "locatie": "",
     "type": "bijeenkomst",
     "beschrijving": "Wat je kunt verwachten In de laatste levensfase is de vraag ‘Hoe gaat het?’ vaak lastig te beantwoorden. Het Utrechts Symptoom Dagboek vier dimensioneel (USD-4D) helpt erbij om in gesprek een duidelijk beeld te krijgen van hoe het met iemand gaat en wat belangrijk is. De vier dimensies van palliatieve zorg staan hierin centraal. Doelen van de bijeenkomst zijn: Hoe helpt werken met het USD jou bij het verlenen van passende zorg met behoud van eigen regie? Zicht krijgen op de vraag of en hoe je me...",
-    "doelgroep": null,
+    "doelgroep": "",
     "actielijn": "Deskundigheidsbevordering",
     "url": "https://palliaweb.nl/netwerk-eemland/agenda/inspiratiebijeenkomst-over-het-utrechts-symptoomda",
     "relatie": "niet-direct"
