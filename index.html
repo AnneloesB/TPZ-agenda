@@ -147,6 +147,7 @@
     .stap-nr { background: var(--groen-donker); color: var(--wit); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     .stap-inhoud h3 { font-size: 0.9rem; font-weight: 600; color: var(--groen-donker); margin-bottom: 3px; }
     .stap-inhoud p { font-size: 0.84rem; line-height: 1.6; color: var(--tekst); }
+    .stap-inhoud ol { font-size: 0.84rem; line-height: 1.6; color: var(--tekst); padding-left: 1.2em; }
     .stap-inhoud code { background: var(--creme); border: 1px solid var(--grijs-licht); border-radius: 4px; padding: 1px 6px; font-family: monospace; font-size: 0.84rem; color: var(--groen-donker); font-weight: 700; }
     .stap-inhoud kbd { background: #f0ece0; border: 1px solid var(--grijs-mid); border-radius: 3px; padding: 1px 5px; font-family: monospace; font-size: 0.8rem; color: var(--tekst); }
     .tip-box { background: #f0f5e8; border-left: 4px solid var(--groen-midden); border-radius: 0 8px 8px 0; padding: 14px 16px; margin-top: 20px; font-size: 0.84rem; line-height: 1.6; }
@@ -352,7 +353,7 @@
   <div class="handleiding-wrapper">
     <h2>Handleiding voor beheerders</h2>
     <p class="handleiding-intro">
-      Zo voeg je nieuwe activiteiten toe aan de agenda en zorg je dat ze zichtbaar worden op de Netlify-website.
+      Zo voeg je nieuwe activiteiten toe aan de agenda en zorg je dat ze zichtbaar worden op de website.
       Het wachtwoord voor beheerdersacties is <strong>TPZ2026</strong>.
     </p>
 
@@ -361,53 +362,13 @@
       <div class="stap">
         <div class="stap-nr">1</div>
         <div class="stap-inhoud">
-          <h3>Open de agenda-website</h3>
-          <p>Ga naar de Netlify-URL van de agenda (bijv. <code>tpz-agenda.netlify.app</code>).</p>
+          <h3>Je krijgt het .js bestand</h3>
+          <p>Je ontvangt het bijgewerkte bestand <code>activiteiten.js</code>, bijvoorbeeld van een collega die de nieuwe activiteit(en) via het webformulier heeft toegevoegd en gedownload, of je hebt dit zelf gedaan.</p>
         </div>
       </div>
 
       <div class="stap">
         <div class="stap-nr">2</div>
-        <div class="stap-inhoud">
-          <h3>Klik op "+ Activiteit toevoegen"</h3>
-          <p>De gele knop staat rechtsboven in de navigatiebalk. Er wordt om een wachtwoord gevraagd.</p>
-        </div>
-      </div>
-
-      <div class="stap">
-        <div class="stap-nr">3</div>
-        <div class="stap-inhoud">
-          <h3>Voer het wachtwoord in</h3>
-          <p>Het wachtwoord is: <code>TPZ2026</code></p>
-        </div>
-      </div>
-
-      <div class="stap">
-        <div class="stap-nr">4</div>
-        <div class="stap-inhoud">
-          <h3>Vul het formulier in</h3>
-          <p>Verplicht: <strong>titel</strong> en <strong>startdatum</strong>. Kies het juiste type en de actielijn. Vul een einddatum in bij meerdaagse activiteiten. Voeg een URL toe als er een aanmeldpagina of meer info beschikbaar is.</p>
-        </div>
-      </div>
-
-      <div class="stap">
-        <div class="stap-nr">5</div>
-        <div class="stap-inhoud">
-          <h3>Klik "+ Toevoegen aan lijst"</h3>
-          <p>De activiteit verschijnt in de wachtrij onderaan. Je kunt meerdere activiteiten toevoegen voordat je downloadt — handig als je in één keer meerdere items wilt bijwerken.</p>
-        </div>
-      </div>
-
-      <div class="stap">
-        <div class="stap-nr">6</div>
-        <div class="stap-inhoud">
-          <h3>Klik "Activiteiten downloaden met alle wijzigingen"</h3>
-          <p>Je downloadt het bestand <code>activiteiten.js</code> naar je computer (meestal in de map <em>Downloads</em>).</p>
-        </div>
-      </div>
-
-      <div class="stap">
-        <div class="stap-nr">7</div>
         <div class="stap-inhoud">
           <h3>Open de GitHub-repository</h3>
           <p>Ga naar de repository <strong>TPZ-agenda</strong> op GitHub (via github.com, inloggen met je GitHub-account).</p>
@@ -415,25 +376,34 @@
       </div>
 
       <div class="stap">
-        <div class="stap-nr">8</div>
+        <div class="stap-nr">3</div>
         <div class="stap-inhoud">
-          <h3>Vervang het bestand activiteiten.js</h3>
-          <p>Klik op het bestand <code>activiteiten.js</code> → klik op het potloodicoon (Edit this file, rechtsboven) → selecteer alle tekst (<kbd>Ctrl+A</kbd>) → plak de inhoud van het gedownloade bestand (<kbd>Ctrl+V</kbd>) → klik <strong>"Commit changes"</strong> → klik nogmaals <strong>"Commit changes"</strong> in het pop-upvenster.</p>
+          <h3>Voeg de nieuwe activiteit(en) toe aan activiteiten.js</h3>
+          <p><strong>Let op: vervang niet de hele inhoud van het bestand</strong> — het gedownloade bestand bevat alleen de nieuw toegevoegde activiteit(en), niet de bestaande. Als je alles overschrijft, verdwijnen de activiteiten die al in de agenda stonden.</p>
+          <p>Ga zo te werk:</p>
+          <ol>
+            <li>Open het gedownloade bestand en kopieer daaruit alle nieuwe activiteit-blokjes in één keer: begin bij de eerste <code>{</code> en eindig bij de laatste <code>}</code> (met alles ertussen). Staat er maar één nieuwe activiteit in, dan is dat vanzelf gewoon dat ene blokje van <code>{</code> tot <code>}</code>.</li>
+            <li>Open op GitHub het bestand <code>activiteiten.js</code> → klik op het potloodicoon (Edit this file, rechtsboven).</li>
+            <li>Zoek helemaal bovenaan de regel <code>const ACTIVITEITEN_DATA = [</code>. Zet je cursor direct ná het blokhaakje <code>[</code> aan het einde van die regel en druk op Enter om een nieuwe regel te maken.</li>
+            <li>Plak op die nieuwe regel het gekopieerde stuk (van de eerste <code>{</code> tot en met de laatste <code>}</code>).</li>
+            <li>Zet direct achter de laatste <code>}</code> die je zojuist geplakt hebt een komma <code>,</code> — dit moet vóór de eerstvolgende <code>{</code> staan (die van de eerste bestaande activiteit).</li>
+            <li>Klik <strong>"Commit changes"</strong> → klik nogmaals <strong>"Commit changes"</strong> in het pop-upvenster.</li>
+          </ol>
         </div>
       </div>
 
       <div class="stap">
-        <div class="stap-nr">9</div>
+        <div class="stap-nr">4</div>
         <div class="stap-inhoud">
-          <h3>Netlify deployt automatisch</h3>
-          <p>Na het committen deployt Netlify de website automatisch. Binnen <strong>±1 minuut</strong> zijn de nieuwe activiteiten zichtbaar op de website. Je hoeft niets extra's te doen.</p>
+          <h3>GitHub Pages publiceert automatisch</h3>
+          <p>Na het committen publiceert GitHub Pages de website automatisch. Binnen <strong>±1 minuut</strong> zijn de nieuwe activiteiten zichtbaar op de website. Je hoeft niets extra's te doen.</p>
         </div>
       </div>
 
     </div>
 
     <div class="tip-box">
-      <strong>Activiteiten bewerken of verwijderen:</strong> Klik op een activiteit in de agenda → kies "Bewerken" of "Verwijderen" (wachtwoord vereist) → download het bijgewerkte <code>activiteiten.js</code> bestand → upload naar GitHub zoals beschreven in stap 7–9 hierboven.
+      <strong>Activiteiten bewerken of verwijderen:</strong> Klik op een activiteit in de agenda → kies "Bewerken" of "Verwijderen" (wachtwoord vereist) → download het bijgewerkte <code>activiteiten.js</code> bestand → upload naar GitHub zoals beschreven in stap 2–4 hierboven.
     </div>
 
     <p class="handleiding-slot">Vragen of problemen? Neem contact op met de beheerder van de repository.</p>

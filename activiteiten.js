@@ -261,8 +261,21 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Het Palliatief Kennisfestival is geen congres als vele andere, maar een inspirerend festival over palliatieve zorg waarin de mens in de palliatieve fase centraal staat. Met korte sessies, interactieve workshops, theater, muziek en ruimte voor echte ontmoeting. Voor iedereen die betrokken is bij palliatieve zorg. In de praktijk, het onderwijs, onderzoek of daarbuiten en die wil verdiepen, verbinden en vernieuwen.\n\n* Accreditatie wordt aangevraagd\n** Toegangsprijs: 10 euro voor studenten, 27,50 euro voor professionals inclusief een horeca tegoed waarmee je wat kunt eten en drinken.",
     "doelgroep": "Voor iedereen die werkzaam is in de PZ",
-    "actielijn": "Algemeen",
+    "actielijn": "Maatschappelijke bewustwording",
     "url": "https://palliatiefkennisfestival.nl/",
-    "relatie": "niet-direct"
-  }
+    "relatie": "direct"
+  },
+  {
+  "id": "netwerkbijeenkomst-utrecht-20260922",
+    "titel": "Netwerkbijeenkomst 'Met elkaar samenwerken én vernieuwen' - NPZ Utrecht stad en Zuidoost-Utrecht",
+    "datum": "2026-09-22",
+    "einddatum": null,
+    "tijd": "12:00 - 15:00",
+    "locatie": "Van der Valk Hotel, De Holle Bilt 1, De Bilt",
+    "type": "bijeenkomst",
+    "beschrijving": "Netwerkevent gericht op ontmoeting, kennisdeling en samenwerking: terugblik op netwerkontwikkelingen, gesprekken met transformatieaanjagers over kansen en uitdagingen in palliatieve zorg, werkgroepen over samenwerking, en een sessie over inclusieve zorg met islamitische perspectieven op leven en dood. Inclusief lunch. Kosteloos. Aanmelden verplicht vóór 31 augustus 2026 via netwerkpalliatievezorgutrecht@outlook.com (naam, functie, organisatie vermelden).",
+    "doelgroep": "Medewerkers van partnerorganisaties van het Netwerk Palliatieve Zorg Utrecht Stad en Zuidoost-Utrecht",
+    "actielijn": "Afspraken en samenwerking",
+    "url": "https://palliaweb.nl/netwerk-utrechtstadenzuidoost/agenda/netwerkbijeenkomst",
+    "relatie": "direct"}
 ];
