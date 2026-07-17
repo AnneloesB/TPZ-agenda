@@ -377,8 +377,17 @@
       <div class="stap">
         <div class="stap-nr">3</div>
         <div class="stap-inhoud">
-          <h3>Vervang het bestand activiteiten.js</h3>
-          <p>Klik op het bestand <code>activiteiten.js</code> → klik op het potloodicoon (Edit this file, rechtsboven) → selecteer alle tekst (<kbd>Ctrl+A</kbd>) → plak de inhoud van het gedownloade bestand (<kbd>Ctrl+V</kbd>) → klik <strong>"Commit changes"</strong> → klik nogmaals <strong>"Commit changes"</strong> in het pop-upvenster.</p>
+          <h3>Voeg de nieuwe activiteit(en) toe aan activiteiten.js</h3>
+          <p><strong>Let op: vervang niet de hele inhoud van het bestand</strong> — het gedownloade bestand bevat alleen de nieuw toegevoegde activiteit(en), niet de bestaande. Als je alles overschrijft, verdwijnen de activiteiten die al in de agenda stonden.</p>
+          <p>Ga zo te werk:</p>
+          <ol>
+            <li>Open het gedownloade bestand en kopieer daaruit alle nieuwe activiteit-blokjes in één keer: begin bij de eerste <code>{</code> en eindig bij de laatste <code>}</code> (met alles ertussen). Staat er maar één nieuwe activiteit in, dan is dat vanzelf gewoon dat ene blokje van <code>{</code> tot <code>}</code>.</li>
+            <li>Open op GitHub het bestand <code>activiteiten.js</code> → klik op het potloodicoon (Edit this file, rechtsboven).</li>
+            <li>Zoek helemaal bovenaan de regel <code>const ACTIVITEITEN_DATA = [</code>. Zet je cursor direct ná het blokhaakje <code>[</code> aan het einde van die regel en druk op Enter om een nieuwe regel te maken.</li>
+            <li>Plak op die nieuwe regel het gekopieerde stuk (van de eerste <code>{</code> tot en met de laatste <code>}</code>).</li>
+            <li>Zet direct achter de laatste <code>}</code> die je zojuist geplakt hebt een komma <code>,</code> — dit moet vóór de eerstvolgende <code>{</code> staan (die van de eerste bestaande activiteit).</li>
+            <li>Klik <strong>"Commit changes"</strong> → klik nogmaals <strong>"Commit changes"</strong> in het pop-upvenster.</li>
+          </ol>
         </div>
       </div>
 
