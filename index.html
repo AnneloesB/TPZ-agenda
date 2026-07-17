@@ -269,7 +269,7 @@
     <button class="tab-knop"        id="tab-knop-handleiding"  onclick="toonTab('handleiding')">📖 Handleiding</button>
     <div class="tab-rij-rechts">
       <input type="search" class="zoek-veld" id="zoek-veld" placeholder="🔍 Zoeken..." oninput="setZoekterm(this.value)" />
-      <button class="btn-toevoegen" onclick="vraagWachtwoord()">
+      <button class="btn-toevoegen" onclick="openFormulierModal()">
         <span style="font-size:1.1rem;">+</span> Activiteit toevoegen
         <span class="wachtrij-badge" id="wachtrij-badge" style="display:none;">0</span>
       </button>
@@ -566,7 +566,7 @@
 
       <button class="btn-opslaan-alles" id="btn-opslaan-alles" onclick="slaAllesOp()" disabled>Activiteiten downloaden met alle wijzigingen</button>
       <div class="download-info">
-        Voeg meerdere activiteiten toe aan de lijst, en download ze daarna in één keer als <strong>activiteiten.js</strong>. Vervang het bestand in je GitHub repository om de agenda bij te werken.
+        Voeg meerdere activiteiten toe aan de lijst, en download ze daarna in één keer als <strong>activiteiten.js</strong>. Stuur het bestand naar Anneloes zodat zij het kan toevoegen.
       </div>
     </div>
   </div>
@@ -625,10 +625,6 @@
     document.getElementById('maand-controls').style.display = naam === 'agenda' ? '' : 'none';
 
     if (naam === 'actielijnen') tekenActielijnen();
-  }
-
-  function vraagWachtwoord() {
-    if (controleerWachtwoord('om een activiteit toe te voegen')) openFormulierModal();
   }
 
   // ---- LADEN ----
