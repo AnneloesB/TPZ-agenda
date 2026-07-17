@@ -264,5 +264,18 @@ const ACTIVITEITEN_DATA = [
     "actielijn": "Algemeen",
     "url": "https://palliatiefkennisfestival.nl/",
     "relatie": "niet-direct"
-  }
+  },
+  {
+  "id": "netwerkbijeenkomst-utrecht-20260922",
+    "titel": "Netwerkbijeenkomst 'Met elkaar samenwerken én vernieuwen' - NPZ Utrecht stad en Zuidoost-Utrecht",
+    "datum": "2026-09-22",
+    "einddatum": null,
+    "tijd": "12:00 - 15:00",
+    "locatie": "Van der Valk Hotel, De Holle Bilt 1, De Bilt",
+    "type": "bijeenkomst",
+    "beschrijving": "Netwerkevent gericht op ontmoeting, kennisdeling en samenwerking: terugblik op netwerkontwikkelingen, gesprekken met transformatieaanjagers over kansen en uitdagingen in palliatieve zorg, werkgroepen over samenwerking, en een sessie over inclusieve zorg met islamitische perspectieven op leven en dood. Inclusief lunch. Kosteloos. Aanmelden verplicht vóór 31 augustus 2026 via netwerkpalliatievezorgutrecht@outlook.com (naam, functie, organisatie vermelden).",
+    "doelgroep": "Medewerkers van partnerorganisaties van het Netwerk Palliatieve Zorg Utrecht Stad en Zuidoost-Utrecht",
+    "actielijn": "Afspraken en samenwerking",
+    "url": "https://palliaweb.nl/netwerk-utrechtstadenzuidoost/agenda/netwerkbijeenkomst",
+    "relatie": "direct"}
 ];
