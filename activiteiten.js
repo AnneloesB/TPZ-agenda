@@ -261,9 +261,9 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Het Palliatief Kennisfestival is geen congres als vele andere, maar een inspirerend festival over palliatieve zorg waarin de mens in de palliatieve fase centraal staat. Met korte sessies, interactieve workshops, theater, muziek en ruimte voor echte ontmoeting. Voor iedereen die betrokken is bij palliatieve zorg. In de praktijk, het onderwijs, onderzoek of daarbuiten en die wil verdiepen, verbinden en vernieuwen.\n\n* Accreditatie wordt aangevraagd\n** Toegangsprijs: 10 euro voor studenten, 27,50 euro voor professionals inclusief een horeca tegoed waarmee je wat kunt eten en drinken.",
     "doelgroep": "Voor iedereen die werkzaam is in de PZ",
-    "actielijn": "Algemeen",
+    "actielijn": "Maatschappelijke bewustwording",
     "url": "https://palliatiefkennisfestival.nl/",
-    "relatie": "niet-direct"
+    "relatie": "direct"
   },
   {
   "id": "netwerkbijeenkomst-utrecht-20260922",
