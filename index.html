@@ -52,6 +52,9 @@
     .filter-select { padding: 5px 10px; border: 1.5px solid var(--groen-midden); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--groen-donker); background: var(--wit); cursor: pointer; transition: border-color 0.15s; }
     .filter-select:focus { outline: none; border-color: var(--groen-donker); }
 
+    .btn-filter-reset { padding: 5px 12px; border: 1.5px solid var(--grijs-mid); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--grijs-mid); background: none; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .btn-filter-reset:hover { color: var(--rood); border-color: var(--rood); }
+
     /* ---- KALENDER (nieuwe structuur) ---- */
     .agenda-wrapper { max-width: 1100px; margin: 28px auto; padding: 0 24px; }
     .kalender { background: var(--wit); border-radius: var(--radius); border: 1.5px solid var(--grijs-licht); overflow: hidden; }
@@ -109,6 +112,7 @@
     .chip-overleg             { background: #e8d8f0; color: #4a1a6e; }
     .chip-campagne            { background: var(--geel); color: var(--groen-donker); }
     .chip-publieksbijeenkomst { background: #f0d8b0; color: #6e3a0d; }
+    .chip-deadline            { background: #f0c0b8; color: #7a2410; }
 
     /* Relatie transformatiedoelen — linkerrand kleur */
     .relatie-direct      { border-left-color: #1a7abf !important; }
@@ -295,6 +299,7 @@
         <option value="overleg">Overleg</option>
         <option value="campagne">Campagne</option>
         <option value="publieksbijeenkomst">Publieksbijeenkomst</option>
+        <option value="deadline">Deadline</option>
       </select>
       <select class="filter-select" id="filter-al-select" onchange="setFilterActielijn(this.value)">
         <option value="alle">Alle actielijnen</option>
@@ -311,6 +316,7 @@
         <option value="direct">Direct gerelateerd</option>
         <option value="niet-direct">Niet direct gerelateerd</option>
       </select>
+      <button class="btn-filter-reset" id="btn-filter-reset" onclick="resetFilters()" style="display:none;">&times; Filters wissen</button>
     </div>
   </div>
 
@@ -326,6 +332,7 @@
       <div class="legenda-item"><div class="legenda-dot" style="background:#e8d8f0;"></div> Overleg</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#EBDC86;"></div> Campagne</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#f0d8b0;"></div> Publieksbijeenkomst</div>
+      <div class="legenda-item"><div class="legenda-dot" style="background:#f0c0b8;"></div> Deadline</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #1a7abf; border-radius:0; width:8px;"></div> Direct gerelateerd aan transformatiedoelen</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #9e8a6e; border-radius:0; width:8px;"></div> Niet direct gerelateerd aan transformatiedoelen</div>
     </div>
@@ -425,6 +432,7 @@
         <div class="meta-item"><label>Tijd</label><span id="d-tijd"></span></div>
         <div class="meta-item"><label>Locatie</label><span id="d-locatie"></span></div>
         <div class="meta-item"><label>Doelgroep</label><span id="d-doelgroep"></span></div>
+        <div class="meta-item" id="d-contactpersoon-wrap" style="display:none;"><label>Contactpersoon</label><span id="d-contactpersoon"></span></div>
         <div class="meta-item meta-url" id="d-url-wrap" style="display:none;grid-column:1/-1;"><label>Link</label><span id="d-url"></span></div>
       </div>
       <div class="modal-beschrijving" id="d-beschrijving"></div>
@@ -493,6 +501,7 @@
             <option value="overleg">Overleg</option>
             <option value="campagne">Campagne</option>
             <option value="publieksbijeenkomst">Publieksbijeenkomst</option>
+            <option value="deadline">Deadline</option>
           </select>
         </div>
         <div class="form-sectie">
@@ -511,6 +520,10 @@
       <div class="form-sectie">
         <label>Doelgroep</label>
         <input type="text" id="f-doelgroep" placeholder="bijv. Transformatieaanjagers" />
+      </div>
+      <div class="form-sectie">
+        <label>Contactpersoon</label>
+        <input type="email" id="f-contactpersoon" placeholder="bijv. naam@organisatie.nl" />
       </div>
       <div class="form-sectie">
         <label>Beschrijving</label>
@@ -547,7 +560,7 @@
 <script>
 
   const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
-  const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst' };
+  const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst', deadline:'Deadline' };
   const WACHTWOORD = 'TPZ2026';
   const SLOT_H = 26; // hoogte per meerdaags slot in px (22px chip + 4px marge)
 
@@ -619,10 +632,26 @@
   }
 
   // ---- FILTERS ----
-  function setFilterType(val) { filterType = val; herteken(); }
-  function setFilterActielijn(val) { filterActielijn = val; herteken(); }
-  function setFilterRelatie(val) { filterRelatie = val; herteken(); }
+  function setFilterType(val) { filterType = val; updateFilterResetKnop(); herteken(); }
+  function setFilterActielijn(val) { filterActielijn = val; updateFilterResetKnop(); herteken(); }
+  function setFilterRelatie(val) { filterRelatie = val; updateFilterResetKnop(); herteken(); }
   function setZoekterm(val) { zoekterm = val.trim(); herteken(); }
+
+  function updateFilterResetKnop() {
+    const actief = filterType !== 'alle' || filterActielijn !== 'alle' || filterRelatie !== 'alle';
+    document.getElementById('btn-filter-reset').style.display = actief ? '' : 'none';
+  }
+
+  function resetFilters() {
+    filterType = 'alle';
+    filterActielijn = 'alle';
+    filterRelatie = 'alle';
+    document.getElementById('filter-type-select').value = 'alle';
+    document.getElementById('filter-al-select').value = 'alle';
+    document.getElementById('filter-relatie-select').value = 'alle';
+    updateFilterResetKnop();
+    herteken();
+  }
 
   function herteken() {
     teken();
@@ -902,6 +931,13 @@
     document.getElementById('d-tijd').textContent = a.tijd || 'Niet opgegeven';
     document.getElementById('d-locatie').textContent = a.locatie || 'Niet opgegeven';
     document.getElementById('d-doelgroep').textContent = a.doelgroep || '';
+    const contactWrap = document.getElementById('d-contactpersoon-wrap');
+    if (a.contactpersoon) {
+      document.getElementById('d-contactpersoon').innerHTML = '<a href="mailto:' + a.contactpersoon + '">' + a.contactpersoon + '</a>';
+      contactWrap.style.display = '';
+    } else {
+      contactWrap.style.display = 'none';
+    }
     document.getElementById('d-beschrijving').textContent = a.beschrijving || '';
     document.getElementById('d-actielijn').textContent = a.actielijn || '';
     const urlWrap = document.getElementById('d-url-wrap');
@@ -964,6 +1000,7 @@
     document.getElementById('f-type').value        = a ? (a.type || 'bijeenkomst') : 'bijeenkomst';
     document.getElementById('f-actielijn').value   = a ? (a.actielijn || 'Algemeen') : 'Algemeen';
     document.getElementById('f-doelgroep').value   = a ? (a.doelgroep || '') : '';
+    document.getElementById('f-contactpersoon').value = a ? (a.contactpersoon || '') : '';
     document.getElementById('f-beschrijving').value = a ? (a.beschrijving || '') : '';
     document.getElementById('f-url').value         = a ? (a.url || '') : '';
     document.getElementById('f-relatie').value     = a ? (a.relatie || '') : '';
@@ -980,6 +1017,7 @@
       type:        document.getElementById('f-type').value,
       beschrijving:document.getElementById('f-beschrijving').value.trim(),
       doelgroep:   document.getElementById('f-doelgroep').value.trim(),
+      contactpersoon: document.getElementById('f-contactpersoon').value.trim() || null,
       actielijn:   document.getElementById('f-actielijn').value,
       url:         document.getElementById('f-url').value.trim() || null,
       relatie:     document.getElementById('f-relatie').value || null
