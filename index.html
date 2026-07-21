@@ -314,7 +314,7 @@
         <option value="Passende financiering">Passende financiering</option>
         <option value="Spiegel- en stuurinformatie">Spiegel- en stuurinformatie</option>
       </select>
-      <select class="filter-select" id="filter-relatie-select" onchange="setFilterRelatie(this.value)">
+      <select class="filter-select" id="filter-relatie-select" onchange="setFilterRelatie(this.value)" style="display:none;">
         <option value="alle">Alle relaties</option>
         <option value="direct">Direct gerelateerd</option>
         <option value="niet-direct">Niet direct gerelateerd</option>
@@ -636,13 +636,23 @@
 
   // ---- FILTERS ----
   function setFilterType(val) { filterType = val; updateFilterResetKnop(); herteken(); }
-  function setFilterActielijn(val) { filterActielijn = val; updateFilterResetKnop(); herteken(); }
+  function setFilterActielijn(val) { filterActielijn = val; updateRelatieFilterZichtbaarheid(); updateFilterResetKnop(); herteken(); }
   function setFilterRelatie(val) { filterRelatie = val; updateFilterResetKnop(); herteken(); }
   function setZoekterm(val) { zoekterm = val.trim(); herteken(); }
 
   function updateFilterResetKnop() {
     const actief = filterType !== 'alle' || filterActielijn !== 'alle' || filterRelatie !== 'alle';
     document.getElementById('btn-filter-reset').style.display = actief ? '' : 'none';
+  }
+
+  // Relatie-filter is alleen zinvol (en zichtbaar) als er specifiek op actielijn Deskundigheidsbevordering gefilterd wordt.
+  function updateRelatieFilterZichtbaarheid() {
+    const zichtbaar = filterActielijn === 'Deskundigheidsbevordering';
+    document.getElementById('filter-relatie-select').style.display = zichtbaar ? '' : 'none';
+    if (!zichtbaar && filterRelatie !== 'alle') {
+      filterRelatie = 'alle';
+      document.getElementById('filter-relatie-select').value = 'alle';
+    }
   }
 
   function resetFilters() {
@@ -652,6 +662,7 @@
     document.getElementById('filter-type-select').value = 'alle';
     document.getElementById('filter-al-select').value = 'alle';
     document.getElementById('filter-relatie-select').value = 'alle';
+    updateRelatieFilterZichtbaarheid();
     updateFilterResetKnop();
     herteken();
   }
