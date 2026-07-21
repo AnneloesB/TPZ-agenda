@@ -106,6 +106,10 @@
     .activiteit-chip { display: block; padding: 4px 6px 4px 8px; border-radius: 4px; font-size: 0.68rem; font-weight: 500; margin-bottom: 3px; cursor: pointer; white-space: normal; overflow-wrap: break-word; transition: opacity 0.15s; line-height: 1.4; border-left: 3px solid rgba(0,0,0,0.15); }
     .activiteit-chip:hover { opacity: 0.8; }
 
+    /* Activiteiten op grijze overloopdagen (vorige/volgende maand) */
+    .activiteit-chip.andere-maand,
+    .multidag-bar.andere-maand { opacity: 0.55; }
+
     /* Chip kleuren (gedeeld door .activiteit-chip en .multidag-bar) */
     .chip-bijeenkomst         { background: #d4e4b0; color: #2d4010; }
     .chip-werkgroep           { background: #b8d4f0; color: #0d3060; }
@@ -728,8 +732,8 @@
         if (!filterActiviteit(a)) return false;
         const startD = new Date(a.datum); startD.setHours(0,0,0,0);
         const eindD  = new Date(a.einddatum); eindD.setHours(0,0,0,0);
-        return weekDagen.some(({ isAndereMaand, celDatum }) =>
-          !isAndereMaand && celDatum >= startD && celDatum <= eindD
+        return weekDagen.some(({ celDatum }) =>
+          celDatum >= startD && celDatum <= eindD
         );
       });
 
@@ -745,7 +749,7 @@
         const eindD  = new Date(a.einddatum); eindD.setHours(0,0,0,0);
         const eventCols = new Set(
           weekDagen
-            .filter(({ isAndereMaand, celDatum }) => !isAndereMaand && celDatum >= startD && celDatum <= eindD)
+            .filter(({ celDatum }) => celDatum >= startD && celDatum <= eindD)
             .map(({ col }) => col)
         );
         if (eventCols.size === 0) return;
@@ -768,17 +772,17 @@
           const startD = new Date(a.datum); startD.setHours(0,0,0,0);
           const eindD  = new Date(a.einddatum); eindD.setHours(0,0,0,0);
 
-          const activeCols = weekDagen
-            .filter(({ isAndereMaand, celDatum }) => !isAndereMaand && celDatum >= startD && celDatum <= eindD)
-            .map(({ col }) => col);
-          if (activeCols.length === 0) return;
+          const activeDagen = weekDagen.filter(({ celDatum }) => celDatum >= startD && celDatum <= eindD);
+          if (activeDagen.length === 0) return;
+          const activeCols = activeDagen.map(({ col }) => col);
+          const bevatAndereMaand = activeDagen.some(({ isAndereMaand }) => isAndereMaand);
 
           const colStart = activeCols[0];
           const colEind  = activeCols[activeCols.length - 1];
           const isWachtrij = wachtrij.some(w => w.id === a.id);
 
           const bar = document.createElement('div');
-          bar.className = 'multidag-bar chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '');
+          bar.className = 'multidag-bar chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '') + (bevatAndereMaand ? ' andere-maand' : '');
           if (isWachtrij) bar.style.opacity = '0.6';
           bar.style.left  = (colStart / 7 * 100).toFixed(4) + '%';
           bar.style.width = ((colEind - colStart + 1) / 7 * 100).toFixed(4) + '%';
@@ -801,27 +805,25 @@
         const cel = document.createElement('div');
         cel.className = 'dag-events-cel' + (isAndereMaand ? ' andere-maand' : '') + (isVandaag ? ' vandaag' : '');
 
-        if (!isAndereMaand) {
-          alles
-            .filter(a => {
-              if (!filterActiviteit(a)) return false;
-              if (a.einddatum && a.datum !== a.einddatum) return false; // skip meerdaags
-              const d = new Date(a.datum); d.setHours(0,0,0,0);
-              return +d === +celDatum;
-            })
-            .forEach(a => {
-              const chip = document.createElement('span');
-              chip.className = 'activiteit-chip chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '');
-              const isWachtrij = wachtrij.some(w => w.id === a.id);
-              if (isWachtrij) chip.style.opacity = '0.6';
-              chip.textContent = a.titel;
-              chip.onclick = () => {
-                if (isWachtrij) openWachtrijBewerken(wachtrij.findIndex(w => w.id === a.id));
-                else openDetail(a);
-              };
-              cel.appendChild(chip);
-            });
-        }
+        alles
+          .filter(a => {
+            if (!filterActiviteit(a)) return false;
+            if (a.einddatum && a.datum !== a.einddatum) return false; // skip meerdaags
+            const d = new Date(a.datum); d.setHours(0,0,0,0);
+            return +d === +celDatum;
+          })
+          .forEach(a => {
+            const chip = document.createElement('span');
+            chip.className = 'activiteit-chip chip-' + a.type + (a.relatie ? ' relatie-' + a.relatie : '') + (isAndereMaand ? ' andere-maand' : '');
+            const isWachtrij = wachtrij.some(w => w.id === a.id);
+            if (isWachtrij) chip.style.opacity = '0.6';
+            chip.textContent = a.titel;
+            chip.onclick = () => {
+              if (isWachtrij) openWachtrijBewerken(wachtrij.findIndex(w => w.id === a.id));
+              else openDetail(a);
+            };
+            cel.appendChild(chip);
+          });
         eventsDiv.appendChild(cel);
       });
       weekDiv.appendChild(eventsDiv);

@@ -157,7 +157,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": null,
     "actielijn": "Algemeen",
     "url": "https://www.zonmw.nl/nl/agenda/nationaal-congres-palliatieve-zorg-2026",
-    "relatie": "niet-direct"
+    "relatie": null
   },
   {
     "id": "XVRErd81lUCUIAptM5A_jpgAJCgn",
@@ -185,7 +185,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": null,
     "actielijn": "Digitale ondersteuning",
     "url": null,
-    "relatie": "direct"
+    "relatie": null
   },
   {
     "id": "uBBn6pYHeUCSqCnefIgVSZgAAJdK",
@@ -311,7 +311,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "",
     "actielijn": "Maatschappelijke bewustwording",
     "url": "https://www.zimihc.nl/agenda/wat-als-de-dood-het-leven-is/",
-    "relatie": "direct"
+    "relatie": null
   },
   {
     "id": "week-palliatieve-zorg-2026",
@@ -325,7 +325,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "",
     "actielijn": "Maatschappelijke bewustwording",
     "url": null,
-    "relatie": "direct"
+    "relatie": null
   },
   {
     "id": "1782220646127",
@@ -353,7 +353,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "Voor iedereen die werkzaam is in de PZ",
     "actielijn": "Maatschappelijke bewustwording",
     "url": "https://palliatiefkennisfestival.nl/",
-    "relatie": "direct"
+    "relatie": null
   },
   {
   "id": "netwerkbijeenkomst-utrecht-20260922",
@@ -367,7 +367,7 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "Medewerkers van partnerorganisaties van het Netwerk Palliatieve Zorg Utrecht Stad en Zuidoost-Utrecht",
     "actielijn": "Afspraken en samenwerking",
     "url": "https://palliaweb.nl/netwerk-utrechtstadenzuidoost/agenda/netwerkbijeenkomst",
-    "relatie": "direct"
+    "relatie": null
   },
   {
     "id": "webinar-digitale-nalatenschap-20261008",
