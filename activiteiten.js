@@ -367,5 +367,21 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "Medewerkers van partnerorganisaties van het Netwerk Palliatieve Zorg Utrecht Stad en Zuidoost-Utrecht",
     "actielijn": "Afspraken en samenwerking",
     "url": "https://palliaweb.nl/netwerk-utrechtstadenzuidoost/agenda/netwerkbijeenkomst",
-    "relatie": "direct"}
+    "relatie": "direct"
+  },
+  {
+    "id": "webinar-digitale-nalatenschap-20261008",
+    "titel": "Webinar: Regel je digitale nalatenschap",
+    "datum": "2026-10-08",
+    "einddatum": null,
+    "tijd": "19:00 - 20:15",
+    "locatie": "Online",
+    "type": "bijeenkomst",
+    "beschrijving": "Praktisch webinar met concrete handvatten om je digitale nalatenschap goed te regelen en inzicht in wat er na een overlijden geregeld moet worden. Aan bod komen concrete voorbeelden, praktische tips en duidelijke acties. Na afloop weet je wat onder digitale nalatenschap valt, kun je jouw accounts en digitale bezittingen in kaart brengen, weet je welke informatie en wensen je kunt vastleggen voor nabestaanden en welke stappen nabestaanden kunnen zetten om digitale accounts, abonnementen en gegevens af te handelen. Docent: Erik de Bruin, vrijwilliger van Bibliotheek Eemland en ambassadeur van Seniorweb. Aanmelden kan t/m 6 oktober 2026.",
+    "doelgroep": "Algemeen publiek",
+    "actielijn": "Maatschappelijke bewustwording",
+    "url": "https://palliaweb.nl/netwerk-eemland/agenda/webinar-regel-je-digitale-nalatenschap",
+    "relatie": null,
+    "contactpersoon": "Willemien.schep@beweging3.nl"
+  }
 ];
