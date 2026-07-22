@@ -1,4 +1,46 @@
 const ACTIVITEITEN_DATA = [
+ {
+    "id": "webinar-kunst-palliatieve-zorg-lectorenplatform",
+    "titel": "Webinar: De kunst van palliatieve zorg - Praktijkgerichte kennis en inzichten vanuit het Landelijk Lectorenplatform Palliatieve Zorg",
+    "datum": "2026-10-06",
+    "einddatum": null,
+    "tijd": "15:00 - 17:00",
+    "locatie": "Online via 1SociaalDomein",
+    "type": "bijeenkomst",
+    "beschrijving": "Online mini-symposium waarin onderzoekers van zes hogescholen (Landelijk Lectorenplatform Palliatieve Zorg) hun praktijkgerichte onderzoeksresultaten delen over palliatieve zorg en begeleiding rondom sterven, verlies en rouw. Acht onderzoeksthema's komen aan bod, waaronder palliatieve zorg in de wijk, communicatiebouwstenen over het levenseinde (LISTEN-project), zingeving in palliatieve zorg, proactieve zorgplanning en palliatieve zorg voor dakloze personen. Twee presentatierondes in breakoutrooms met ruimte voor interactie en vragen. Deelname is gratis; inschrijving via 1SociaalDomein, Zoom-link volgt 48 uur vooraf.",
+    "doelgroep": "Zorgprofessionals, onderzoekers en docenten geïnteresseerd in palliatieve zorg",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://www.agora.nl/agenda/webinar-de-kunst-van-palliatieve-zorg-praktijkgerichte-kennis-en-inzichten-vanuit-het-landelijk-lectorenplatform-palliatieve-zorg/",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "jaarcongres-carend-stervensfase",
+    "titel": "Jaarcongres Carend: Zorg in de Stervensfase",
+    "datum": "2026-10-28",
+    "einddatum": null,
+    "tijd": "09:00 - 17:00",
+    "locatie": "Beatrix Theater Utrecht, Jaarbeursplein 6A, Utrecht",
+    "type": "congres",
+    "beschrijving": "Jaarlijks congres over de complexe dimensies van palliatieve zorg in de laatste levensfase, met een combinatie van wetenschappelijke inzichten, praktijkervaring, filosofische reflectie en theatrale expressie. Kernthema's: herkenning van de stervensfase, verlichten versus behandelen, totale pijn, presentie, rouwverwerking op de werkvloer, proactieve zorgplanning, natuurlijk sterven en zorg na overlijden. Gereduceerd tarief voor studenten, vrijwilligers, mantelzorgers en patiënten; groepsinschrijving vanaf 3 personen mogelijk. Accreditatie aangevraagd bij ABAN, NAPA, V&VN, VSR en SKGV.",
+    "doelgroep": "Artsen, verpleegkundigen, verzorgenden, physician assistants, geestelijk verzorgers, paramedici, vrijwilligers, naasten, mantelzorgers en patiënten",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://carend.nl/congress/jaarcongres-carend-zorg-in-de-stervensfase",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "congres-carend-pz-parkinson",
+    "titel": "Congres Palliatieve Zorg bij Parkinson",
+    "datum": "2026-09-09",
+    "einddatum": null,
+    "tijd": "13:00 - 17:00",
+    "locatie": "Van der Valk Hotel Utrecht, Winthontlaan 4-6, Utrecht",
+    "type": "congres",
+    "beschrijving": "Congres over palliatieve zorg bij de ziekte van Parkinson in de volle breedte, niet alleen gericht op de laatste levensfase maar ook op de jaren daarvoor. Medische, verpleegkundige, spirituele en palliatieve perspectieven worden geïntegreerd, met aandacht voor proactieve zorgplanning, besluitvorming bij ziekteprogressie en zorg in de stervensfase. Kosten €175. Accreditatie: 3 punten (ABAN, NAPA, V&VN) en 0,5 punt (SKGV).",
+    "doelgroep": "Specialisten ouderengeneeskunde, neurologen, huisartsen, verpleegkundig specialisten, physician assistants, verpleegkundigen, paramedici, psychologen, maatschappelijk werkers en geestelijk verzorgers betrokken bij Parkinsonzorg",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://carend.nl/congress/congres-palliatieve-zorg-bij-parkinson",
+    "relatie": "niet-direct"
+  },
   {
     "id": "dl-voortgangsrapportage-2026-12",
     "titel": "Opleverdatum voortgangsrapportage",
