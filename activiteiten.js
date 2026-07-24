@@ -1,7 +1,7 @@
 const ACTIVITEITEN_DATA = [
  {
     "id": "scholing-stervensfase-ijsselstein-20261014",
-    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis)",
+    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis), locatie: Vecht en IJssel",
     "datum": "2026-10-14",
     "einddatum": null,
     "tijd": "14:15 - 17:00",
@@ -15,7 +15,7 @@ const ACTIVITEITEN_DATA = [
   },
   {
     "id": "scholing-stervensfase-breukelen-20261015",
-    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis)",
+    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis), locatie: de Vechtstreek ",
     "datum": "2026-10-15",
     "einddatum": null,
     "tijd": "17:00 - 20:00",
@@ -29,7 +29,7 @@ const ACTIVITEITEN_DATA = [
   },
   {
     "id": "scholing-stervensfase-boschenduin-20261028",
-    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis)",
+    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis), locatie: Accolade",
     "datum": "2026-10-28",
     "einddatum": null,
     "tijd": "14:15 - 17:00",
@@ -43,7 +43,7 @@ const ACTIVITEITEN_DATA = [
   },
   {
     "id": "scholing-stervensfase-utrecht-20261125",
-    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis)",
+    "titel": "Scholing Stervensfase (voor verzorgenden en helpenden werkzaam in een verpleeghuis), locatie: AxionContinu",
     "datum": "2026-11-25",
     "einddatum": null,
     "tijd": "13:30 - 16:15",
