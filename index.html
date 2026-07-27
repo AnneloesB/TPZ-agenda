@@ -6,12 +6,18 @@
   <meta name="author" content="Anneloes Bork" />
   <title>Agenda Transformatieplan Midden-Nederland</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --groen-donker: #46571B; --groen-midden: #93AB67; --geel: #EBDC86;
       --creme: #F5F2E8; --wit: #ffffff; --tekst: #2a2a2a;
       --grijs-licht: #e8e4d8; --grijs-mid: #b0a98e; --rood: #c0392b; --radius: 10px;
+      --groen-mid: #6a8040; --groen-pale: #d4dfc0; --groen-xpale: #edf2e3;
+      --shadow: rgba(70,87,27,0.15);
+      --oranje-pale: #fdf0e8; --oranje: #b35c2c; --oranje-border: #f0c9a8;
+      --blauw: #3d6b7d; --sector-bg: #d4dfc0; --sector-goud: #8a7a1f; --sector-ta: #6a4c93;
     }
     body { font-family: 'DM Sans', sans-serif; background: var(--creme); color: var(--tekst); min-height: 100vh; }
 
@@ -162,6 +168,97 @@
     .tip-box strong { color: var(--groen-donker); }
     .handleiding-slot { text-align: center; margin-top: 24px; color: var(--grijs-mid); font-size: 0.78rem; }
 
+    /* ---- TPZ OVERZICHT (tab 4) ---- */
+    .tpz-wrap { max-width: 1100px; margin: 28px auto; padding: 0 24px 40px; }
+    .tpz-intro { margin-bottom: 16px; }
+    .tpz-intro .section-desc { margin-bottom: 0; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--groen-donker); margin-bottom: 2px; }
+    .section-desc { font-size: 11.5px; color: var(--grijs-mid); margin-bottom: 12px; line-height: 1.3; }
+
+    .map-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+
+    .filters { display: flex; flex-direction: column; flex: 0 0 230px; gap: 18px; background: var(--wit); border: 1px solid var(--groen-pale); border-radius: 12px; padding: 16px 18px; box-shadow: 0 3px 10px var(--shadow); }
+    .filter-group { display: flex; flex-direction: column; gap: 6px; }
+    .filter-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--grijs-mid); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--groen-xpale); border: 1px solid var(--groen-pale); color: var(--groen-donker); font-size: 11.5px; font-weight: 500; padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+    .chip:hover { background: var(--groen-pale); }
+    .chip.active { background: var(--groen-donker); color: var(--wit); border-color: var(--groen-donker); }
+
+    .chip[data-type="ziekenhuizen"],
+    .chip[data-type="huisartsen"],
+    .chip[data-type="wijkverpleging"],
+    .chip[data-type="ambulance"] { background: var(--sector-bg); border-color: var(--sector-goud); color: var(--sector-goud); }
+    .chip[data-type="ziekenhuizen"]:hover,
+    .chip[data-type="huisartsen"]:hover,
+    .chip[data-type="wijkverpleging"]:hover,
+    .chip[data-type="ambulance"]:hover { background: var(--geel); }
+    .chip[data-type="ziekenhuizen"].active,
+    .chip[data-type="huisartsen"].active,
+    .chip[data-type="wijkverpleging"].active,
+    .chip[data-type="ambulance"].active { background: var(--geel); border-color: var(--sector-goud); color: var(--tekst); }
+
+    .chip-ta { border-color: var(--sector-ta); color: var(--sector-ta); }
+    .chip-ta:hover { background: color-mix(in srgb, var(--sector-ta) 12%, var(--wit)); }
+    .chip-ta.active { background: var(--sector-ta); border-color: var(--sector-ta); color: var(--wit); }
+    .search-input { font-family: 'DM Sans', sans-serif; font-size: 12.5px; padding: 7px 12px; border: 1px solid var(--groen-pale); border-radius: 8px; color: var(--tekst); width: 100%; }
+    .search-input:focus { outline: none; border-color: var(--groen-mid); }
+    .reset-btn { font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 500; color: var(--groen-mid); background: transparent; border: 1px solid var(--groen-pale); border-radius: 8px; padding: 7px 12px; cursor: pointer; transition: background 0.15s ease, color 0.15s ease; align-self: flex-start; }
+    .reset-btn:hover { background: var(--groen-xpale); color: var(--groen-donker); }
+
+    .tpz-section-title { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--groen-donker); margin: 22px 0 10px; }
+
+    .map-card { background: var(--wit); border: 1px solid var(--groen-pale); border-radius: 12px; padding: 14px; box-shadow: 0 3px 10px var(--shadow); max-width: 720px; margin: 0 auto; }
+    #tpz-map { height: 560px; border-radius: 8px; z-index: 0; }
+    @media (max-width: 760px) {
+      .map-row { flex-direction: column; }
+      .filters { flex: 1 1 auto; width: 100%; }
+      #tpz-map { height: 440px; }
+    }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; }
+    .map-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--tekst); }
+    .map-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex: 0 0 auto; }
+    .map-credit { font-size: 10px; color: var(--grijs-mid); margin-top: 8px; }
+    .leaflet-tooltip.gemeente-tooltip { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--groen-pale); box-shadow: 0 3px 10px var(--shadow); }
+    .leaflet-tooltip.gemeente-tooltip .tt-regio { color: var(--grijs-mid); font-size: 10.5px; }
+
+    .region-grid { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .region-card { background: var(--wit); border: 1px solid var(--groen-pale); border-radius: 12px; padding: 14px 16px; box-shadow: 0 3px 10px var(--shadow); transition: opacity 0.15s ease; }
+    .region-card.hidden { display: none; }
+    .region-card h3 { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--groen-donker); margin-bottom: 10px; }
+    .field { margin-bottom: 8px; }
+    .field.hidden { display: none; }
+    .field-label { font-size: 9.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--grijs-mid); margin-bottom: 2px; }
+    .field-label.collapsible { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+    .field-count { font-size: 9px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--grijs-mid); }
+    .field-chevron { font-size: 10px; color: var(--grijs-mid); margin-left: auto; transition: transform 0.15s ease; }
+    .field-label.collapsible.expanded .field-chevron { transform: rotate(90deg); }
+    .field-value { font-size: 12px; color: var(--tekst); line-height: 1.4; }
+    .field-value mark, .tpz-table mark { background: var(--geel); color: var(--tekst); border-radius: 3px; padding: 0 2px; }
+    .dim { opacity: 0.35; }
+
+    .org-row { display: flex; align-items: center; gap: 5px; padding: 1px 0; }
+    .org-row.org-has-ta { cursor: pointer; }
+    .org-name { flex: 0 1 auto; }
+    .org-badge-ta { background: none; color: var(--sector-ta); opacity: 0.55; font-size: 7.5px; font-weight: 600; letter-spacing: 0.5px; padding: 0; flex: 0 0 auto; }
+    .org-chevron { color: var(--grijs-mid); font-size: 12px; flex: 0 0 auto; transition: transform 0.15s ease; }
+    .org-row.expanded .org-chevron { transform: rotate(90deg); }
+    .org-ta-list { list-style: none; padding-left: 14px; margin: 2px 0 6px; border-left: 2px solid var(--groen-pale); }
+    .org-ta-list li { font-size: 11px; color: var(--grijs-mid); padding: 1px 0 1px 8px; }
+
+    .tpz-table-wrap { overflow-x: auto; background: var(--wit); border: 1px solid var(--groen-pale); border-radius: 12px; box-shadow: 0 3px 10px var(--shadow); }
+    .tpz-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .tpz-table th, .tpz-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--groen-pale); vertical-align: top; }
+    .tpz-table th { background: var(--groen-xpale); color: var(--groen-donker); font-weight: 600; font-size: 11px; letter-spacing: 0.3px; text-transform: uppercase; white-space: nowrap; }
+    .tpz-table td.row-label { font-weight: 600; color: var(--groen-donker); white-space: nowrap; }
+    .tpz-table td.col-hidden, .tpz-table th.col-hidden { display: none; }
+    .tpz-table tr.row-hidden { display: none; }
+
+    .samenwerking-strip { background: var(--oranje-pale); border: 1px solid var(--oranje-border); border-radius: 12px; padding: 14px 18px; margin-top: 18px; }
+    .samenwerking-strip .field-label { color: var(--oranje); }
+    .samenwerking-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .samenwerking-list span { background: var(--wit); border: 1px solid var(--oranje-border); color: var(--oranje); font-size: 11.5px; font-weight: 500; padding: 4px 12px; border-radius: 20px; }
+
     /* ---- MODALS ---- */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.zichtbaar { display: flex; }
@@ -274,6 +371,7 @@
   <div class="tab-rij">
     <button class="tab-knop actief" id="tab-knop-agenda"       onclick="toonTab('agenda')">📅 Agenda</button>
     <button class="tab-knop"        id="tab-knop-actielijnen"  onclick="toonTab('actielijnen')">📋 Activiteiten</button>
+    <button class="tab-knop"        id="tab-knop-tpz"          onclick="toonTab('tpz')">🗺️ TPZ overzicht</button>
     <button class="tab-knop"        id="tab-knop-handleiding"  onclick="toonTab('handleiding')">📖 Handleiding</button>
     <div class="tab-rij-rechts">
       <input type="search" class="zoek-veld" id="zoek-veld" placeholder="🔍 Zoeken..." oninput="setZoekterm(this.value)" />
@@ -417,6 +515,59 @@
     </div>
 
     <p class="handleiding-slot">Vragen of problemen? Neem contact op met de beheerder van de repository.</p>
+  </div>
+</div>
+
+
+<!-- ===== TAB 4: TPZ OVERZICHT ===== -->
+<div class="tab-inhoud" id="tab-tpz" style="display:none;">
+  <div class="tpz-wrap">
+
+    <div class="tpz-intro">
+      <div class="section-title">TPZ overzicht per regio</div>
+      <p class="section-desc">Zorgorganisaties binnen de vijf WMO-gebieden van TPZ Midden-Nederland — gemeentes, ziekenhuislocaties, huisartsenorganisaties, wijkverpleging, netwerk PZ en hospicebedden. Filter op regio of type, of zoek op organisatienaam.</p>
+    </div>
+
+    <div class="tpz-section-title">Visueel overzicht</div>
+    <div class="map-row">
+      <div class="filters">
+        <div class="filter-group">
+          <span class="filter-label">Regio</span>
+          <div class="chip-row" id="region-chips"></div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Type</span>
+          <div class="chip-row" id="type-chips"></div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Zoeken</span>
+          <input type="text" id="tpz-search-input" class="search-input" placeholder="Bv. Axioncontinu, UNICUM, Careyn…">
+        </div>
+        <button type="button" id="tpz-reset-filters" class="reset-btn">Filters resetten</button>
+      </div>
+      <div class="region-grid" id="region-grid"></div>
+    </div>
+
+    <div class="tpz-section-title">Kaart</div>
+    <div class="map-card">
+      <div id="tpz-map"></div>
+      <div class="map-legend" id="map-legend"></div>
+      <div class="map-credit">Gemeentegrenzen: cartomap.github.io (CBS/Kadaster) · Kaart: OpenStreetMap &amp; CARTO</div>
+    </div>
+
+    <div class="samenwerking-strip">
+      <span class="field-label">Samenwerkingsverbanden (alle regio's)</span>
+      <div class="samenwerking-list" id="samenwerking-list"></div>
+    </div>
+
+    <div class="tpz-section-title">Tabel</div>
+    <div class="tpz-table-wrap">
+      <table class="tpz-table" id="tpz-table">
+        <thead><tr id="tpz-table-head"></tr></thead>
+        <tbody id="tpz-table-body"></tbody>
+      </table>
+    </div>
+
   </div>
 </div>
 
@@ -605,12 +756,16 @@
     document.querySelectorAll('.tab-knop').forEach(b => b.classList.remove('actief'));
     document.getElementById('tab-knop-' + naam).classList.add('actief');
 
-    // Maand-rij: verborgen op handleiding, zichtbaar op agenda en actielijnen
-    document.getElementById('maand-rij').classList.toggle('verborgen', naam === 'handleiding');
+    // Maand-rij: verborgen op handleiding en tpz-overzicht, zichtbaar op agenda en actielijnen
+    document.getElementById('maand-rij').classList.toggle('verborgen', naam === 'handleiding' || naam === 'tpz');
     // Maandnavigatie-knoppen: alleen zichtbaar op agenda
     document.getElementById('maand-controls').style.display = naam === 'agenda' ? '' : 'none';
 
     if (naam === 'actielijnen') tekenActielijnen();
+    if (naam === 'tpz' && window.tpzOverzicht) {
+      window.tpzOverzicht.initMap();
+      setTimeout(() => window.tpzOverzicht.invalidateMap(), 0);
+    }
   }
 
   // ---- LADEN ----
@@ -1145,6 +1300,447 @@
   }
 
   laad();
+</script>
+
+<script>
+(function () {
+  const regios = [
+    { id: 'uw', naam: 'Utrecht-West', gemeentes: ['De Ronde Venen', 'Montfoort', 'Oudewater', 'Stichtse Vecht', 'Woerden'], ziekenhuizen: ['St. Antonius Utrecht'], huisartsen: ['RegiozorgNU'], wijkverpleging: ['Careyn (20)', 'Buurtzorg (2)', 'De Rijnhoven (2)', 'Maria Dommer', 'Zorggroep De Vechtstreek', 'Fundis', 'De Wulverhorst', 'Zorggroep Sint Maarten'], netwerkPZ: 'Noordwest Utrecht', netwerkcoordinatoren: ['Nienke Goemaat', 'Ineke van Laar'], hospicebedden: '31 (+2)', ambulance: ['RAVU'] },
+    { id: 'u', naam: 'Utrecht', gemeentes: ['Utrecht'], ziekenhuizen: ['UMC Utrecht', 'Diakonessenhuis', 'St. Antonius Utrecht'], huisartsen: ['Sterkzorg/HUS', 'RegioZorgNU'], wijkverpleging: ['Careyn (16)', 'Axioncontinu (7)', 'Buurtzorg (6)', 'Vecht & IJssel', 'Bartholomeus Gasthuis', 'Leger des Heils'], netwerkPZ: 'Utrecht Stad', netwerkcoordinatoren: ['Mirjam Velting', 'Lar Luikx'], hospicebedden: '6 (+6)', ambulance: ['RAVU'] },
+    { id: 'zo', naam: 'Utrecht Zuid Oost', gemeentes: ['Bunnik', 'De Bilt', 'Utrechtse Heuvelrug', 'Wijk bij Duurstede', 'Zeist'], ziekenhuizen: ['Diakonessenhuis'], huisartsen: ['UNICUM'], wijkverpleging: ['Santé Partners (6)', 'Buurtzorg (5)', 'Silverein (3)', 'Huize het Oosten', 'Accolade', 'Quarijn', 'Warande', 'Charim', 'Zorgspectrum', 'Bloezem'], netwerkPZ: 'ZO Utrecht', netwerkcoordinatoren: ['Nienke Goemaat', 'Ineke van Laar'], hospicebedden: '31 (+3)', ambulance: ['RAVU'] },
+    { id: 'lek', naam: 'Lekstroom', gemeentes: ['Houten', 'IJsselstein', 'Lopik', 'Nieuwegein', 'Vianen'], ziekenhuizen: ['St. Antonius Nieuwegein'], huisartsen: ['UNICUM'], wijkverpleging: ['Santé Partners (10)', 'Buurtzorg (5)', 'Zorgspectrum (4)', 'Bloezem'], netwerkPZ: 'Utrecht Zuid', netwerkcoordinatoren: ['Mirjam Velting', 'Lar Luikx'], hospicebedden: '15 (+6)', ambulance: ['RAVU'] },
+    { id: 'eem', naam: 'Eemland', gemeentes: ['Amersfoort', 'Baarn', 'Bunschoten', 'Leusden', 'Nijkerk', 'Soest', 'Woudenberg'], ziekenhuizen: ['Meander Amersfoort'], huisartsen: ['HA Eemland'], wijkverpleging: ['Beweging 3.0 (20)', 'Buurtzorg (14)', 'Silverein (10)', 'De Haven', 'Sint Pieters en Bloklands Gasthuis', 'De Koperhorst', 'Amaris', 'De GeZusters'], netwerkPZ: 'Eemland', netwerkcoordinatoren: ['Willemien Schep'], hospicebedden: '26 (+4)', ambulance: ['RAVU'] }
+  ];
+  const samenwerkingsverbanden = ['Regioaanpak ziekenhuiszorg Utrecht & Oncomid', 'Septet', 'Palliateam Midden-Nederland', 'Trijn'];
+  const typen = [
+    { id: 'ziekenhuizen', label: 'Ziekenhuizen' },
+    { id: 'huisartsen', label: 'Huisartsenorganisaties' },
+    { id: 'wijkverpleging', label: 'Wijkverpleging' },
+    { id: 'ambulance', label: 'Ambulancedienst' },
+    { id: 'gemeentes', label: 'Gemeentes' },
+    { id: 'netwerkPZ', label: 'Netwerk PZ' },
+    { id: 'netwerkcoordinatoren', label: 'Netwerkcoördinator(en) PZ' },
+    { id: 'hospicebedden', label: 'Hospicebedden' }
+  ];
+  // Typen waarvan de veldwaarden individuele zorgorganisaties zijn (i.t.t. gemeentenamen,
+  // een netwerk-PZ-label of een bedden-aantal) — alleen deze krijgen de TA-uitklapfunctie.
+  const orgTypen = new Set(['ziekenhuizen', 'huisartsen', 'wijkverpleging', 'ambulance']);
+
+  const transformatieaanjagers = [
+    { naam: 'Woutriëlle de Vogel', organisatie: 'RAVU', type: 'ambulance', regios: ['uw', 'u', 'zo', 'lek', 'eem'] },
+    { naam: 'Dietske van Maanen', organisatie: 'HA Eemland', type: 'huisartsen', regios: ['eem'] },
+    { naam: 'Yvonne Pijnacker', organisatie: 'Sterkzorg/HUS', type: 'huisartsen', regios: ['u'] },
+    { naam: 'Fleur van Thiel', organisatie: 'Sterkzorg/HUS', type: 'huisartsen', regios: ['u'] },
+    { naam: 'Ella Benedictus', organisatie: 'RegiozorgNU', type: 'huisartsen', regios: ['uw'] },
+    { naam: 'Debby van Sleeuwen', organisatie: 'RegiozorgNU', type: 'huisartsen', regios: ['uw'] },
+    { naam: 'Heleen Weber', organisatie: 'RegiozorgNU', type: 'huisartsen', regios: ['uw'] },
+    { naam: 'Tesse Zwijnenburg', organisatie: 'RegiozorgNU', type: 'huisartsen', regios: ['uw'] },
+    { naam: 'Leonoor Gräler', organisatie: 'UNICUM', type: 'huisartsen', regios: ['zo', 'lek'] },
+    { naam: 'Iva Klerks', organisatie: 'Axioncontinu', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Sara Franssen', organisatie: 'Axioncontinu', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Claudia Bijl', organisatie: 'Beweging 3.0', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Susan Weijman', organisatie: 'Careyn', type: 'wijkverpleging', regios: ['u', 'uw'] },
+    { naam: 'Jacomijn Wittenberg', organisatie: 'Charim', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Wilke Meijering', organisatie: 'Charim', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Caroline Priem', organisatie: 'Charim', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Maartje Knottnerus', organisatie: 'De Rijnhoven', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Phira Otten', organisatie: 'De Rijnhoven', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Angela Kranendonk', organisatie: 'De Rijnhoven', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Susanne van Loenhout', organisatie: 'Quarijn', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Tjerk van den Berg', organisatie: 'Santé Partners', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Pauline Kramer', organisatie: 'Silverein', type: 'wijkverpleging', regios: ['zo', 'eem'] },
+    { naam: 'Mariska Oosterveld', organisatie: 'Silverein', type: 'wijkverpleging', regios: ['zo', 'eem'] },
+    { naam: 'Wilma Verkerk', organisatie: 'Warande', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Martine Nagelkerke', organisatie: 'Warande', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'John Benjamin', organisatie: 'Warande', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Tessa Augustijn', organisatie: 'Zorgspectrum', type: 'wijkverpleging', regios: ['lek'] },
+    { naam: 'Rianne van Genderen', organisatie: 'Zorgspectrum', type: 'wijkverpleging', regios: ['lek'] },
+    { naam: 'Rianne Modderkolk', organisatie: 'Zorgspectrum', type: 'wijkverpleging', regios: ['lek'] },
+    { naam: 'Tjerk van den Berg', organisatie: 'Bloezem', type: 'wijkverpleging', regios: ['zo', 'lek'] },
+    { naam: 'Karina Crum', organisatie: 'De Haven', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Karina Crum', organisatie: 'Sint Pieters en Bloklands Gasthuis', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Karina Crum', organisatie: 'De Koperhorst', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Karina Crum', organisatie: 'Amaris', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Karina Crum', organisatie: 'De GeZusters', type: 'wijkverpleging', regios: ['eem'] },
+    { naam: 'Kiki Geelen', organisatie: 'Huize het Oosten', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Kiki Geelen', organisatie: 'Accolade', type: 'wijkverpleging', regios: ['zo'] },
+    { naam: 'Charlotte Bel', organisatie: 'Maria Dommer', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Charlotte Bel', organisatie: 'Zorggroep De Vechtstreek', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Charlotte Bel', organisatie: 'Fundis', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Charlotte Bel', organisatie: 'De Wulverhorst', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Charlotte Bel', organisatie: 'Zorggroep Sint Maarten', type: 'wijkverpleging', regios: ['uw'] },
+    { naam: 'Iva Klerks', organisatie: 'Vecht & IJssel', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Iva Klerks', organisatie: 'Bartholomeus Gasthuis', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Iva Klerks', organisatie: 'Leger des Heils', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Sara Franssen', organisatie: 'Vecht & IJssel', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Sara Franssen', organisatie: 'Bartholomeus Gasthuis', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Sara Franssen', organisatie: 'Leger des Heils', type: 'wijkverpleging', regios: ['u'] },
+    { naam: 'Bas Butje', organisatie: 'St. Antonius Nieuwegein', type: 'ziekenhuizen', regios: ['lek'] },
+    { naam: 'Bas Butje', organisatie: 'St. Antonius Utrecht', type: 'ziekenhuizen', regios: ['uw'] },
+    { naam: 'Lotte van der Weerdt', organisatie: 'St. Antonius Nieuwegein', type: 'ziekenhuizen', regios: ['lek'] },
+    { naam: 'Lotte van der Weerdt', organisatie: 'St. Antonius Utrecht', type: 'ziekenhuizen', regios: ['uw'] },
+    { naam: 'Evert Jan Rebergen', organisatie: 'Diakonessenhuis', type: 'ziekenhuizen', regios: ['u', 'zo'] },
+    { naam: 'Thea Zijlstra', organisatie: 'Diakonessenhuis', type: 'ziekenhuizen', regios: ['u', 'zo'] },
+    { naam: 'Tom van de Nieuwenhof', organisatie: 'Meander Amersfoort', type: 'ziekenhuizen', regios: ['eem'] },
+    { naam: 'Marieke ter Horst', organisatie: 'Meander Amersfoort', type: 'ziekenhuizen', regios: ['eem'] },
+    { naam: 'Ginette Hesselmann', organisatie: 'UMC Utrecht', type: 'ziekenhuizen', regios: ['u'] },
+    { naam: 'Charlotte Bel', organisatie: 'UMC Utrecht', type: 'ziekenhuizen', regios: ['u'] }
+  ];
+
+  const regioKleur = { uw: '#46571b', u: '#93ab67', zo: '#ebdc86', lek: '#b35c2c', eem: '#3d6b7d' };
+  // Gemeentenamen zoals in de bron-GeoJSON (statnaam) wijken soms af van de Tabel 7-namen
+  // (herindelingen). Vianen ging in 2019 op in Vijfheerenlanden.
+  const gemeenteAlias = { 'Vianen': 'Vijfheerenlanden' };
+
+  const gemeenteRegio = {};
+  regios.forEach(r => {
+    r.gemeentes.forEach(g => { gemeenteRegio[gemeenteAlias[g] || g] = r.id; });
+  });
+
+  // --- TA-koppeling: organisatienaam (zonder "(n)"-suffix) + regio + type -> lijst TA-namen ---
+  function stripOrgSuffix(orgName) { return orgName.replace(/\s*\([^)]*\)\s*$/, '').trim(); }
+  function taKey(regioId, typeId, orgBaseName) { return regioId + '|' + typeId + '|' + orgBaseName; }
+
+  const taByOrgRegio = {};
+  transformatieaanjagers.forEach(ta => {
+    ta.regios.forEach(rid => {
+      const key = taKey(rid, ta.type, ta.organisatie);
+      (taByOrgRegio[key] || (taByOrgRegio[key] = [])).push(ta.naam);
+    });
+  });
+
+  function taNamesFor(regioId, typeId, orgName) {
+    return taByOrgRegio[taKey(regioId, typeId, stripOrgSuffix(orgName))] || [];
+  }
+
+  function matchingTaKeysForTerm(term) {
+    const keys = new Set();
+    if (!term) return keys;
+    const t = term.toLowerCase();
+    transformatieaanjagers.forEach(ta => {
+      if (ta.naam.toLowerCase().includes(t)) {
+        ta.regios.forEach(rid => keys.add(taKey(rid, ta.type, ta.organisatie)));
+      }
+    });
+    return keys;
+  }
+
+  // --- Sectorvelden (ziekenhuizen/huisartsen/wijkverpleging/ambulance) staan standaard ingeklapt ---
+  function sectorKey(regioId, typeId) { return regioId + '::' + typeId; }
+
+  function orgFieldMatchesTerm(regio, typeId, term) {
+    if (!term) return false;
+    const t = term.toLowerCase();
+    const names = regio[typeId] || [];
+    return names.some(n => n.toLowerCase().includes(t) || taNamesFor(regio.id, typeId, n).some(ta => ta.toLowerCase().includes(t)));
+  }
+
+  const state = { regions: new Set(), types: new Set(), search: '', expandedOrgs: new Set(), expandedSectors: new Set(), taFilterActive: false };
+
+  function fieldText(regio, typeId) {
+    const v = regio[typeId];
+    if (Array.isArray(v)) return v.length ? v.join(', ') : '–';
+    return v || '–';
+  }
+
+  function highlight(text, term) {
+    if (!term) return text;
+    const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  function matchesSearch(regio, term) {
+    if (!term) return true;
+    const taNamen = transformatieaanjagers.filter(ta => ta.regios.includes(regio.id)).map(ta => ta.naam);
+    const haystack = [regio.naam, ...typen.map(t => fieldText(regio, t.id)), ...taNamen].join(' ').toLowerCase();
+    return haystack.includes(term.toLowerCase());
+  }
+
+  // --- Build filter chips ---
+  const regionChipsEl = document.getElementById('region-chips');
+  regios.forEach(r => {
+    const chip = document.createElement('button');
+    chip.className = 'chip';
+    chip.textContent = r.naam;
+    chip.dataset.region = r.id;
+    chip.addEventListener('click', () => {
+      if (state.regions.has(r.id)) state.regions.delete(r.id); else state.regions.add(r.id);
+      render();
+    });
+    regionChipsEl.appendChild(chip);
+  });
+
+  const typeChipsEl = document.getElementById('type-chips');
+  typen.forEach(t => {
+    const chip = document.createElement('button');
+    chip.className = 'chip';
+    chip.textContent = t.label;
+    chip.dataset.type = t.id;
+    chip.addEventListener('click', () => {
+      if (state.types.has(t.id)) state.types.delete(t.id); else state.types.add(t.id);
+      render();
+    });
+    typeChipsEl.appendChild(chip);
+  });
+
+  const taChip = document.createElement('button');
+  taChip.className = 'chip chip-ta';
+  taChip.textContent = 'Transformatieaanjager';
+  taChip.addEventListener('click', () => {
+    state.taFilterActive = !state.taFilterActive;
+    render();
+  });
+  typeChipsEl.appendChild(taChip);
+
+  const searchInputEl = document.getElementById('tpz-search-input');
+  searchInputEl.addEventListener('input', e => {
+    state.search = e.target.value.trim();
+    render();
+  });
+
+  document.getElementById('tpz-reset-filters').addEventListener('click', () => {
+    state.regions.clear();
+    state.types.clear();
+    state.search = '';
+    state.expandedOrgs.clear();
+    state.expandedSectors.clear();
+    state.taFilterActive = false;
+    searchInputEl.value = '';
+    render();
+  });
+
+  // --- Samenwerkingsverbanden (static, altijd zichtbaar) ---
+  const samenwerkingEl = document.getElementById('samenwerking-list');
+  samenwerkingsverbanden.forEach(s => {
+    const span = document.createElement('span');
+    span.textContent = s;
+    samenwerkingEl.appendChild(span);
+  });
+
+  // --- Build region cards (structure once, content on render) ---
+  const gridEl = document.getElementById('region-grid');
+  regios.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'region-card';
+    card.dataset.region = r.id;
+    const h3 = document.createElement('h3');
+    h3.textContent = r.naam;
+    card.appendChild(h3);
+    typen.forEach(t => {
+      const field = document.createElement('div');
+      field.className = 'field';
+      field.dataset.type = t.id;
+      const isOrgField = orgTypen.has(t.id);
+      const labelClass = isOrgField ? 'field-label collapsible' : 'field-label';
+      const labelExtra = isOrgField ? '<span class="field-count"></span><span class="field-chevron">›</span>' : '';
+      field.innerHTML = '<div class="' + labelClass + '"><span class="field-label-text">' + t.label + '</span>' + labelExtra + '</div><div class="field-value"></div>';
+      if (isOrgField) {
+        field.querySelector('.field-label').addEventListener('click', () => {
+          const key = sectorKey(r.id, t.id);
+          if (state.expandedSectors.has(key)) state.expandedSectors.delete(key); else state.expandedSectors.add(key);
+          render();
+        });
+      }
+      card.appendChild(field);
+    });
+    gridEl.appendChild(card);
+  });
+
+  // --- Build table structure ---
+  const theadRow = document.getElementById('tpz-table-head');
+  theadRow.innerHTML = '<th class="row-label-head">Categorie</th>' + regios.map(r => '<th data-region="' + r.id + '">' + r.naam + '</th>').join('');
+
+  const tbody = document.getElementById('tpz-table-body');
+  typen.forEach(t => {
+    const tr = document.createElement('tr');
+    tr.dataset.type = t.id;
+    tr.innerHTML = '<td class="row-label">' + t.label + '</td>' +
+      regios.map(r => '<td data-region="' + r.id + '" data-cell="' + r.id + '-' + t.id + '"></td>').join('');
+    tbody.appendChild(tr);
+  });
+
+  // --- Legend ---
+  const legendEl = document.getElementById('map-legend');
+  regios.forEach(r => {
+    const item = document.createElement('div');
+    item.className = 'map-legend-item';
+    item.innerHTML = '<span class="map-legend-dot" style="background:' + regioKleur[r.id] + '"></span>' + r.naam;
+    legendEl.appendChild(item);
+  });
+
+  // --- Map (lazy: pas aangemaakt zodra de TPZ-tab voor het eerst zichtbaar wordt,
+  // anders berekent Leaflet de kaartgrootte verkeerd in een display:none-container) ---
+  let map = null;
+  let gemeenteLayer = null;
+  let mapBounds = null;
+
+  function gemeenteStyle(feature) {
+    const naam = feature.properties.statnaam;
+    const regioId = gemeenteRegio[naam];
+    const term = state.search;
+    const activeRegions = state.regions.size ? state.regions : new Set(regios.map(r => r.id));
+    const regio = regios.find(r => r.id === regioId);
+    const inActiveRegion = activeRegions.has(regioId);
+    const matches = !term || (regio && matchesSearch(regio, term)) || naam.toLowerCase().includes(term.toLowerCase());
+    return {
+      fillColor: regioKleur[regioId],
+      fillOpacity: inActiveRegion ? (term && !matches ? 0.25 : 0.65) : 0.12,
+      color: term && matches && inActiveRegion ? '#2a3410' : '#ffffff',
+      weight: term && matches && inActiveRegion ? 2.5 : 1
+    };
+  }
+
+  function initMap() {
+    if (map) return;
+    map = L.map('tpz-map', { center: [52.09, 5.15], zoom: 9, scrollWheelZoom: false });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 19
+    }).addTo(map);
+
+    fetch('https://cartomap.github.io/nl/wgs84/gemeente_2025.geojson')
+      .then(res => res.json())
+      .then(data => {
+        const features = data.features.filter(f => gemeenteRegio[f.properties.statnaam]);
+        gemeenteLayer = L.geoJSON(features, {
+          style: gemeenteStyle,
+          onEachFeature: (feature, layer) => {
+            const regioId = gemeenteRegio[feature.properties.statnaam];
+            const regio = regios.find(r => r.id === regioId);
+            layer.bindTooltip(
+              feature.properties.statnaam + '<br><span class="tt-regio">' + (regio ? regio.naam : '') + '</span>',
+              { className: 'gemeente-tooltip', sticky: true }
+            );
+          }
+        }).addTo(map);
+        mapBounds = gemeenteLayer.getBounds();
+        map.invalidateSize();
+        map.fitBounds(mapBounds, { padding: [16, 16], animate: false });
+      });
+  }
+
+  function invalidateMap() {
+    if (!map) return;
+    map.invalidateSize();
+    if (mapBounds) map.fitBounds(mapBounds, { padding: [16, 16], animate: false });
+  }
+
+  function renderOrgField(container, regio, typeId, term, matchingTaKeys) {
+    container.innerHTML = '';
+    const names = regio[typeId];
+    if (!Array.isArray(names) || !names.length) {
+      container.textContent = '–';
+      return;
+    }
+    names.forEach(name => {
+      const base = stripOrgSuffix(name);
+      const key = taKey(regio.id, typeId, base);
+      const taNamen = taNamesFor(regio.id, typeId, name);
+      const row = document.createElement('div');
+      row.className = 'org-row';
+
+      const label = document.createElement('span');
+      label.className = 'org-name';
+      label.innerHTML = highlight(name, term);
+      row.appendChild(label);
+
+      if (taNamen.length) {
+        row.classList.add('org-has-ta');
+        const badge = document.createElement('span');
+        badge.className = 'org-badge-ta';
+        badge.textContent = 'TA';
+        row.appendChild(badge);
+        const chevron = document.createElement('span');
+        chevron.className = 'org-chevron';
+        chevron.textContent = '›';
+        row.appendChild(chevron);
+
+        const expanded = state.taFilterActive || state.expandedOrgs.has(key) || matchingTaKeys.has(key);
+        row.classList.toggle('expanded', expanded);
+        row.addEventListener('click', () => {
+          if (state.expandedOrgs.has(key)) state.expandedOrgs.delete(key); else state.expandedOrgs.add(key);
+          render();
+        });
+
+        const list = document.createElement('ul');
+        list.className = 'org-ta-list';
+        list.style.display = expanded ? '' : 'none';
+        taNamen.forEach(naam => {
+          const li = document.createElement('li');
+          li.innerHTML = highlight(naam, term);
+          list.appendChild(li);
+        });
+        container.appendChild(row);
+        container.appendChild(list);
+      } else {
+        container.appendChild(row);
+      }
+    });
+  }
+
+  function render() {
+    const term = state.search;
+    const matchingTaKeys = matchingTaKeysForTerm(term);
+
+    if (gemeenteLayer) gemeenteLayer.setStyle(gemeenteStyle);
+
+    // chips visual state
+    regionChipsEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', state.regions.has(c.dataset.region)));
+    typeChipsEl.querySelectorAll('.chip[data-type]').forEach(c => c.classList.toggle('active', state.types.has(c.dataset.type)));
+    taChip.classList.toggle('active', state.taFilterActive);
+
+    const activeRegions = state.regions.size ? state.regions : new Set(regios.map(r => r.id));
+    const activeTypes = state.types.size ? state.types : new Set(typen.map(t => t.id));
+
+    // region cards
+    regios.forEach(r => {
+      const card = gridEl.querySelector('.region-card[data-region="' + r.id + '"]');
+      const regionVisible = activeRegions.has(r.id);
+      const search = matchesSearch(r, term);
+      card.classList.toggle('hidden', !regionVisible);
+      card.classList.toggle('dim', regionVisible && term && !search);
+      typen.forEach(t => {
+        const field = card.querySelector('.field[data-type="' + t.id + '"]');
+        field.classList.toggle('hidden', !activeTypes.has(t.id));
+        const valueEl = field.querySelector('.field-value');
+        if (orgTypen.has(t.id)) {
+          const names = r[t.id] || [];
+          const typeFiltered = state.types.size > 0 && state.types.has(t.id);
+          const sExpanded = state.expandedSectors.has(sectorKey(r.id, t.id)) || state.taFilterActive || typeFiltered || orgFieldMatchesTerm(r, t.id, term);
+          const labelEl = field.querySelector('.field-label');
+          labelEl.classList.toggle('expanded', sExpanded);
+          const countEl = labelEl.querySelector('.field-count');
+          if (countEl) countEl.textContent = names.length ? '(' + names.length + ')' : '';
+          valueEl.style.display = sExpanded ? '' : 'none';
+          renderOrgField(valueEl, r, t.id, term, matchingTaKeys);
+        } else {
+          valueEl.innerHTML = highlight(fieldText(r, t.id), term);
+        }
+      });
+    });
+
+    // table columns (regions)
+    theadRow.querySelectorAll('th[data-region]').forEach(th => th.classList.toggle('col-hidden', !activeRegions.has(th.dataset.region)));
+    tbody.querySelectorAll('td[data-region]').forEach(td => td.classList.toggle('col-hidden', !activeRegions.has(td.dataset.region)));
+
+    // table rows (types) + cell content
+    typen.forEach(t => {
+      const tr = tbody.querySelector('tr[data-type="' + t.id + '"]');
+      tr.classList.toggle('row-hidden', !activeTypes.has(t.id));
+      regios.forEach(r => {
+        const td = tr.querySelector('td[data-cell="' + r.id + '-' + t.id + '"]');
+        const text = fieldText(r, t.id);
+        const cellMatches = term && text.toLowerCase().includes(term.toLowerCase());
+        td.innerHTML = highlight(text, term);
+        td.classList.toggle('dim', Boolean(term) && !cellMatches);
+      });
+    });
+  }
+
+  render();
+
+  window.tpzOverzicht = { initMap, invalidateMap };
+})();
 </script>
 </body>
 </html>
