@@ -116,6 +116,9 @@
     .activiteit-chip.andere-maand,
     .multidag-bar.andere-maand { opacity: 0.55; }
 
+    /* Default kleur voor activiteiten zonder (herkend) type — .chip-* regels hieronder overschrijven dit */
+    .activiteit-chip, .multidag-bar, .al-item { background: var(--grijs-licht); color: var(--tekst); }
+
     /* Chip kleuren (gedeeld door .activiteit-chip en .multidag-bar) */
     .chip-bijeenkomst         { background: #d4e4b0; color: #2d4010; }
     .chip-werkgroep           { background: #b8d4f0; color: #0d3060; }
@@ -123,6 +126,7 @@
     .chip-campagne            { background: var(--geel); color: var(--groen-donker); }
     .chip-publieksbijeenkomst { background: #f0d8b0; color: #6e3a0d; }
     .chip-deadline            { background: #f0c0b8; color: #7a2410; }
+    .chip-opleiding           { background: #b8ece0; color: #0d5a48; }
 
     /* Relatie transformatiedoelen — linkerrand kleur */
     .relatie-direct      { border-left-color: #1a7abf !important; }
@@ -401,6 +405,7 @@
         <option value="campagne">Campagne</option>
         <option value="publieksbijeenkomst">Publieksbijeenkomst</option>
         <option value="deadline">Deadline</option>
+        <option value="opleiding">Opleiding</option>
       </select>
       <select class="filter-select" id="filter-al-select" onchange="setFilterActielijn(this.value)">
         <option value="alle">Alle actielijnen</option>
@@ -434,6 +439,8 @@
       <div class="legenda-item"><div class="legenda-dot" style="background:#EBDC86;"></div> Campagne</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#f0d8b0;"></div> Publieksbijeenkomst</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:#f0c0b8;"></div> Deadline</div>
+      <div class="legenda-item"><div class="legenda-dot" style="background:#b8ece0;"></div> Opleiding</div>
+      <div class="legenda-item"><div class="legenda-dot" style="background:#e8e4d8;"></div> Overig / geen type</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #1a7abf; border-radius:0; width:8px;"></div> Direct gerelateerd aan transformatiedoelen</div>
       <div class="legenda-item"><div class="legenda-dot" style="background:transparent; border-left: 4px solid #9e8a6e; border-radius:0; width:8px;"></div> Niet direct gerelateerd aan transformatiedoelen</div>
     </div>
@@ -574,7 +581,7 @@
 
 <!-- ===== DETAIL MODAL ===== -->
 <div class="modal-overlay" id="detail-modal" onclick="sluitOverlay('detail-modal', event)">
-  <div class="modal">
+  <div class="modal modal-scroll">
     <div class="modal-top">
       <div class="modal-type-badge" id="d-type"></div>
       <div class="modal-titel" id="d-titel"></div>
@@ -714,7 +721,7 @@
 <script>
 
   const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
-  const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst', deadline:'Deadline' };
+  const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst', deadline:'Deadline', opleiding:'Opleiding' };
   const WACHTWOORD = 'TPZ2026';
   const SLOT_H = 26; // hoogte per meerdaags slot in px (22px chip + 4px marge)
 
