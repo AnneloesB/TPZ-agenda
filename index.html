@@ -819,6 +819,13 @@
     return filter.trefwoorden.some(t => tekst.includes(t));
   }
 
+  // Een activiteit is afgelopen als haar einddatum (of startdatum bij eendaagse activiteiten) vóór vandaag ligt.
+  function isAfgelopen(a) {
+    const nu = new Date(); nu.setHours(0, 0, 0, 0);
+    const vandaagStr = nu.getFullYear() + '-' + String(nu.getMonth() + 1).padStart(2, '0') + '-' + String(nu.getDate()).padStart(2, '0');
+    return (a.einddatum || a.datum) < vandaagStr;
+  }
+
   // ---- MAANDNAVIGATIE ----
   function verschuifMaand(d) {
     maand += d;
@@ -1057,7 +1064,7 @@
     const container = document.getElementById('actielijnen-lijst');
     container.innerHTML = '';
 
-    const alles = [...activiteiten, ...wachtrij].filter(a => filterActiviteit(a));
+    const alles = [...activiteiten, ...wachtrij].filter(a => filterActiviteit(a) && !isAfgelopen(a));
 
     if (alles.length === 0) {
       container.innerHTML = '<div class="al-geen">Geen activiteiten gevonden met de huidige filters.</div>';
