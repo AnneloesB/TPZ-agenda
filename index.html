@@ -277,7 +277,8 @@
     .meta-item label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--grijs-mid); margin-bottom: 2px; }
     .meta-item span { font-size: 0.88rem; }
     .modal-beschrijving { background: var(--creme); border-left: 3px solid var(--groen-midden); padding: 12px 14px; border-radius: 0 6px 6px 0; font-size: 0.88rem; line-height: 1.6; }
-    .modal-actielijn { margin-top: 12px; display: inline-block; background: var(--geel); color: var(--groen-donker); border-radius: 20px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
+    .modal-actielijn { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .modal-actielijn-item { display: inline-block; background: var(--geel); color: var(--groen-donker); border-radius: 20px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
     .modal-acties { display: flex; gap: 10px; margin-top: 16px; }
     .btn-bewerken { flex: 1; padding: 9px; background: var(--groen-donker); color: var(--wit); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
     .btn-bewerken:hover { background: #344010; }
@@ -416,6 +417,9 @@
         <option value="Digitale ondersteuning">Digitale ondersteuning</option>
         <option value="Passende financiering">Passende financiering</option>
         <option value="Spiegel- en stuurinformatie">Spiegel- en stuurinformatie</option>
+      </select>
+      <select class="filter-select" id="filter-doelgroep-select" onchange="setFilterDoelgroep(this.value)">
+        <option value="alle">Alle doelgroepen</option>
       </select>
       <select class="filter-select" id="filter-relatie-select" onchange="setFilterRelatie(this.value)" style="display:none;">
         <option value="alle">Alle relaties</option>
@@ -667,7 +671,7 @@
         </div>
         <div class="form-sectie">
           <label>Actielijn</label>
-          <select id="f-actielijn">
+          <select id="f-actielijn" multiple size="7">
             <option value="Algemeen">Algemeen</option>
             <option value="Maatschappelijke bewustwording">(Maatschappelijke) bewustwording</option>
             <option value="Deskundigheidsbevordering">Deskundigheidsbevordering</option>
@@ -676,6 +680,7 @@
             <option value="Passende financiering">Passende financiering</option>
             <option value="Spiegel- en stuurinformatie">Spiegel- en stuurinformatie</option>
           </select>
+          <div class="form-hint">Houd Ctrl (Windows) of Cmd (Mac) ingedrukt om meerdere actielijnen te selecteren</div>
         </div>
       </div>
       <div class="form-sectie">
@@ -722,6 +727,19 @@
 
   const MAANDEN = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
   const TYPE_LABELS = { bijeenkomst:'Bijeenkomst', werkgroep:'Werkgroep', overleg:'Overleg', campagne:'Campagne', publieksbijeenkomst:'Publieksbijeenkomst', deadline:'Deadline', opleiding:'Opleiding' };
+  // Vaste doelgroep-categorieën voor de filter: het doelgroep-veld is vrije tekst, dus filteren gebeurt op trefwoorden.
+  const DOELGROEP_FILTERS = [
+    { label: 'Huisartsen', trefwoorden: ['huisarts'] },
+    { label: 'Verpleegkundigen', trefwoorden: ['verpleegkundig'] },
+    { label: 'Specialisten ouderengeneeskunde', trefwoorden: ['ouderengeneeskunde'] },
+    { label: 'Geestelijk verzorgers', trefwoorden: ['geestelijk verzorg'] },
+    { label: 'Paramedici', trefwoorden: ['paramedi', 'fysiotherapeut', 'ergotherapeut', 'diëtist'] },
+    { label: 'Vrijwilligers', trefwoorden: ['vrijwilliger'] },
+    { label: 'Mantelzorgers en naasten', trefwoorden: ['mantelzorg', 'naasten', 'familieleden'] },
+    { label: 'Zorgprofessionals (algemeen)', trefwoorden: ['zorgprofessional', 'zorgverlener'] },
+    { label: 'Breed publiek', trefwoorden: ['publiek'] },
+    { label: 'Beleidsmakers en organisaties', trefwoorden: ['beleidsmaker', 'projectcontroller', 'partnerorganisatie'] }
+  ];
   const WACHTWOORD = 'TPZ2026';
   const SLOT_H = 26; // hoogte per meerdaags slot in px (22px chip + 4px marge)
 
@@ -731,6 +749,7 @@
   let maand = new Date().getMonth();
   let filterType = 'alle';
   let filterActielijn = 'alle';
+  let filterDoelgroep = 'alle';
   let filterRelatie = 'alle';
   let zoekterm = '';
   let huidigId = null;
@@ -778,7 +797,26 @@
   // ---- LADEN ----
   function laad() {
     activiteiten = typeof ACTIVITEITEN_DATA !== 'undefined' ? ACTIVITEITEN_DATA : [];
+    vulDoelgroepFilter();
     teken();
+  }
+
+  function vulDoelgroepFilter() {
+    const select = document.getElementById('filter-doelgroep-select');
+    DOELGROEP_FILTERS.forEach(f => {
+      const optie = document.createElement('option');
+      optie.value = f.label;
+      optie.textContent = f.label;
+      select.appendChild(optie);
+    });
+  }
+
+  // Controleert of de doelgroeptekst van een activiteit bij een gekozen doelgroep-categorie past.
+  function matchtDoelgroep(a, categorie) {
+    const filter = DOELGROEP_FILTERS.find(f => f.label === categorie);
+    if (!filter) return false;
+    const tekst = (a.doelgroep || '').toLowerCase();
+    return filter.trefwoorden.some(t => tekst.includes(t));
   }
 
   // ---- MAANDNAVIGATIE ----
@@ -799,11 +837,12 @@
   // ---- FILTERS ----
   function setFilterType(val) { filterType = val; updateFilterResetKnop(); herteken(); }
   function setFilterActielijn(val) { filterActielijn = val; updateRelatieFilterZichtbaarheid(); updateFilterResetKnop(); herteken(); }
+  function setFilterDoelgroep(val) { filterDoelgroep = val; updateFilterResetKnop(); herteken(); }
   function setFilterRelatie(val) { filterRelatie = val; updateFilterResetKnop(); herteken(); }
   function setZoekterm(val) { zoekterm = val.trim(); herteken(); }
 
   function updateFilterResetKnop() {
-    const actief = filterType !== 'alle' || filterActielijn !== 'alle' || filterRelatie !== 'alle';
+    const actief = filterType !== 'alle' || filterActielijn !== 'alle' || filterDoelgroep !== 'alle' || filterRelatie !== 'alle';
     document.getElementById('btn-filter-reset').style.display = actief ? '' : 'none';
   }
 
@@ -820,9 +859,11 @@
   function resetFilters() {
     filterType = 'alle';
     filterActielijn = 'alle';
+    filterDoelgroep = 'alle';
     filterRelatie = 'alle';
     document.getElementById('filter-type-select').value = 'alle';
     document.getElementById('filter-al-select').value = 'alle';
+    document.getElementById('filter-doelgroep-select').value = 'alle';
     document.getElementById('filter-relatie-select').value = 'alle';
     updateRelatieFilterZichtbaarheid();
     updateFilterResetKnop();
@@ -834,10 +875,17 @@
     if (actieveTab === 'actielijnen') tekenActielijnen();
   }
 
+  // Geeft de actielijn(en) van een activiteit altijd als array terug (ondersteunt zowel een enkele string als meerdere).
+  function actielijnLijst(a) {
+    if (Array.isArray(a.actielijn)) return a.actielijn.filter(Boolean);
+    return a.actielijn ? [a.actielijn] : [];
+  }
+
   // Controleer of een activiteit voldoet aan de actieve filters (type, actielijn, zoekterm).
   function filterActiviteit(a) {
     if (filterType !== 'alle' && a.type !== filterType) return false;
-    if (filterActielijn !== 'alle' && a.actielijn !== filterActielijn) return false;
+    if (filterActielijn !== 'alle' && !actielijnLijst(a).includes(filterActielijn)) return false;
+    if (filterDoelgroep !== 'alle' && !matchtDoelgroep(a, filterDoelgroep)) return false;
     if (filterRelatie !== 'alle' && (a.relatie || '') !== filterRelatie) return false;
     if (zoekterm) {
       const q = zoekterm.toLowerCase();
@@ -1064,13 +1112,13 @@
       typeBadge.textContent = TYPE_LABELS[a.type] || a.type;
       badges.appendChild(typeBadge);
 
-      if (a.actielijn) {
+      actielijnLijst(a).forEach(al => {
         const alBadge = document.createElement('span');
         alBadge.className = 'al-actielijn-badge';
-        alBadge.textContent = a.actielijn;
-        alBadge.title = a.actielijn;
+        alBadge.textContent = al;
+        alBadge.title = al;
         badges.appendChild(alBadge);
-      }
+      });
 
       if (a.relatie) {
         const relBadge = document.createElement('span');
@@ -1113,7 +1161,8 @@
       contactWrap.style.display = 'none';
     }
     document.getElementById('d-beschrijving').textContent = a.beschrijving || '';
-    document.getElementById('d-actielijn').textContent = a.actielijn || '';
+    document.getElementById('d-actielijn').innerHTML = actielijnLijst(a)
+      .map(al => '<span class="modal-actielijn-item">' + al + '</span>').join('');
     const urlWrap = document.getElementById('d-url-wrap');
     if (a.url) {
       document.getElementById('d-url').innerHTML = '<a href="' + a.url + '" target="_blank" rel="noopener">' + a.url + '</a>';
@@ -1172,7 +1221,10 @@
     document.getElementById('f-tijd').value        = a ? (a.tijd || '') : '';
     document.getElementById('f-locatie').value     = a ? (a.locatie || '') : '';
     document.getElementById('f-type').value        = a ? (a.type || 'bijeenkomst') : 'bijeenkomst';
-    document.getElementById('f-actielijn').value   = a ? (a.actielijn || 'Algemeen') : 'Algemeen';
+    const gekozenActielijnen = a ? actielijnLijst(a) : ['Algemeen'];
+    Array.from(document.getElementById('f-actielijn').options).forEach(o => {
+      o.selected = gekozenActielijnen.includes(o.value);
+    });
     document.getElementById('f-doelgroep').value   = a ? (a.doelgroep || '') : '';
     document.getElementById('f-contactpersoon').value = a ? (a.contactpersoon || '') : '';
     document.getElementById('f-beschrijving').value = a ? (a.beschrijving || '') : '';
@@ -1181,6 +1233,7 @@
   }
 
   function leesFormulier() {
+    const gekozenActielijnen = Array.from(document.getElementById('f-actielijn').selectedOptions).map(o => o.value);
     return {
       id:          document.getElementById('f-id').value || Date.now().toString(),
       titel:       document.getElementById('f-titel').value.trim(),
@@ -1192,7 +1245,7 @@
       beschrijving:document.getElementById('f-beschrijving').value.trim(),
       doelgroep:   document.getElementById('f-doelgroep').value.trim(),
       contactpersoon: document.getElementById('f-contactpersoon').value.trim() || null,
-      actielijn:   document.getElementById('f-actielijn').value,
+      actielijn:   gekozenActielijnen.length ? gekozenActielijnen : ['Algemeen'],
       url:         document.getElementById('f-url').value.trim() || null,
       relatie:     document.getElementById('f-relatie').value || null
     };

@@ -51,7 +51,7 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Theatercollege waarin internist-oncoloog Sabine Netters vertelt over oncologische zorg en de overgang naar best supportive care, en longarts Sander de Hosson een lezing geeft over herkenbare situaties en dilemma's in de laatste levensfase, met bijzondere aandacht voor dementie. Zaal open vanaf 18:30 uur. Kosten €32,50 (met accreditatie €42,50); groepskorting vanaf 10 personen. Accreditatie aangevraagd bij ABAN, NAPA, V&VN, VSR en SKGV.",
     "doelgroep": "Zorgverleners en breed publiek geïnteresseerd in palliatieve zorg en de stervensfase",
-    "actielijn": "Deskundigheidsbevordering",
+    "actielijn": ["Maatschappelijke bewustwording", "Deskundigheidsbevordering"],
     "url": "https://carend.nl/congress/theatercollege-wie-de-dood-ziet-ziet-het-leven-deventer",
     "relatie": "niet-direct"
   },
@@ -107,7 +107,7 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Theatervoorstelling door 18 acteurs van Theater Totaal, gebaseerd op Eugène Ionesco's 'De koning sterft', over een koppige maar ontroerende koning die het leven moet loslaten. In opdracht van Amerpoort gemaakt voor een projectgroep proactieve zorgplanning. Na afloop lancering van de Wegwijzer Laatste Levensfase en een netwerkborrel. Gratis deelname; alle 120 plekken zijn inmiddels vol. Aanmelden was mogelijk tot 4 oktober 2026. Contact: Willemien Schep (Willemien.Schep@beweging3.nl).",
     "doelgroep": "Professionals, vrijwilligers en mantelzorgers betrokken bij palliatieve zorg in de regio Eemland",
-    "actielijn": "Deskundigheidsbevordering",
+    "actielijn": ["Maatschappelijke bewustwording", "Deskundigheidsbevordering"],
     "url": "https://palliaweb.nl/netwerk-eemland/agenda/theatervoorstelling-de-koning-sterft",
     "relatie": "niet-direct"
   },
@@ -121,7 +121,7 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Driedaags programma vol activiteiten, workshops, gesprekken en films over verlies en rouw, georganiseerd door Stichting TrooST en Bibliotheek Utrecht in Bibliotheek Neude. Het gedetailleerde programma voor de editie van 2026 was op het moment van raadplegen nog niet gepubliceerd; voorgaande edities kenden onder meer lezingen, workshops, een documentaire, een rouwwandeling en een open podium.",
     "doelgroep": "Breed publiek, waaronder nabestaanden en zorgprofessionals",
-    "actielijn": "Deskundigheidsbevordering",
+    "actielijn": ["Maatschappelijke bewustwording", "Deskundigheidsbevordering"],
     "url": "https://palliaweb.nl/netwerk-utrechtstadenzuidoost/hulpverleners/scholing",
     "relatie": "niet-direct"
   },
