@@ -1,4 +1,18 @@
 const ACTIVITEITEN_DATA = [
+  {
+    "id": "congres-cultuursensitieve-zorg-utrecht-20261113",
+    "titel": "Congres Cultuursensitieve Zorg",
+    "datum": "2026-11-13",
+    "einddatum": null,
+    "tijd": "09:00 - 17:30",
+    "locatie": "Utrecht",
+    "type": "bijeenkomst",
+    "beschrijving": "Congres over cultuursensitieve zorg, van bewustwording naar handelen. Ochtendprogramma over wat cultuursensitieve zorg van professionals vraagt, hoe miscommunicatie ontstaat en de rol van eigen referentiekaders. Middagprogramma bevat een workshop Het moeilijke gesprek: levenseinde, slecht nieuws en cultuurcommunicatie. Wordt afgesloten met interactieve rollenspellen over lastige praktijksituaties. Kosten €299/€349. Accreditatie aangevraagd bij o.a. ABAN, V&V, NAPA, NVRG, SKGV, VSR. Organisatie: BSL.",
+    "doelgroep": "Zorgprofessionals (accreditatie aangevraagd bij meerdere beroepsregisters)",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://congressen.huisarts.bsl.nl/event/congres-cultuursensitieve-zorg/",
+    "relatie": "niet-direct"
+  },
  {
     "id": "congres-carend-bsted-veenendaal-20270303",
     "titel": "Congres Bewust Stoppen met Eten en Drinken",
