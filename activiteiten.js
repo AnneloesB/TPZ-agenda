@@ -13,7 +13,7 @@ const ACTIVITEITEN_DATA = [
     "url": "https://congressen.huisarts.bsl.nl/event/congres-cultuursensitieve-zorg/",
     "relatie": "niet-direct"
   },
- {
+  {
     "id": "congres-carend-bsted-veenendaal-20270303",
     "titel": "Congres Bewust Stoppen met Eten en Drinken",
     "datum": "2027-03-03",
