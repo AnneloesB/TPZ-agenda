@@ -96,7 +96,8 @@ const ACTIVITEITEN_DATA = [
     "actielijn": "Deskundigheidsbevordering",
     "url": "https://kinderpalliatief.nl/scholing/training/dateid/22538/scholing/training-proactive-zorgplanning",
     "relatie": "niet-direct"
-  }{
+  },
+  {
     "id": "congres-cultuursensitieve-zorg-utrecht-20261113",
     "titel": "Congres Cultuursensitieve Zorg",
     "datum": "2026-11-13",
