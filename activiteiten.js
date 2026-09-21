@@ -1,5 +1,46 @@
 const ACTIVITEITEN_DATA = [
   {
+    "id": "publiekslezing-carend-pz-genemuiden-20261001",
+    "titel": "Publiekslezing palliatieve zorg – Genemuiden",
+    "datum": "2026-10-01",
+    "einddatum": null,
+    "tijd": "19:30 - 21:30 (inloop vanaf 19:00)",
+    "locatie": "De Meente, Dorus Rijkersstraat 2, Genemuiden",
+    "type": "Publieksbijeenkomst",
+    "beschrijving": "Eerste van zes publiekslezingen over palliatieve zorg in de gemeente Zwartewaterland, georganiseerd door stichting Samen Carend met steun van het Nationaal Programma Palliatieve Zorg. Onderwerpen: proactieve zorgplanning, levenstestament/zorgvolmacht, beslissingen rond het levenseinde en wat sterven inhoudt. Sprekers: Vera van den Belt (huisarts), Sabine Netters (internist-oncoloog), Rik de Jonge (notaris) en vrijwilligers van de NPV Genemuiden. Gratis toegang.",
+    "doelgroep": "Algemeen publiek (regio Zwartewaterland)",
+    "actielijn": "Maatschappelijke bewustwording",
+    "url": "https://carend.nl/publiekslezing/publiekslezing-palliatieve-zorg-genemuiden",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "basistraining-kinderpalliatieve-zorg-utrecht-20261005",
+    "titel": "2-daagse Basistraining Kinderpalliatieve Zorg - eerste trainingsdag",
+    "datum": "2026-10-05",
+    "einddatum": null,
+    "tijd": null,
+    "locatie": "Utrecht",
+    "type": "opleiding",
+    "beschrijving": "Eerste trainingsdag van de 2-daagse basistraining van het Kenniscentrum Kinderpalliatieve Zorg, met online leren gecombineerd met twee fysieke bijeenkomsten (5 okt en 9 nov 2026). Behandelt de verschillende fasen van kinderpalliatieve zorg, gezinsondersteuning, praktische hulpmiddelen (o.a. Medisch Kindzorgsysteem en Individueel Zorgplan), gesprekstechnieken, emotionele ondersteuning en ethische besluitvorming. Geaccrediteerd voor artsen (ABAN), geestelijk verzorgers (SKGV) en verpleegkundig specialisten (VSR). Kosten: €959.",
+    "doelgroep": "Zorgprofessionals rondom kinderen met levensbedreigende/levensduurbeperkende aandoeningen en hun families",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://palliaweb.nl/opleidingen/2-daagse-basistraining-kinderpalliatieve-zorg",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "basistraining-kinderpalliatieve-zorg-utrecht-20261109",
+    "titel": "2-daagse Basistraining Kinderpalliatieve Zorg - tweede trainingsdag",
+    "datum": "2026-11-09",
+    "einddatum": null,
+    "tijd": null,
+    "locatie": "Utrecht",
+    "type": "opleiding",
+    "beschrijving": "Tweede en laatste trainingsdag van de 2-daagse basistraining van het Kenniscentrum Kinderpalliatieve Zorg, met online leren gecombineerd met twee fysieke bijeenkomsten (5 okt en 9 nov 2026). Behandelt de verschillende fasen van kinderpalliatieve zorg, gezinsondersteuning, praktische hulpmiddelen (o.a. Medisch Kindzorgsysteem en Individueel Zorgplan), gesprekstechnieken, emotionele ondersteuning en ethische besluitvorming. Geaccrediteerd voor artsen (ABAN), geestelijk verzorgers (SKGV) en verpleegkundig specialisten (VSR). Kosten: €959.",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://palliaweb.nl/opleidingen/2-daagse-basistraining-kinderpalliatieve-zorg",
+    "relatie": "niet-direct"
+  },
+  {
     "id": "congres-aesculaap-pz-dagelijks-leven-veenendaal-20270415",
     "titel": "Palliatieve Zorg en het Dagelijks Leven",
     "datum": "2027-04-15",
