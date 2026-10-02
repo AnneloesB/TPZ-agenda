@@ -257,7 +257,7 @@ const ACTIVITEITEN_DATA = [
     "einddatum": null,
     "tijd": "14:00 (inloop 13:45)",
     "locatie": "Natuurbegraafplaats Hillig Meer, Provincialeweg 3, Eext",
-    "type": "Publieksbijeenkomst",
+    "type": "publieksbijeenkomst",
     "beschrijving": "Publiekslezing met drie perspectieven op sterven: een internist-oncoloog over wat er fysiek gebeurt bij het sterven, een stoïcijns filosoof over meditaties op de dood via klassieke teksten, en een fotograaf over persoonlijke ervaringen met verlies. Uitgangspunt: sterven hoort bij het leven en zou zo natuurlijk mogelijk moeten verlopen. Drie lezingen van 20-25 minuten, pauze, informatie over natuurbegraven en optioneel een rondwandeling. Gratis toegang (donatie welkom), voorregistratie verplicht, max. 100 personen.",
     "doelgroep": "Algemeen publiek",
     "actielijn": "Maatschappelijke bewustwording",
