@@ -1,5 +1,47 @@
 const ACTIVITEITEN_DATA = [
   {
+    "id": "congres-carend-complementaire-zorg-vianen-20270421",
+    "titel": "Congres Complementaire zorg in de laatste fase",
+    "datum": "2027-04-21",
+    "einddatum": null,
+    "tijd": "13:00 - 17:00",
+    "locatie": "Van der Valk Hotel Vianen",
+    "type": "congres",
+    "beschrijving": "Congres van Carend over hoe complementaire therapieën (aromatherapie, aquatherapie zoals koele buikwassingen, massage, muziek) bijdragen aan comfort en kwaliteit van leven in de laatste levensfase. Evidence-based benaderingen en praktische implementatie, met aandacht voor de 'Handreiking Complementaire Zorg in de Palliatieve Fase'. Sprekers gaan zowel in op klinische toepassing als op organisatorische implementatie. Kosten: €159 (early bird t/m 1 februari 2027) / €177 (regulier).",
+    "doelgroep": "Verpleegkundigen, verzorgenden, artsen, PA's, paramedici, geestelijk verzorgers en hospicemedewerkers; ook beleidsmakers uit ziekenhuis, wijkzorg, verpleeghuis en thuiszorg",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://carend.nl/congressen/congres-complementaire-zorg-in-de-laatste-fase-21-april-2027",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "informatieavond-leven-tot-het-laatst-zeewolde-20261006",
+    "titel": "Informatieavond Leven tot het Laatst Zeewolde",
+    "datum": "2026-10-06",
+    "einddatum": null,
+    "tijd": "19:45 - 21:45 (inloop vanaf 19:30)",
+    "locatie": "De Verbeelding, De Verbeelding 25, Zeewolde",
+    "type": "bijeenkomst",
+    "beschrijving": "Publieksavond waarin twee initiatieven zich presenteren: VPTZ Zeewolde biedt kosteloze ondersteuning thuis aan mensen in hun laatste levensfase en hun naasten via opgeleide vrijwilligers; de Bedside Singers Harderwijk-Zeewolde zingen zacht en a capella aan het bed ter bevordering van rust en nabijheid. Na afloop informele nabijeenkomst. Gratis.",
+    "doelgroep": "Algemeen publiek (patiënten, naasten en geïnteresseerden)",
+    "actielijn": "Maatschappelijke bewustwording",
+    "url": "https://palliaweb.nl/netwerk-noordwestveluwe/agenda/informatieavond-leven-tot-het-laatst-zeewolde",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "open-huis-vptz-zeewolde-20261009",
+    "titel": "Open Huis VPTZ Zeewolde - Voor informatie en een goed gesprek",
+    "datum": "2026-10-09",
+    "einddatum": null,
+    "tijd": "09:30 - 12:00",
+    "locatie": "Mazerhard 71, Zeewolde",
+    "type": "Publieksbijeenkomst",
+    "beschrijving": "Open huis van VPTZ Zeewolde (vrijwillige palliatieve terminale zorg), in samenwerking met Stichting NabijZijn, voor informatie en een goed gesprek over vrijwillige ondersteuning in de laatste levensfase. Verdere inhoudelijke details niet vermeld op de pagina; kosten niet vermeld — navraag bij netwerkcoördinator Willemien Schep (06-36183680) nodig.",
+    "doelgroep": "Algemeen publiek / geïnteresseerden in vrijwillige palliatieve zorg",
+    "actielijn": "Maatschappelijke bewustwording",
+    "url": "https://palliaweb.nl/netwerk-noordwestveluwe/agenda/open-huis-vptz-zeewolde",
+    "relatie": "niet-direct"
+    },
+  {
     "id": "publiekslezing-carend-pz-genemuiden-20261001",
     "titel": "Publiekslezing palliatieve zorg – Genemuiden",
     "datum": "2026-10-01",
