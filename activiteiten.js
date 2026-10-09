@@ -1,5 +1,19 @@
 const ACTIVITEITEN_DATA = [
   {
+    "id": "webinar-palliactief-mdo-allemaal-aan-tafel-20261118",
+    "titel": "Het Palliactief MDO Webinar: Allemaal aan tafel! – Multidimensionele benadering van de mens met pijn",
+    "datum": "2026-11-18",
+    "einddatum": null,
+    "tijd": "19:30 - 21:00",
+    "locatie": "Online",
+    "type": "bijeenkomst",
+    "beschrijving": "Eerste editie van een nieuwe webinarreeks van Palliactief: een multidisciplinair overleg (MDO) waarin vier experts een actuele casus bespreken van een palliatieve patiënt met veel pijn, met aandacht voor alle dimensies van mens-zijn. Presentatie door Tom van 't Hek; deelnemers kunnen meepraten. Sprekers: Annemieke Kuin (geestelijk verzorger), Marianne van Eijk (verpleegkundige palliatieve zorg/trainer Cedrah, coördinator hospice Bodegraven-Reeuwijk), Bart van Wijck (anesthesioloog-pijnspecialist) en Nieke van Driel (specialist ouderengeneeskunde/kaderarts palliatieve zorg). Accreditatie aangevraagd bij ABAN, V&VN, V&VN-VS, SKGV en NAPA. Kosten: €60 (artsen, geen lid) / €50 (artsen, lid) / €35 (overige zorgverleners, geen lid) / €25 (overige zorgverleners, lid); factuur achteraf. Aanmelden via palliactief.medvio.nl.",
+    "doelgroep": "Zorgprofessionals (artsen en overige zorgverleners) in de palliatieve zorg",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://www.palliactief.nl/congressen-symposia/congres/details/het-palliactief-mdo-webinar-allemaal-aan-tafel",
+    "relatie": "niet-direct"
+  },
+ {
     "id": "congres-carend-complementaire-zorg-vianen-20270421",
     "titel": "Congres Complementaire zorg in de laatste fase",
     "datum": "2027-04-21",
