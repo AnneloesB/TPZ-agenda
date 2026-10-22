@@ -652,7 +652,7 @@ const ACTIVITEITEN_DATA = [
     "type": "bijeenkomst",
     "beschrijving": "Driedaags programma over verlies en rouw in Bibliotheek Neude, georganiseerd door Bibliotheek Utrecht samen met Stichting TrösT en Humanitas Utrecht. De editie van 2026 richt zich vooral op millennials en Gen Z. Programma: do 29 okt workshop Styx (18:00), film 'How to Make Millions Before Grandma Dies' (19:00) en workshop Troosten (19:30); vr 30 okt leesclub rouw met Lena Bril (15:00-16:30, reserveren) en avond over verlies en troost in woord en beeld (19:30); za 31 okt 'Ik wilde je nog wat zeggen' voor kinderen 6-12 jaar (11:00), Rage Room (12:00-15:00), open mic 'Rouw aan het woord' (14:00-17:00) en Troostreis met muziek en dans (16:00). Exposities 'Troostbrengers' en 'Verloren door verlies' lopen van 26 okt t/m 8 nov. In november vervolg in de wijkbibliotheken via 'Troost in de wijken'. Alle activiteiten gratis.",
     "doelgroep": "Breed publiek, waaronder nabestaanden en zorgprofessionals",
-    "actielijn": ["Maatschappelijke bewustwording", "Deskundigheidsbevordering"],
+    "actielijn": "Maatschappelijke bewustwording",
     "url": "https://www.bibliotheekutrecht.nl/agenda/troost-in-de-bieb.html",
     "relatie": "niet-direct"
   },
