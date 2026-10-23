@@ -1319,7 +1319,7 @@ const ACTIVITEITEN_DATA = [
     "beschrijving": "Iedere 2e zondag van de maand bij de blauwe keet op Begraafplaats Tolsteeg, voor iedereen die een dierbare heeft verloren, kort of lang geleden. Muzikanten spelen troostende muziek, vrijwilligers schenken koffie of thee en bieden desgewenst een luisterend oor. Georganiseerd door Gemeente Utrecht en Stichting TrösT. Gratis, binnenlopen tussen 12:00 en 14:00.",
     "doelgroep": "Mensen die een dierbare hebben verloren",
     "actielijn": "Maatschappelijke bewustwording",
-    "url": "https://www.trost.nl/mc-events/bakkie-trost-7/",
+    "url": "https://www.trost.nl/mc-events/bakkie-trost-14/",
     "relatie": "niet-direct"
   },
   {
@@ -1408,6 +1408,20 @@ const ACTIVITEITEN_DATA = [
     "doelgroep": "Algemeen publiek",
     "actielijn": "Maatschappelijke bewustwording",
     "url": "https://www.trost.nl/mc-events/allerzielen-in-het-griftpark-5/",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "congres-belichaming-van-rouw-amersfoort-20261113",
+    "titel": "Congres Belichaming van rouw",
+    "datum": "2026-11-13",
+    "einddatum": null,
+    "tijd": null,
+    "locatie": "Bergkerk, Doctor Abraham Kuyperlaan 2, Amersfoort",
+    "type": "congres",
+    "beschrijving": "Congres van het Landelijk Steunpunt Verlies over de lichamelijke kant van rouw, ook bij levend verlies, met een ochtend- en middagprogramma. Bedoeld voor professionals die beroepsmatig met verlies werken én voor mensen die zelf rouwen. Kosten €255 inclusief lunch (€65 korting voor wie in het LVS-verwijsbestand staat). Aanmelden via de webwinkel van steunbijverlies.nl, uiterlijk 6 november 2026.",
+    "doelgroep": "Professionals en mensen die rouwen",
+    "actielijn": "Maatschappelijke bewustwording",
+    "url": "https://www.steunbijverlies.nl/congres",
     "relatie": "niet-direct"
   }
 ];
