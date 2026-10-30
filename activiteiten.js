@@ -453,7 +453,7 @@ const ACTIVITEITEN_DATA = [
     "einddatum": null,
     "tijd": "13:15 - 17:15",
     "locatie": "Van der Valk Hotel Veenendaal, Bastion 73, Veenendaal",
-    "type": "congres",
+    "type": bBijeenkomst",
     "beschrijving": "Congres over bewust stoppen met eten en drinken (BSTED) vanuit zes perspectieven: persoonlijke verhalen van nabestaanden, patiënt- en naastenvisie, verpleegkundige en medische aspecten, en ethische, juridische en psychiatrische vraagstukken. Kosten €155, groepsinschrijving vanaf 3 personen mogelijk. Accreditatie aangevraagd bij ABAN, NAPA, V&VN, VSR, NVvPO, Kabiz, NVDA en SKGV.",
     "doelgroep": "Artsen, verpleegkundigen, verpleegkundig specialisten, physician assistants, geestelijk verzorgers, psychologen, psychiaters en zorgverleners in eerste lijn, ziekenhuizen, verpleeghuizen, hospices, thuiszorg, gehandicaptenzorg, GGZ en verslavingszorg; ook patiënten, naasten en mantelzorgers welkom",
     "actielijn": "Deskundigheidsbevordering",
