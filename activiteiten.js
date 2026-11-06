@@ -1,4 +1,46 @@
 const ACTIVITEITEN_DATA = [
+  {
+    "id": "nationaal-euthanasiecongres-2027-20270331",
+    "titel": "Nationaal Euthanasiecongres 2027",
+    "datum": "2027-03-31",
+    "einddatum": null,
+    "tijd": "13:00 - 17:30 (ontvangst vanaf 12:15)",
+    "locatie": "Van der Valk Hotel Veenendaal, Bastion 73, Veenendaal",
+    "type": "bijeenkomst",
+    "beschrijving": "Middagcongres van Carend, de NVVE en Expertisecentrum Euthanasie over de medische, juridische en morele vragen rond euthanasie. Plenair: keynote van Bert Keizer ('Euthanasie: waar komt het vandaan, waar gaat het naartoe?') en een podiumgesprek met nabestaanden. Daarnaast twee workshoprondes met keuze uit zes workshops, o.a. over euthanasie bij dementie en schriftelijke wilsverklaringen, euthanasie bij psychiatrisch lijden, het gesprek over een euthanasieverzoek, de werkwijze van de Regionale Toetsingscommissies Euthanasie en morele dilemma's voor zorgverleners. Opening door Sander de Hosson en Fransien van ter Beek. Kosten: €147,50 per persoon, inclusief koffie/thee, frisdrank en versnaperingen (geen lunch). Accreditatie aangevraagd bij ABAN, VSR, V&VN, NAPA en SKGV (aantal punten nog niet bekend).",
+    "doelgroep": "Huisartsen, specialisten ouderengeneeskunde, medisch specialisten, psychiaters, artsen in opleiding, verpleegkundig specialisten, physician assistants, verpleegkundigen en andere zorgprofessionals; ook geestelijk verzorgers, ethici, juristen, onderzoekers en beleidsmakers. Patiënten, naasten en nabestaanden ook welkom",
+    "actielijn": "Deskundigheidsbevordering",
+    "url": "https://carend.nl/congressen/nationaal-euthanasiecongres-2027",
+    "relatie": "niet-direct"
+  },
+  {
+    "id": "werkconferentie-transmurale-continuiteit-eerste-lijn-20270112",
+    "titel": "Werkconferentie Transmurale continuïteit van palliatieve zorg binnen de eerste lijn",
+    "datum": "2027-01-12",
+    "einddatum": null,
+    "tijd": "18:00 - 20:30",
+    "locatie": "Locatie volgt (centraal in de regio Utrecht)",
+    "type": "bijeenkomst",
+    "beschrijving": "Eerste van twee werkconferenties van de Transformatie Palliatieve Zorg Midden-Nederland. Zorgprofessionals uit de huisartsenpraktijk en de wijkverpleging (incl. casemanager PZ, indien werkzaam) geven samen praktische invulling aan de regionale werkafspraken over signaleren, markeren en het starten van proactieve zorgplanning, bespreken knelpunten en verzamelen best practices aan de hand van herkenbare praktijksituaties. Deels ingedeeld per subregio. Deelname op uitnodiging: aanmelden via de transformatieaanjager van de eigen organisatie. Kosten: geen; inclusief diner, en deelnemers ontvangen een cadeaubon van €100 of vacatiegeld (max. €110 per uur) als dank voor hun tijd.",
+    "doelgroep": "Zorgprofessionals uit huisartsenpraktijk ((kader)huisarts, POH) en wijkverpleging (casemanager palliatieve zorg of wijkverpleegkundige) van deelnemende organisaties; 2 à 3 per organisatie",
+    "actielijn": ["Deskundigheidsbevordering", "Afspraken op alle niveaus"],
+    "url": null,
+    "relatie": "direct"
+  },
+  {
+    "id": "werkconferentie-transmurale-continuiteit-eerste-tweede-lijn-20270126",
+    "titel": "Werkconferentie Transmurale continuïteit van palliatieve zorg tussen de eerste en tweede lijn",
+    "datum": "2027-01-26",
+    "einddatum": null,
+    "tijd": "18:00 - 20:30",
+    "locatie": "Locatie volgt (centraal in de regio Utrecht)",
+    "type": "bijeenkomst",
+    "beschrijving": "Tweede van twee werkconferenties van de Transformatie Palliatieve Zorg Midden-Nederland. Zorgprofessionals uit de huisartsenpraktijk, de wijkverpleging (incl. casemanager PZ, indien werkzaam) en het ziekenhuis geven samen praktische invulling aan de regionale werkafspraken over signaleren, markeren en het starten van proactieve zorgplanning, bespreken knelpunten en verzamelen best practices aan de hand van herkenbare praktijksituaties. Deels ingedeeld per subregio. Deelname op uitnodiging: aanmelden via de transformatieaanjager van de eigen organisatie. Kosten: geen; inclusief diner, en deelnemers ontvangen een cadeaubon van €100 of vacatiegeld (max. €110 per uur) als dank voor hun tijd.",
+    "doelgroep": "Zorgprofessionals uit huisartsenpraktijk ((kader)huisarts, POH), wijkverpleging (casemanager palliatieve zorg of wijkverpleegkundige) en ziekenhuis (medisch specialist, verpleegkundige palliatief team, medewerker transferbureau) van deelnemende organisaties; 2 à 3 per organisatie",
+    "actielijn": ["Deskundigheidsbevordering", "Afspraken op alle niveaus"],
+    "url": null,
+    "relatie": "direct"
+  },
  {
     "id": "jaarcongres-rouw-2027-van-afscheid-tot-nazorg-20270317",
     "titel": "Jaarcongres Rouw 2027: Van afscheid tot nazorg",
