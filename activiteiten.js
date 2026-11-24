@@ -881,21 +881,6 @@ const ACTIVITEITEN_DATA = [
     "relatie": "niet-direct"
   },
   {
-    "id": "dl-voortgangsrapportage-2026-12",
-    "titel": "Opleverdatum voortgangsrapportage",
-    "datum": "2026-12-01",
-    "einddatum": null,
-    "tijd": null,
-    "locatie": null,
-    "type": "deadline",
-    "beschrijving": "Document met voortgangsrapportage, situatie-analyse en plan van aanpak per organisatie met eigen transformatieaanjager",
-    "doelgroep": "Transformatieaanjagers",
-    "actielijn": "Algemeen",
-    "url": null,
-    "relatie": null,
-    "contactpersoon": "denise.seelen@tpz-midden.nl"
-  },
-  {
     "id": "dl-voortgangsrapportage-2027-06",
     "titel": "Opleverdatum voortgangsrapportage",
     "datum": "2027-06-01",
